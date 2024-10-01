@@ -1,0 +1,5 @@
+<!--components/goods/goods-nav/goods-nav.wxml-->
+<view class="nav-container">
+  <view style="margin: 2orpx;">垃圾堆</view>
+  <van-search placeholder="请输入搜索关键词"/>
+</view>

@@ -1,0 +1,21 @@
+/* components/common/ye-msg/ye-msg.wxss */
+.container{
+    position:absolute;
+    top:40%;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    opacity: var(--tip-opacity);
+    transition: all 0.5s;
+
+}
+.msg-tip{
+    max-width: 300rpx;
+    box-sizing: border-box;
+    border-radius: 20rpx;
+    padding: 20rpx;
+    text-align: center;
+    background-color: black;
+    color: white;
+    
+}

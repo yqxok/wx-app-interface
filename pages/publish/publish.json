@@ -1,0 +1,13 @@
+{
+  "usingComponents": {
+    "van-uploader": "@vant/weapp/uploader/index",
+    "van-divider": "@vant/weapp/divider/index",
+    "pub-sort":"../../components/publish/pub-sort/pub-sort",
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "price-input":"../../components/common/price-input/price-input",
+    "van-loading": "@vant/weapp/loading/index",
+    "van-stepper": "@vant/weapp/stepper/index",
+    "ye-msg":"../../components/common/ye-msg/ye-msg"
+  }
+}

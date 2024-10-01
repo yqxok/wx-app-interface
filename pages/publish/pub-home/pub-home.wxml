@@ -1,0 +1,8 @@
+<!--pages/publish/pub-home/pub-home.wxml-->
+<view class="page-view" style="overflow: hidden;">
+    <view animation="{{animationData}}"  class="pub-home-container" bind:tap="navToPublish" id="box">
+        <view>发闲置</view>
+        <view class="iconfont icon-fabu" style="font-size: 50rpx;"></view>
+    </view>
+</view>
+

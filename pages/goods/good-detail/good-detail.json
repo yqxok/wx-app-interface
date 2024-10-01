@@ -1,0 +1,14 @@
+{
+  "usingComponents": {
+    "van-icon": "@vant/weapp/icon/index",
+
+    "ye-nav":"../../../components/common/ye-nav/ye-nav",
+
+    "ye-comment":"../../../components/common/ye-comment/ye-comment",
+    "van-dialog": "@vant/weapp/dialog/index",
+    "ye-msg":"../../../components/common/ye-msg/ye-msg",
+    "van-nav-bar": "@vant/weapp/nav-bar/index"
+  },
+
+  "enablePullDownRefresh": false
+}

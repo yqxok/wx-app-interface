@@ -1,0 +1,5 @@
+.swipe-cell-container{
+    
+    position: relative;
+    
+}

@@ -1,0 +1,35 @@
+<van-nav-bar title="我的收藏" left-arrow bind:click-left="navBack"/>
+<scroll-view scroll-y="true" style="transition: all 0.5s; flex: 1;height: 1rpx;box-sizing: border-box;padding: 20rpx;padding-bottom: 0;">
+    <view style="display: flex;align-items: center;margin-bottom: 20rpx;">
+        <view style="flex:1;margin-right: 20rpx;">
+            <ye-search></ye-search>
+        </view>
+        <view bind:tap="startManage" class="border-btn" style="font-size: 30rpx;font-weight: 500;">{{leftOpen?'完成':'管理'}}</view>
+    </view>
+    <ye-swipe-cell wx:for="{{goodCollects.records}}" wx:key="collectId" rightWidth="{{150}}" leftWidth="{{150}}" openLeft="{{leftOpen}}">
+       
+        <view class="collect-container" bind:tap="navGoodDetail" data-goodid="{{item.goodId}}">
+            <image class="good-image" src="{{item.picUrls[0].url}}" mode="aspectFill"></image>
+            <view style="display: flex;flex-direction: column;justify-content: space-between;align-items: flex-start;">    
+                <view  class="text">{{item.html}}</view>
+                <view style="color: red;font-size: 18px;font-weight: 500;">￥{{item.price}}</view> 
+                <view style="display: flex;align-items: center;">
+                    <image class="user-image" src="{{item.profilePicUrl}}" mode="aspectFill"></image>
+                    <span>{{item.userName}}</span>
+                </view>  
+            </view>
+        </view>
+        <view slot="before"   class="swipe-cell-left" >
+            <van-icon color="green" data-goodid="{{item.goodId}}" name="{{item.choosed?'success':'circle'}}" bind:click="clickChoose" />
+        </view>
+        <view bind:tap="deleteCollectById" data-goodid="{{item.goodId}}" slot="after" class="swipe-cell-left" style="background: red;">取消收藏</view>
+    </ye-swipe-cell>
+    <view style="--bottom-container-height:{{bottomHeight}}rpx;" class="bottom-tip">已经到底了</view>
+</scroll-view>
+<view style="--bottom-container-height:{{bottomHeight}}rpx" class="bottom-container">
+    <view style="display: flex;" bind:tap="chooseAll">
+        <van-icon color="green" name="{{isChoosedAll?'success':'circle'}}" />
+        <view style="margin-left: 20rpx;">全选</view>
+    </view>
+    <view class="border-btn" bind:tap="deleteCollectByList" >取消收藏 {{selectNum}}</view>
+</view>

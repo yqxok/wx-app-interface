@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "miniprogram-simulate": "^1.6.1"
+  },
+  "dependencies": {
+    "@vant/weapp": "^1.11.6",
+    "validate.js": "^0.13.1"
+  }
+}

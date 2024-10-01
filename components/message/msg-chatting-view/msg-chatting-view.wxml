@@ -1,0 +1,19 @@
+<!--components/message/msg-chatting-view/msg-chatting-view.wxml-->
+<scroll-view scroll-y="true" class="msg-scroll-container" 	scroll-top="{{scrollTop}}">
+  <block wx:for="{{chattingRecords.messages}}" wx:key="index">
+    <view class="msg-his-container" wx:if="{{item.sender_id=='user1'}}">
+      <image class="msg-his-img" src="https://ts1.cn.mm.bing.net/th/id/R-C.12bba6f72ade2c12db61338c596cc623?rik=Wc%2ffvOwFtlKJDA&riu=http%3a%2f%2fimg.crcz.com%2fallimg%2f202002%2f12%2f1581507061495683.jpg&ehk=GRpynVWlojNkbDDlCVUKM%2feDD76Req3VVUdwqPktpsA%3d&risl=&pid=ImgRaw&r=0"></image>
+      <view class="msg-his-msg" >{{chattingRecords.messages[index].message}}</view>
+    </view>
+    <view class="msg-my-container" wx:else>
+      <view class="msg-his-msg">{{chattingRecords.messages[index].message}}</view>
+      <image class="msg-his-img" src="https://c-ssl.dtstatic.com/uploads/blog/202203/26/20220326100237_51273.thumb.400_0.jpg" />
+    </view>
+  </block>
+  <view style="height: {{height}}px;"></view>
+  
+</scroll-view>
+<view class="msg-input-container">
+    <textarea class="msg-input"  auto-height="false" placeholder="想和TA说点什么..."  bind:input="handleInput"></textarea>
+    <button class="msg-send-btn">发送</button>
+</view>

@@ -1,0 +1,31 @@
+/* pages/person/person.wxss */
+.user-navigator-bar{
+  height: 120rpx;
+}
+.user-icon-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 150rpx;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 30rpx;
+}
+.user-img{
+    vertical-align:middle;
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 60rpx;
+    margin: 0 10rpx;
+}
+.cell-group{
+    --cell-font-size:var(--big-font-size);
+    --cell-icon-size:var(--big-icon-size);
+    /* font-weight: 600; */
+}
+.van-cell__left-icon-wrap{
+    color:var(--theme-weight-color);
+}
+.setting{
+    font-weight: bold;
+}

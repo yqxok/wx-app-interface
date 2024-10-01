@@ -1,0 +1,27 @@
+/* pages/test/test.wxss */
+
+.van-radio-group{
+  justify-content:flex-end;
+}
+.account-cell{
+  margin-top:10px ;
+  margin-bottom: 10px;
+}
+.button-class{
+  width: 100%;
+  
+}
+.user-img-container{
+  display: flex;
+  background-color: white;
+  justify-content: center;
+  height:100rpx;
+  margin-top: 100rpx;
+}
+.user-img{
+  translate: 0 -50rpx;
+}
+.van-cell-group{
+  border-radius: 100rpx;
+  
+}

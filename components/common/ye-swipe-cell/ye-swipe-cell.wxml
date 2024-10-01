@@ -1,0 +1,14 @@
+<wxs module="swipe" src="./swipe.wxs"></wxs>
+<view class="swipe-cell-container" bind:touchstart="{{swipe.touchStart}}" bind:touchmove="{{swipe.touchMove}}" capture-bind:touchend="{{swipe.touchEnd}}" data-left="{{leftWidth/750*swiperCellW}}" data-right="{{rightWidth/750*swiperCellW}}" data-enableleft="{{enableLeft}}" data-enableright="{{enableRight}}" change:openLeft="{{swipe.openLeft}}" openLeft="{{openLeft}}" >
+    
+    
+    <slot ></slot>
+    <view style=" position: absolute;left:-{{leftWidth}}rpx;top:0;background-color: green;">
+        <slot name="before" ></slot>
+    </view>
+    <view style=" position: absolute;right:-{{rightWidth}}rpx;top:0">
+        <slot name="after" ></slot>     
+    </view>
+   
+    
+</view>

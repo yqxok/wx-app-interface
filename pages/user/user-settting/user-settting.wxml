@@ -1,0 +1,2 @@
+<van-nav-bar title="设置" left-arrow bind:click-left="navBack"/>
+<view bind:tap="logout" class="logout-btn">退出登录</view>

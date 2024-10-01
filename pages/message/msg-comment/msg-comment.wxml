@@ -1,0 +1,16 @@
+<van-nav-bar title="互动消息"  left-arrow  bind:click-left="navBack"/>
+<block wx:for="{{cmMsgVoPage.records}}" wx:key="cmMsgId">
+    <view class="msg-cm-container" bind:tap="navToGoodDetail" data-goodid="{{item.goodId}}">
+        <image class="user-img" src="{{item.profilePicUrl}}" mode="aspectFill"></image>
+        <view style="flex:1;display: flex;flex-direction: column;align-items: flex-start;justify-content: space-between;">
+            <view>
+                <span>{{item.userName}} </span>
+                <span style="color:var(--text-grey-color);">{{item.type==0?'回复了我的评论':'在您宝贝下留言了'}} </span>
+            </view>
+            <view >{{item.content}}</view>
+            <view style="color:var(--text-grey-color);font-size:var(--small-font-size)">{{item.createTime}}</view>
+        </view>
+        <image class="good-img" src="{{item.picUrl}}" mode="aspectFill"></image>
+    </view>
+    <view class="split-border" ></view>
+</block>

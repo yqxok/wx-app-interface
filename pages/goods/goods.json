@@ -1,0 +1,16 @@
+{
+  "usingComponents": {
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
+    "van-grid": "@vant/weapp/grid/index",
+    "van-grid-item": "@vant/weapp/grid-item/index",
+    "van-image": "@vant/weapp/image/index",
+    "goods-show":"../../components/common/goods-show/goods-show",
+    "ye-card":"../../components/common/ye-card/ye-card",
+    "ye-nav":"../../components/common/ye-nav/ye-nav",
+    "ye-search":"../../components/common/ye-search/ye-search",
+    "van-icon": "@vant/weapp/icon/index"
+  },
+  "disableScroll": true
+ 
+  
+}

@@ -1,0 +1,52 @@
+<!--pages/publish/publish.wxml-->
+<!-- <ye-nav custom-nav="pub-nav">
+    <van-icon name="arrow-left" size="40rpx" bind:click="navBack"/>  
+    <view style="margin: 0 5rpx;" >发闲置</view>
+</ye-nav> -->
+<van-nav-bar left-arrow left-text="发闲置" bind:click-left="navBack">
+</van-nav-bar>
+<scroll-view scroll-y="true" style="flex: 1;height: 1rpx;box-sizing: border-box;padding: 20rpx;">
+    <form bind:submit="submitForm">
+        <view class="pub-edit-container" data-nb="蔡徐坤" style="{{style}}">
+            <!--编辑框  -->
+            <textarea name="textarea"  placeholder="描述宝贝的品牌型号、功能成色、出手原因..." maxlength="1000" value="{{goodDto.html}}" class="pub-edit {{textUnfold?'unfold-pub-edit':''}}" bind:blur="textareaFocus" bind:focus="textareaFocus"></textarea>
+            
+            <!-- <scroll-view class="pub-edit" scroll-y="true">
+                <editor id="editor" bind:input="editorInputEvent" placeholder=" 描述宝贝的品牌型号、功能成色、出手原因...">
+                </editor>
+            </scroll-view> -->
+            <!-- 图片上传 -->
+            <van-uploader accept="image" multiple="true" preview-image="true" file-list="{{ fileList }}" bind:after-read="afterRead" bind:delete="imgDelete" deletable="true"/>
+            <!-- <view class="pub-edit-position">莞博22栋</view> -->
+            <van-divider></van-divider>
+            <!-- 下拉框 -->
+            <pub-sort bind:sortChangeEvent="sortChange" id="pub-sort" closed="{{categoryOpen}}" categoriesAll bind:openCategoryEvent="openCategoryEvent" getCategory="{{getCategory}}" ></pub-sort>
+        </view>
+        <!-- 填写价格 -->
+        <price-input show="{{priceShow}}" bind:closePriceEvent="closePrice" bind:getPriceEvent="getPrice"></price-input>
+        <view class="pub-edit-container pub-edit-container-price" >
+            <view class="pub-price-container" bind:tap="openPrice">
+                <view>价格</view>
+                <view style="display: flex;align-items: center;">
+                    <span style="color: red;">￥{{goodDto.price==null?'0.00':goodDto.price}}</span>
+                    <van-icon name="arrow" />         
+                </view>
+            </view>
+            <van-divider />
+            <view class="pub-price-container">
+                <view>数量</view>
+                <van-stepper value="{{goodDto.goodNum}}" bind:change="goodNumChange" />
+
+                <!-- <view style="display: flex;align-items: center;">
+                    <span style="color: red;">￥{{goodDto.price==null?'0.00':goodDto.price}}</span>
+                    <van-icon name="arrow" />         
+                </view> -->
+            </view>
+        </view>
+        <button form-type="submit"  class="pub-commit-btn">{{isUpdatePub?'重新发布':'发布'}}</button>
+    </form>
+</scroll-view>
+<ye-msg id="msgTip"></ye-msg>
+<van-loading wx:if="{{loadingShow}}" color="var(--theme-color)" text-size="var(--big-font-size)" custom-class="loading" size="var(--big-font-size)">发布中...</van-loading>
+
+

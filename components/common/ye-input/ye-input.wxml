@@ -1,0 +1,8 @@
+<!--components/common/my-input/my-input.wxml-->
+<form bind:submit="submit">
+    <view class="msg-input-container custom-class" style="margin-bottom: {{marginBottom}}px;" bind:submit="submit">
+        <textarea value="{{inputValue}}" name="textarea"  adjust-position="{{false}}"  show-confirm-bar="{{false}}" class="msg-input narrow-wide-padding"  auto-height="true" placeholder="{{placeholder}}" bind:focus="focus" bind:blur="blur" focus="{{isFocus}}"></textarea>
+        <button class="send-btn" form-type="submit" style="margin-left: 20rpx;">发送</button>
+    </view>
+</form>
+

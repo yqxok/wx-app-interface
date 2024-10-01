@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "user-header":"../../components/user/user-header/user-header",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "ye-nav":"../../components/common/ye-nav/ye-nav",
+    "van-icon": "@vant/weapp/icon/index"
+  }
+ 
+}

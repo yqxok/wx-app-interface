@@ -1,0 +1,2 @@
+<!--components/common/ye-line/ye-line.wxml-->
+<view class="custom-class" style="border-bottom: 1px solid rgb(202, 202, 202);"></view>

@@ -1,0 +1,11 @@
+/* components/goods/goods-nav/goods-nav.wxss */
+.nav-container{
+  height: 10vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 20rpx;
+  padding-top: 20rpx;
+ 
+}

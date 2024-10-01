@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index",
+    "van-dialog": "@vant/weapp/dialog/index",
+    "van-action-sheet": "@vant/weapp/action-sheet/index",
+    "van-uploader": "@vant/weapp/uploader/index"
+  },
+  "enablePullDownRefresh": false
+}

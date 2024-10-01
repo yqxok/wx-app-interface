@@ -1,0 +1,53 @@
+/* components/my-tabbar/my-tabbar.wxss */
+.tab-bar {
+    /* pointer-events: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0; */
+    --tab-height:100rpx;
+    --tab-icon-size:50rpx;
+    height: var(--tab-height);
+    
+    background: white;
+    display: flex;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tab-bar-border {
+    background-color: rgba(0, 0, 0, 0.33);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 1px;
+    transform: scaleY(0.5);
+}
+
+.tab-bar-item {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.msg-tip{
+    --tip-width:30rpx;
+    --padding-tip:3rpx;
+    position: absolute;
+    top: -5rpx;
+    right: -12rpx;
+    font-size: 24rpx;
+    line-height: var(--tip-width);
+    padding:var(--padding-tip);
+    min-width: var(--tip-width);
+    min-height: var(--tip-width);
+    text-align: center;
+    border-radius: calc((var(--tip-width) + var(--padding-tip))/2);
+    background-color: red;
+    color:white;
+}
+
+
+  

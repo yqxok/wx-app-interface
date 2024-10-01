@@ -1,3 +1,0 @@
-<!--pages/person/person.wxml-->
-<navigation-bar title="小程序" back="{{false}}" color="black" background="#FFF"></navigation-bar>
-<!-- <text>pages/person/person.wxml</text> -->

@@ -1,0 +1,50 @@
+<van-nav-bar title="我的地址" left-text="返回" left-arrow  bind:click-left="onClickLeft"/>
+<van-cell-group inset style="margin-top: 20rpx;" custom-class="address-cell-group">
+    <van-field  value="{{ addressDto.receiver }}"  label="联系人"
+        border="{{ true }}" placeholder="联系人" maxlength="5"
+        bind:change="receiverChange" input-align="right" required
+    />
+    <van-field  value="{{ addressDto.phoneNumber }}" label="联系电话"
+        border="{{ true }}" placeholder="联系电话" maxlength="11"
+        bind:change="phoneNumberChange" input-align="right" required
+    />
+    <van-field  label="宿舍楼" border="true" readonly value="{{addressDto.school&&addressDto.zone&&addressDto.dormiName?addressDto.school+' '+addressDto.zone+' '+addressDto.dormiName:''}}"
+        input-align="right"  required  bind:click-input="showTableEvent">   
+        <van-icon slot="button" name="arrow" bind:click="showTableEvent" />
+    </van-field>
+    <van-field value="{{addressDto.dormiNum}}" label="宿舍号" border="true" maxlength="7"
+        input-align="right" placeholder="宿舍号" required bind:change="dormiNumChange"
+    />
+</van-cell-group>
+<van-action-sheet custom-class="list-container"  bind:close="closeTableEvent" show="{{ show }}" title="请选择所在地区">
+    <template name="zone">
+        <view  class="list-item" bind:tap="chooseZone" data-index="{{index}}">
+            <view>
+                <van-icon name="{{item.choosed!=-1?'checked':'circle'}}" color="var(--theme-weight-color)"/>
+                <span style="margin:0 10rpx;"> {{item.district}}</span>
+            </view>
+            <view>
+                <span style="font-weight: bold;" wx:if="{{item.choosed!=-1}}">{{item.item[item.choosed]}}</span>
+                <van-icon  name="arrow" />
+            </view>
+        </view>
+    </template>
+    <view class="zone-container" style="--zone-heigt:calc(var(--one-height)*{{cur+1}});height: var(--zone-heigt);">
+        <template is="zone" data="{{item:zoneShow[0],index:0}}"  ></template>
+        <template is="zone" data="{{item:zoneShow[1],index:1}}" wx:if="{{zoneShow[0].choosed!=-1}}" ></template>
+        <template is="zone" data="{{item:zoneShow[2],index:2}}"  wx:if="{{zoneShow[1].choosed!=-1}}" ></template>
+    </view>
+    <van-divider />
+    <scroll-view scroll-y class="list-scroller" >
+        <view class="scroll-choose-list" wx:for="{{zoneShow[cur].item}}" wx:key="index" bind:tap="chooseItem" data-index="{{index}}">
+            <view>
+                <van-icon name="location" color="var(--theme-weight-color)"/>
+                <span style="margin:0 10rpx;">{{item}}</span>
+            </view>
+            <van-icon style="display: {{index==zoneShow[cur].choosed?'block':'none'}};" name="checked" color="var(--theme-weight-color)"/>
+        </view>
+    </scroll-view>
+</van-action-sheet>
+<ye-msg id="msgTip"></ye-msg>
+<button  class="pub-commit-btn" bind:tap="{{isUpdateAddress?'updateAddress':'saveAddress'}}">{{isUpdateAddress?'保存修改':'保存'}}</button>
+

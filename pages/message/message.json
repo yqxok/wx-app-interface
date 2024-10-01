@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
+    "msg-item":"../../components/message/msg/msg",
+    "ye-search":"../../components/common/ye-search/ye-search",
+    "ye-swiper-cell":"../../components/common/ye-swipe-cell/ye-swipe-cell",
+    "van-dialog": "@vant/weapp/dialog/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "ye-image":"../../components/common/ye-image/ye-image"
+  }
+}

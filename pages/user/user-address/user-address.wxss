@@ -1,0 +1,43 @@
+.pub-commit-btn{
+  margin:20rpx 20rpx;
+  background-color:  var(--theme-color);
+  width: 710rpx;
+  border-radius: 45rpx;
+}
+.van-cell{
+    --cell-font-size: var(--normal-font-size);
+    --cell-line-height:calc(var(--normal-font-size) + 10rpx)
+    --cell-vertical-padding:30rpx;
+}
+.list-container{
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+}
+.zone-container{
+    line-height: 1.2;
+    width: 100%;
+    --one-height:calc(var(--big-font-size)*1.2 + 40rpx);
+    transition: all 0.3s;
+    overflow: hidden;
+}
+.list-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 20rpx ;
+    margin-top: 40rpx;
+}
+
+.list-scroller{
+    flex:1;
+    height: 1px;
+   
+}
+.scroll-choose-list{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 20rpx;
+    margin-bottom: 40rpx;
+}

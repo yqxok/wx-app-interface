@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
+    "ye-msg":"../../../components/common/ye-msg/ye-msg"
+   
+  }
+}

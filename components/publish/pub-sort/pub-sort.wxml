@@ -1,0 +1,24 @@
+<!--components/publish/pub-sort/pub-sort.wxml-->
+
+<view>
+    <view class="sort-title" bind:tap="openCategory">
+      <view> 标签</view>
+      <van-icon  name="{{!closed?'arrow-down':'arrow-up'}}"></van-icon>
+      <!-- <view catch:tap="openCategory">打开</view> -->
+    </view>
+    <!-- 分类选择 -->
+    <view bind:tap="sortTap" class="sort-container" style="--sort-height:calc(var(--sort-bar-height)*{{categories.all.length}}); height: {{closed?'var(--sort-height)':'0'}};">
+        <view wx:for="{{categories.all}}" wx:for-index="i" wx:key="index" class="item-container">
+            <view  wx:if="{{categories.all[i].length!=0}}">标签{{i+1}}</view>
+            <!-- 横向滚动 -->
+            <scroll-view scroll-x="true" enable-flex="true" class="sort-scroll-container">
+                <view wx:for="{{categories.all[i]}}" wx:for-index="j" wx:key="index" style="display: inline-block;">
+                    <view class="sort-item "  data-item="{{[i,j]}}"
+                    style="background-color:{{categories.chosenSort[i]==j?'rgb(134, 223, 1)':'rgb(238, 238, 238)'}}">
+                    {{item}}
+                    </view>
+                </view>
+            </scroll-view>
+        </view>
+    </view>
+  </view>

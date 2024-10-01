@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "ye-line":"../../common/ye-line/ye-line"
+  }
+}

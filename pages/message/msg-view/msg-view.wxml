@@ -1,0 +1,21 @@
+
+<van-nav-bar title="{{theOtherUser.userName}}"  left-arrow  bind:click-left="navBack"/>
+<scroll-view  scroll-y="true" class="msg-scroll-container" 	scroll-top="{{scrollTop}}">
+    <view style="height: 20rpx;width:100%;background-color: transparent;"></view>
+    <block wx:for="{{chattingRecords}}" wx:key="index">
+        <view  class="msg-his-container" wx:if="{{item.sendUserId==theOtherUser.userId}}">
+            <image catch:tap="navToUserHome" data-userid="{{item.sendUserId}}" class="msg-his-img" mode="aspectFill" src="{{theOtherUser.profilePicUrl}}"></image>
+            <view class="msg-his-msg" style="background-color: rgb(226, 226, 226);">{{item.content}}</view>
+        </view>
+        <view  class="msg-my-container" wx:else>
+            <view  class="msg-his-msg">{{item.content}}</view>
+            <image catch:tap="navToUserHome" data-userid="{{item.sendUserId}}" class="msg-his-img" mode="aspectFill" src="{{user.profilePicUrl}}" />
+        </view>
+    </block>
+    <view style="height: 1px;"></view>
+</scroll-view>
+<view style="margin-bottom: {{keyboardH==0?'env(safe-area-inset-bottom)':keyboardH+'px'}};">
+    <ye-input  inputValue="{{msgContent}}" bind:inputValueEvent="msgSend" bind:keyboardOpen="keyboardOpen" bind:keyboardClose="keyboardClose"></ye-input>
+</view>
+
+

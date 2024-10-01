@@ -1,0 +1,7 @@
+<van-nav-bar title="设置昵称"  left-arrow bind:click-left="navBack"/>
+<view class="edit-container" >
+    <input type="text" class="input" wx:if="{{isNameEdit}}"  />
+    <textarea class="textarea" wx:else></textarea>
+    <view style="border-bottom: 5rpx solid black;margin:20rpx 0;"></view>
+    <view class="theme-btn save-btn">保存</view>
+</view>

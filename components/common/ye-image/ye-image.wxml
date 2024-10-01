@@ -1,0 +1,2 @@
+<!--components/common/ye-image/ye-image.wxml-->
+<image class="image-class" bind:tap="tapImg" src="{{imgUrl}}" bind:error="imageError" mode="aspectFill"></image>

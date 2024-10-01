@@ -1,0 +1,10 @@
+{
+    "component": true,
+    "styleIsolation": "apply-shared",
+    "usingComponents": {
+        "van-icon": "@vant/weapp/icon/index",
+ 
+        "ye-input":"../ye-input/ye-input",
+        "van-action-sheet": "@vant/weapp/action-sheet/index"
+    }
+}

@@ -1,0 +1,35 @@
+<view class="page-view">
+    <ye-nav></ye-nav>
+    <!-- <user-header bind:userTapLogin="userLogin" bind:settingClickEvent="settingClick" user="{{user}}"></user-header> -->
+    <view class="user-icon-container">
+    <view bind:tap="userLogin">
+        <image src="{{user.profilePicUrl!=null?user.profilePicUrl:img}}" mode="aspectFill" class="user-img" ></image>
+        <span style="font-size: var(--large-font-size);font-weight: bold;">
+            <span wx:if="{{user!=null}}">
+                {{user.userName}}
+            </span>
+            <span wx:else="" >
+                <span>未登录</span>
+                <van-icon name="arrow"></van-icon>
+            </span>
+        </span>
+    </view>
+    <van-icon name="setting-o" bind:click="navToUserSetting" custom-class="setting" size="47rpx"/>
+    </view>
+    <van-cell-group title="我的交易" custom-class="cell-group" >
+        <van-cell title="我发布的" is-link icon="shop-o" bind:click="navToMyPub" />
+        <van-cell title="我卖出的" is-link icon="passed" bind:click="navToMySell" />
+        <van-cell title="我买到的" is-link icon="completed-o" bind:click="navToMyBuy"/>
+    </van-cell-group>
+    <van-cell-group title="常用工具" custom-class="cell-group">
+        <van-cell title="我的收藏" is-link icon="star-o" bind:tap="navToMyCollect"/>
+        <van-cell title="我的地址" is-link icon="location-o" bind:click="navToAddress" />
+        <van-cell title="联系客服" is-link icon="service-o" />
+    </van-cell-group>
+</view>
+
+
+
+
+
+

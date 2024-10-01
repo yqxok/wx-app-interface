@@ -1,0 +1,6 @@
+<!--components/ye-card/ye-card.wxml-->
+<view class="good-card-container custom-class">
+    <view class="custom-card-class good-card ">
+      <slot></slot>
+    </view>
+</view>

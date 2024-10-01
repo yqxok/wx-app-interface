@@ -1,0 +1,45 @@
+/* pages/message/msg-view/msg-view.wxss */
+page{
+    background-color: white;
+}
+.msg-scroll-container{
+    flex: 1;
+    height: 1rpx;
+    background: rgb(245, 245, 245);
+    box-sizing: border-box;
+    padding:0 20rpx;
+   --line-height:calc(var(--big-font-size)*1.2);
+   --user-img-width:calc(var(--line-height) + 40rpx);
+}
+.msg-his-container{
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30rpx;
+}
+.msg-my-container{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    margin-bottom: 30rpx;
+
+}
+.msg-his-img{
+    width: var(--user-img-width);
+    height: var(--user-img-width);
+    border-radius:calc(var(--user-img-width)/2) ;
+}
+
+.msg-his-msg{
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 20rpx;
+    margin: 0 20rpx;
+    border-radius: 20rpx;
+    background-color: var(--theme-color);
+    font-size: var(--big-font-size);
+    line-height:var(--line-height);
+    max-width: calc(670rpx - var(--user-img-width)*2);
+    overflow-wrap:break-word;
+}
+
+/*  */

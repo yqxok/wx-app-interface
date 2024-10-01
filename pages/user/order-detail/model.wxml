@@ -1,0 +1,6 @@
+<template name="model">
+    <view style="display: flex;justify-content: space-between;align-items: center;margin-bottom: 30rpx;">
+        <span>{{label}}</span>
+        <span style="color: {{label=='商品总价'?'red':'rgb(182, 182, 182)'}};">{{item}}</span>
+    </view>
+</template>

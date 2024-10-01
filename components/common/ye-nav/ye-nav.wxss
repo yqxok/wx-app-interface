@@ -1,0 +1,4 @@
+/* components/common/ye-nav/ye-nav.wxss */
+.content{
+    width: calc(750rpx - 95px);
+}

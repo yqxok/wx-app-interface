@@ -1,0 +1,9 @@
+<!--components/common/ye-nav/ye-nav.wxml-->
+<view class="custom-class" style="background-color: {{backgroundColor}}">
+    <view class="custom-status" style="height: {{nav.statusH}}px;"></view>
+    <view style="height: {{nav.height}}px;width: 100%;">
+        <view class="content custom-nav" style="height:{{nav.navH}}px;width: {{nav.menuInfo.left}}px">
+            <slot></slot>
+        </view>
+    </view>
+</view>

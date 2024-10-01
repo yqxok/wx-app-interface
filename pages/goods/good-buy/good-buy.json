@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
+    "van-stepper": "@vant/weapp/stepper/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-dialog": "@vant/weapp/dialog/index"
+  },
+  "enablePullDownRefresh": false
+}

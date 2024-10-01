@@ -1,0 +1,8 @@
+{
+    "styleIsolation": "apply-shared",
+    "component": true,
+    "usingComponents": {
+        "van-image": "@vant/weapp/image/index"
+    
+    }
+}

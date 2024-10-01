@@ -1,0 +1,67 @@
+/* components/goods/goods-show/goods-show.wxss */
+.goods-show-container{
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 20rpx;
+}
+.goods-item-1{
+    /* display: inline-block; */
+    font-size: var(--big-font-size);
+    line-height:1.3;
+    
+    width: 345rpx;
+    height: 100%;
+    vertical-align: top;
+    --good-user-img:50rpx;
+}
+.good-user-container{
+    display: flex;
+    align-items: center;
+    font-size: var(--normal-font-size);
+    color:var(--text-grey-color);
+}
+.good-user-img{
+    width: var(--good-user-img);
+    height: var(--good-user-img);
+    border-radius: calc(var(--good-user-img)/2);
+    margin-right: 20rpx;
+}
+.goods-card{
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border-radius: 20rpx;
+    margin-bottom: 20rpx;
+    overflow: hidden;
+    background-color: white;
+    position: relative;
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, .2) */
+}
+
+.good-title{
+    height:calc(var(--big-font-size)*1.3) ;
+    width: 100%; 
+    overflow: hidden;
+    overflow-wrap:break-word;
+}
+.msg-bottom{
+    box-sizing: border-box;
+    padding-bottom: 20rpx;
+    text-align:center; color: rgb(202, 202, 202);
+}
+.good-overlay::after{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '已卖出';
+    font-size: var(--large-font-size);
+    font-weight: bold;
+    color: red;
+}

@@ -1,0 +1,78 @@
+<!--pages/message/message.wxml-->
+<view class="page-view" style="background-color: white;">
+    <van-nav-bar title="消息" title-class="title"/>
+    <scroll-view wx:if="{{isLogin}}" scroll-y="true"  class="msg-scroll-container" >
+        <!-- <ye-search placeholder="搜索联系人"></ye-search> -->
+        <!-- <view class="all-msg-container">
+            <view class="all-msg-item">
+                <van-icon name="bill" color="var(--theme-color)" size="var(--bigger-icon-size)" />
+                <view>订单消息</view>
+            </view>
+            <view class="all-msg-item">
+                <van-icon name="comment" color="var(--theme-color)" size="var(--bigger-icon-size)" />
+                <veiw>回复我的</veiw>
+            </view>
+            <view class="all-msg-item">
+                <van-icon name="good-job" color="var(--theme-color)" size="var(--bigger-icon-size)" />
+                <veiw>点赞我的</veiw>
+            </view>
+        </view> -->
+        
+        <view class="msg-container" bind:tap="navToMsgCenter" style="border-radius: 20rpx; background-color: var(--background-color);">
+            <view style="position: relative;">
+                <view class="msg-center-icon" style="background: pink;">
+                    <van-icon name="bill" color="white" size="var(--bigger-icon-size)" />   
+                </view>
+                <view class="msg-tip" wx:if="{{noReadOrderVo.noReadNum!=0}}" >{{noReadOrderVo.noReadNum}}</view>
+            </view>
+            <view class="msg">
+                <view style="font-size: var(--big-font-size);color: black; font-weight: bold;">消息中心</view>
+                <span class="msg-content">{{noReadOrderVo.content}}</span>
+                <view style="font-size: var(--smaller-font-size)">{{noReadOrderVo.createTime==null?'':noReadOrderVo.createTime}}</view>
+            </view>
+        </view>
+        <view class="split-border" ></view>
+        <view class="msg-container" bind:tap="navToCommentMsg" style="border-radius: 20rpx; background-color: var(--background-color);">
+            <view style="position: relative;">
+                <view class="msg-center-icon">
+                    <van-icon name="comment" color="white" size="var(--bigger-icon-size)" />   
+                </view>
+                <view class="msg-tip" wx:if="{{commentMsgVo.noReadCount!=0}}" >{{commentMsgVo.noReadCount}}</view>
+            </view>
+            <view class="msg">
+                <view style="font-size: var(--big-font-size);color: black; font-weight: bold;">互动消息</view>
+                <span class="msg-content">{{commentMsgVo.userName==null?'暂无互动消息':commentMsgVo.type==0?commentMsgVo.userName+' 回复了你的评论':commentMsgVo.userName+' 在您宝贝下留言了'}}</span>
+                <view style="font-size: var(--smaller-font-size)">{{commentMsgVo.createTime==null?'':commentMsgVo.createTime}}</view>
+            </view>
+        </view>
+        <view class="split-border" ></view>
+        <block wx:for="{{chatContentList}}" wx:key="goodId">
+            <ye-swiper-cell rightWidth="{{150}}">
+                <view class="msg-container" data-theotherid="{{item.theOtherId}}" bind:tap="navToMsgView" data-goodid="{{item.goodId}}">
+                    <view style="position: relative;">
+                        <image src="{{item.theOtherProfileImg}}" mode="aspectFill" class="msg-user-img" />
+                        <view class="msg-tip" wx:if="{{item.noReadCount!=0}}" >{{item.noReadCount}}</view>
+                    </view>
+                    <view class="msg">
+                        <view style="font-size: var(--big-font-size);color: black; font-weight: bold;">{{item.theOtherName}}</view>
+                        <span class="msg-content">{{item.content}}</span>
+                        <view style="font-size: var(--smaller-font-size)">{{item.createTime}}</view>
+                    </view>
+                    <!-- <van-image custom-class="msg-good-img"  src="{{item.picUrls[0].url}}" /> -->
+                    <ye-image src="{{item.picUrls[0].url}}" data-goodid="{{item.goodId}}" bind:click="navToGoodDetail" image-class="msg-good-img"></ye-image>
+                    <!-- <image data-goodid="{{item.goodId}}" catch:tap="navToGoodDetail" src="{{item.picUrls[0].url}}"  mode="aspectFill" class="msg-good-img"/> -->
+                </view>
+                <view bind:tap="showDeleteTable" data-goodid="{{item.goodId}}"  slot="after" class="swipe-cell-right">删除</view>
+            </ye-swiper-cell>
+            
+            <view class="split-border" ></view>
+        </block>
+        <!-- <view class="msg-bottom">哎呀,到底啦~</view> -->
+    </scroll-view>
+    <view wx:else style="margin-top: 70%;display: flex;flex-direction: column;align-items: center;">
+        <view style="margin-bottom: 10rpx;">暂无法查看消息</view>
+        <view style="margin-bottom: 20rpx; color:var(--text-grey-color)">您还没有登录，请登陆后查看消息</view>
+        <view class="theme-btn" bind:tap="navToLogin">登录</view>
+    </view>
+</view>
+<van-dialog id="van-dialog" bind:cancel="cancelDelete" bind:confirm="confirmDelete"  message="确认删除该聊天吗" showCancelButton showConfirmButton show="{{deleteTableShow}}"/>

@@ -1,0 +1,16 @@
+.user-icon-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 150rpx;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 30rpx;
+}
+.user-img{
+  vertical-align:middle;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50rpx;
+  margin: 0 10rpx;
+}

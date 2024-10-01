@@ -1,0 +1,62 @@
+/* pages/user/user-sell/user-sell-detail/user-sell-detail.wxss */
+page{
+    --good-width:160rpx;
+}
+.order-status{
+    background-color: white;
+    box-sizing: border-box;
+    padding: 30rpx 20rpx;
+    border-radius: 30rpx;
+    font-size: var(--bigger-font-size);
+    font-weight: bold;
+    margin-bottom: 20rpx;
+    /* color: var(--theme-weight-color); */
+}
+.detail-card{
+    background-color: white;
+    box-sizing: border-box;
+    padding: 20rpx;
+    border-radius: 30rpx;
+}
+.sell-top-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 30rpx;
+
+}
+.good-image{
+    width: var(--good-width);
+    height: var(--good-width);
+    border-radius: 20rpx;
+}
+.text-container{
+    height: var(--good-width);
+    width: calc(640rpx - var(--good-width));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;align-items: flex-end;
+}
+.text {
+    width: 100%;
+    white-space: nowrap; /* 文本不换行 */
+    overflow: hidden; /* 超出部分隐藏 */
+    text-overflow: ellipsis;
+   
+}
+.bottom-menu{
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding:20rpx 20rpx 40rpx;
+    background-color: white;
+}
+.bottom-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 20rpx 40rpx;
+    border-radius: 50rpx;
+    background-color: var(--grey-btn-color);
+}

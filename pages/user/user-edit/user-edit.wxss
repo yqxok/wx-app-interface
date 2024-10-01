@@ -1,0 +1,47 @@
+page{
+    --item-height:calc(var(--big-font-size) + 60rpx);
+    
+}
+.card-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--big-font-size);
+    height: var(--item-height);
+    border-bottom: 1rpx solid rgb(243, 243, 243);
+}
+.user-img{
+    --img:calc(var(--item-height) - 20rpx);
+    width: var(--img);
+    height: var(--img);
+    border-radius: calc(var(--img)/2);
+}
+.gender-show-container{
+    box-sizing: border-box;
+    padding: 30rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: var(--big-font-size);
+    color: var(--text-grey-color);
+}
+.btn-container{
+    background-color: var(--theme-color);
+    box-sizing: border-box;
+    padding: 20rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.gender-already-select{
+    color:black;
+    font-weight: bold;
+}
+.edit-overlay::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}

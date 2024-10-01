@@ -1,0 +1,82 @@
+var method={
+    leftMove: function(distance,swipe){
+        var dataset=swipe.getDataset()
+        var state=swipe.getState()
+        if(state.translateX+distance<-dataset.right){
+            this.move(-dataset.right-state.translateX,swipe)
+            return
+        }
+        this.move(distance,swipe)
+    },
+    rightMove:function(distance,swipe){
+        var dataset=swipe.getDataset()
+        var state=swipe.getState()
+        if(state.translateX<0&&state.translateX+distance>0){
+            this.move(-state.translateX,swipe)
+            return
+        }
+        this.move(distance,swipe)
+    },
+    move:function(distance,swipe){
+        var state=swipe.getState()
+        state.translateX+=distance
+        var str='translateX('+state.translateX+'px)'
+        swipe.setStyle({'transform':str})
+    },
+    leftMoveEnd:function(swipe){
+        var state=swipe.getState()
+    },
+    rightMoveEnd:function(swipe){
+        
+    }
+}
+module.exports={
+    touchMove:function(event,instance){
+        var swipe= instance.selectComponent('.swipe-cell-container')
+        var dataset= swipe.getDataset()
+        var pageX1=event.touches[0].pageX
+        var state=swipe.getState()
+      
+        var distance= pageX1-state.pageX
+      
+        if(distance>0){
+           
+            if(state.translateX>=0) return
+            method.rightMove(distance,swipe)
+        }
+        else{
+            if(!dataset.enableleft||state.translateX>0) return
+            method.leftMove(distance,swipe)
+        }
+         state.pageX=pageX1
+    },
+    touchStart:function(event,instance){
+        var swipe= instance.selectComponent('.swipe-cell-container')
+        var state= swipe.getState()
+        state.pageX=event.touches[0].pageX
+        
+  
+    },
+    touchEnd:function(event,instance){
+     
+    },
+    openLeft:function(newValue, oldValue, ownerInstance, instance){
+        var swipe= ownerInstance.selectComponent('.swipe-cell-container')
+        var dataset= swipe.getDataset()
+        var state= swipe.getState()
+        var str=''
+        if(newValue){
+            str='translateX('+dataset.left+'px)'
+            state.translateX=dataset.left
+
+        }
+        else{
+            str='translateX('+0+'px)'
+            state.translateX=0
+        }
+        swipe.setStyle({ 
+            'transition':'all 0.4s',
+            'transform':str
+        })
+    }
+}

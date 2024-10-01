@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
+    "msg-chatting-view":"../../../components/message/msg-chatting-view/msg-chatting-view",
+    "ye-input":"../../../components/common/ye-input/ye-input"
+  },
+  "disableScroll": true,
+  "enablePullDownRefresh": false
+}

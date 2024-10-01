@@ -1,0 +1,23 @@
+<!--pages/user/user-pub/user-pub.wxml-->
+<van-nav-bar title="我发布的" left-arrow bind:click-left="navBack"/>
+<ye-search style="margin: 0 20rpx;margin-top: 20rpx;"></ye-search>
+<scroll-view scroll-y="true" class="my-pub-scroll" >
+    <view class="pub-container" wx:for="{{goodVos}}" wx:key="index">
+        <view class="pub-top-container" bind:tap="navToGoodDetail" data-goodid="{{item.goodId}}">
+            <image class="good-image" src="{{item.picUrls[0].url}}" mode="aspectFill"></image>
+            <view class="text-container">
+                <view class="text">{{item.html}}</view>
+                <view style="color: red;">￥{{item.price}}</view>   
+            </view>
+            <van-icon name="share-o" />
+        </view>
+        <view class="pub-bottom-container">
+            <view data-item="{{item}}" bind:tap="showDeleteTable" style="color: var(--text-grey-color);font-size: var(--normal-font-size);">删除</view>
+            <view class="border-btn short-wide-padding" data-item="{{item}}" catch:tap="navToPubEdit">编辑</view>
+        </view>
+    </view>
+    <view style="width: 10rpx;height: 10rpx;"></view>
+</scroll-view>
+<van-dialog id="van-dialog" bind:cancel="cancelDelete" bind:confirm="confirmDelete"  message="确认删除该商品吗" showCancelButton showConfirmButton show="{{deleteTableShow}}"/>
+
+

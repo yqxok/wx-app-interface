@@ -1,0 +1,26 @@
+<template name="card">
+    <view class="skeleton-card">
+        <view style="height:250rpx" class="skeleton-image"></view>
+        <view class="skeleton-text"></view>
+        <view class="skeleton-price"></view>
+        <view style="display: flex;">
+            <view class="skeleton-profile-img"></view>
+            <view class="skeleton-name"></view>
+        </view>
+    </view>
+</template>
+<template name="skeleton">
+    <view class="skeleton-container">
+        <view class="skeleton-item1">
+            <template is="card" data="{{cardHeight:250}}"></template>
+            <template is="card" data="{{cardHeight:250}}"></template>
+            <template is="card" data="{{cardHeight:250}}"></template>
+        </view>
+        <view class="skeleton-item1">
+            <template is="card" data="{{cardHeight:200}}"></template>
+            <template is="card" data="{{cardHeight:250}}"></template>
+            <template is="card" data="{{cardHeight:250}}"></template>
+        </view>
+    </view>
+    
+</template>

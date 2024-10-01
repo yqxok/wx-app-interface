@@ -1,0 +1,16 @@
+<!--components/user/user-header/user-header.wxml-->
+<view class="user-icon-container">
+  <view bind:tap="userLogin">
+    <image src="{{user.profilePicUrl!=null?user.profilePicUrl:img}}" class="user-img" ></image>
+    <span>
+        <span wx:if="{{user!=null}}">
+            {{user.userName}}
+        </span>
+        <span wx:else="">
+            未登录 
+            <van-icon name="arrow"></van-icon>
+        </span>
+    </span>
+  </view>
+  <van-button type="default" bind:click="btnClick">设置</van-button>
+</view>

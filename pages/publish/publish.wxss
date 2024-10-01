@@ -1,0 +1,84 @@
+/* pages/publish/publish.wxss */
+page{
+    padding-bottom: env(safe-area-inset-bottom);
+    /* align-items: center; */
+}
+.pub-nav{
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  /* padding: 1vh 20rpx; */
+  padding:0 20rpx;
+  font-weight: bold;
+}
+.pub-edit-container{
+    margin-bottom: 20rpx;
+    width: 710rpx;
+    background-color: white;
+    box-sizing: border-box; 
+    border-radius: 30rpx;
+    padding: 20rpx;
+  /* box-shadow:  0 0 5px rgba(0, 0, 0, .2); */
+}
+/* 编辑框 */
+.pub-edit{
+    width: 100%;
+    --this-font-size:var(--normal-font-size);
+    font-size: var(--this-font-size);
+    line-height: 1.4;
+    height: calc(var(--this-font-size)*1.4*10);
+    max-height:calc(var(--this-font-size)*1.4*30);
+    box-sizing: border-box;
+    padding: 10rpx;
+    border: rgb(236, 236, 236) 5rpx solid;
+    border-radius: 20rpx;
+    margin-bottom: 20rpx;
+    transition: all 0.5s;
+}
+.unfold-pub-edit{
+    height:calc(var(--this-font-size)*1.4*30) !important;
+}
+.pub-edit-position{
+    background-color: rgb(235, 235, 235);
+    width: 180rpx;
+    box-sizing: border-box;
+    padding: 5rpx;
+    text-align: center;
+    border-radius: 10rpx;
+    color: rgb(71, 71, 71);
+}
+
+.pub-edit-container-price{
+    background-color:white;
+}
+.pub-price-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20rpx 0;
+    width: 100%;
+    font-weight: bold;
+}
+/* 价格输入 */
+.pub-input{
+  display: inline-block;
+  width: 150rpx;
+  text-align: right;
+  color: red;
+}
+.pub-commit-btn{
+    margin-top:20rpx;
+    background-color:  var(--theme-color);
+    width: 710rpx;
+    border-radius: 45rpx;
+    font-size: var(--bigger-font-size);
+    font-weight: bold;
+    /* padding: 20rpx 0; */
+}
+.loading{
+    position: absolute;
+    --loading-width:200rpx;
+    width: var(--loading-width);
+    top: 45vh;
+    left: calc(375rpx - var(--loading-width)/2);
+}

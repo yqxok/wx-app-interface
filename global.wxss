@@ -1,0 +1,83 @@
+::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+    color: transparent;
+}
+/* button{font-size: 28rpx;white-space: nowrap;overflow: unset;line-height: 2;color: #333;margin: 0;} */
+button::after{content: "";border: none;border-radius: 0;width: 0;height: 0;}
+.page-view{
+    height: calc(100% - var(--tab-height) - env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+/* 统一的卡片样式 */
+.my-card-container{
+    background-color: white;
+    box-sizing: border-box;
+    padding: 20rpx;
+    border-radius: 30rpx;
+}
+.border-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--normal-font-size);
+    margin: 0;
+    border-radius: 40rpx;
+    border: 1px solid var(--theme-color);
+    background-color: white;
+    box-sizing: border-box;
+    padding: var(--narrow-padding) var(--wide-padding);
+}
+.theme-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--normal-font-size);
+    margin: 0;
+    border-radius: 40rpx;
+    background-color: var(--theme-color);
+    box-sizing: border-box;
+    padding: var(--narrow-padding) var(--wide-padding)
+}
+/*van-nav样式  */
+.van-nav-bar__left{
+    --nav-bar-arrow-size: var(--big-icon-size);
+    --nav-bar-icon-color:black;
+    font-weight: bold;
+}
+.van-nav-bar__title{
+    --nav-bar-title-font-size:var(--bigger-font-size);
+    --font-weight-bold:bold;
+}
+.van-nav-bar__text{
+    --nav-bar-text-color:black;
+    font-size: var(--big-font-size);
+    font-weight: bold;
+}
+.theme-border{
+    border:1rpx solid var(--theme-color) !important;
+}
+.short-middle-padding{
+    padding: var(--short-padding) var(--middle-padding) !important;
+}
+.short-wide-padding{
+    padding: var(--short-padding) var(--wide-padding) !important;
+}
+.narrow-wide-padding{
+    padding: var(--narrow-padding) var(--wide-padding) !important;
+}
+.big-font-size{
+    font-size: var(--big-font-size) !important;
+}
+.bigger-font-size{
+    font-size: var(--bigger-font-size) !important;
+}
+.big-icon-size{
+    font-size: var(--big-icon-size) !important;
+}
+.bigger-icon-size{
+    font-size: var(--bigger-icon-size);
+}

@@ -1,0 +1,40 @@
+<ye-nav custom-nav="nav"  custom-class="nav-custom-class" backgroundColor="{{opacityDegree==1?'white':''}}">
+    <van-icon name="arrow-left" bind:click="navBack"/>
+    <view style="margin-left: 20rpx; display: flex;align-items: center;opacity: {{opacityDegree}};">
+        <image src="{{user.profilePicUrl}}" mode="aspectFill" class="good-detail-nav-img"/>
+        <view>{{user.userName}}</view>
+    </view>
+</ye-nav>
+<scroll-view bind:scroll="scrolling" style="height: 1rpx;flex:1;" scroll-y="true">
+    <view style="--backgroun-height:{{backgroundH}}rpx;">
+        <image class="background" src="{{background}}" mode="aspectFill"/>
+        <view class="img-container">
+            <image class="img" src="{{user.profilePicUrl}}" mode="aspectFill"></image>
+            <span class="user-name">{{user.userName}}</span>
+        </view>
+    </view>
+    <view class="container">
+        <span>{{user.bio?user.bio:'这个人很懒，没有写个人简介...'}}</span>
+        <span style="font-weight: bold;" bind:tap="navToUserNotEdit" >更多</span>
+    </view>
+    <view class="container">
+        <view>
+            <span style="margin-right:20rpx">1关注</span>
+            <span>0粉丝</span>
+        </view>
+        <button class="edit-button" wx:if="{{mySelf.userId==user.userId}}" bind:tap="navToUserEdit">编辑资料</button>
+    </view>
+    <van-divider />
+    <view class="container" style="padding: 0 20rpx; justify-content: flex-start;">
+        <span class="page-tag" style="margin-right: 20rpx;background-color:{{current==0?'var(--theme-color)':'var(--grey-color)'}} ;">宝贝</span>
+        <span class="page-tag" style="background-color:{{current==1?'var(--theme-color)':'var(--grey-color)'}} ;" >已卖出</span>
+    </view>
+    <swiper class="swiper" style="height: {{goodShowHeight}}px;"	bind:change="pageChangeEvent">
+        <swiper-item >
+            <goods-show needGoodUser="{{false}}" bind:goodTapEvent="navToGoodDetail" bind:goodShowHeightEvent="goodsShowChange" goodList="{{noSellGoods}}" ></goods-show>
+        </swiper-item>
+        <swiper-item>
+            <goods-show needGoodUser="{{false}}" overlay="{{true}}" bind:goodShowHeightEvent="goodShowHeightEvent" bind:goodTapEvent="navToGoodDetail" goodList="{{selledGoods}}" ></goods-show>
+        </swiper-item>
+    </swiper>
+</scroll-view>

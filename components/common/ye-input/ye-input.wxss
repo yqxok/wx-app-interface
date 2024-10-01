@@ -1,0 +1,35 @@
+.msg-input-container{
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 20rpx;
+
+}
+
+.msg-input{
+    flex: 1;
+    font-size: var(--big-font-size);
+    height: 1em;
+    max-height: 5em;
+    overflow: auto;
+    
+    background-color: rgb(245, 245, 245);
+    border-radius: 40rpx;
+}
+.send-btn{
+
+    font-size: var(--big-font-size);
+    line-height: 1;
+    --width:calc(2*var(--big-font-size) + 2*var(--wide-padding));
+    width: var(--width);
+    height: calc(var(--big-font-size) + 2*var(--middle-padding));
+    border-radius:calc(var(--width)/2) ;
+    background-color: var(--theme-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* justify-content: center; */
+}

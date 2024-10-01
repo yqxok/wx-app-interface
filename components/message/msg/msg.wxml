@@ -1,0 +1,11 @@
+<!--components/message/msg/msg.wxml-->
+<view class="msg-container">
+    <image src="https://tupian.qqw21.com/article/UploadPic/2020-6/20206416212275003.jpg" class="msg-user-img"/>
+    <view class="msg">
+      <view style="font-size: 40rpx;">{{name}}</view>
+      <view style="color: rgb(151, 151, 151);margin: 10rpx 0;">{{msg}}</view>
+      <view style="color: rgb(151, 151, 151);font-size: 25rpx;">{{date}}</view>
+    </view>
+    <image src="https://cbu01.alicdn.com/img/ibank/2019/005/971/11156179500_1675166310.jpg" class="msg-good-img"/>
+</view> 
+<ye-line></ye-line>

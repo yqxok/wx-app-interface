@@ -1,0 +1,5 @@
+<view class="search-container custom-class" style="background-color: {{backgroundColor}};">
+    <view class="iconfont icon-sousuo" style="font-size:var(--bigger-icon-size)"></view>
+    <input wx:if="{{enableInput}}" class="search" type="text" placeholder="{{placeholder}}" />
+    <view bind:tap="startSearch" wx:else class="search"></view>
+</view>

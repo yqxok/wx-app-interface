@@ -1,0 +1,20 @@
+/* pages/publish/pub-home/pub-home.wxss */
+.pub-home-container{
+    --pub-home-width:650rpx;
+    --pub-home-height:180rpx;
+    width: var(--pub-home-width);
+    height: var(--pub-home-height);
+    padding: 30rpx;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--theme-color);
+    position: absolute;
+    bottom: 20vh;
+    left: calc((750rpx - var(--pub-home-width))/2);
+    font-size: 50rpx;
+    font-weight: bold;
+    border-radius: 40rpx;
+    
+}

@@ -1,0 +1,66 @@
+<!-- 评论模块 -->
+<view style="background-color: white;box-sizing: border-box;padding: 20rpx;margin-top: 20rpx;">
+    <view style="font-weight: bold;">所有留言 62</view>
+    <view class="fake-comment-container" >
+        <image src="https://th.bing.com/th?id=OIP.6JHi5qrxUuWIkg7bIW9IlwAAAA&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.7&pid=3.1&rm=2" class="good-detail-nav-img"/>
+        <view data-arr="{{[-1,-1]}}" class="fake-comment-input" bind:tap="startComment" >看对眼就留言，问问更多的细节</view>
+    </view>
+    <view wx:for="{{newComments}}" wx:key="commentId">
+        <view class="comment-item" data-arr="{{[index,-1]}}" bind:tap="startComment" data-comment="{{item}}" data-fatherid="{{item.commentId}}">
+            <view class="comment-item-box" >
+                <image catch:tap="showDialog" class="comment-img" src="{{item.profilePicUrl}}" mode="aspectFill"/>
+                <view class="comment-name-content">
+                    <view style="color: rgb(190, 190, 190);margin-bottom: 10rpx;">
+                        <span>{{item.userName}}</span>
+                        <span style="font-size: var(--small-font-size);">{{' · '+item.createTime}}</span>
+                    </view>
+                    <view>{{item.content}}</view>
+                </view>
+            </view>
+            <view class="good-job"  catch:tap="goodJob" data-arr="{{[index,-1]}}">
+                <van-icon wx:if="{{!item.isGoodJob}}" name="good-job-o" />
+                <van-icon wx:else name="good-job" color="var(--theme-color)" />
+                <view style="color: rgb(190, 190, 190);font-size: small;">{{item.goodJobNum}}</view>
+            </view>
+        </view>
+        <!-- 子回复 -->
+        <view wx:for="{{!item.putAwayComment?item.sonComments:item.sonCommentNum>0?[item.sonComments[0]]:[]}}" wx:key="commentId"  wx:for-item="son" wx:for-index="sonindex" class="comment-item"  style="margin-left: 80rpx;" data-arr="{{[index,sonindex]}}" bind:tap="startComment" data-comment="{{son}}" data-fatherid="{{item.commentId}}">
+            <view class="comment-item-box" >
+                <image class="comment-img" src="{{son.profilePicUrl}}" mode="aspectFill"/>
+                <view class="comment-name-content">
+                    <view style="color: rgb(190, 190, 190);margin-bottom: 10rpx;">
+                        <span>{{son.userName}}</span>
+                        <span style="font-size: var(--small-font-size);">{{' · '+son.createTime}}</span>
+                    </view>
+                    <view>
+                        <span>回复了</span>
+                        <span style="color: rgb(190, 190, 190)">{{son.replyName}}:</span>
+                        {{son.content}}
+                    </view>
+                </view>
+            </view>
+            <view class="good-job"  catch:tap="goodJob" data-arr="{{[index,sonindex]}}">
+                <van-icon wx:if="{{!son.isGoodJob}}" name="good-job-o" />
+                <van-icon wx:else name="good-job" color="var(--theme-color)" />
+                <view style="color: rgb(190, 190, 190);font-size: small;">{{son.goodJobNum}}</view>
+            </view>
+        </view>
+        <!-- 回复折叠 -->
+        <view wx:if="{{item.sonCommentNum>1}}" data-user="{{item}}" data-index="{{index}}" bind:tap="resCommentEvent" class="check-all-comment" >
+            <block wx:if="{{item.putAwayComment}}">
+                <span>查看{{item.sonCommentNum-1}}条回复</span>
+                <van-icon name="arrow-down" />
+            </block>
+            <block wx:else>
+                <span>折叠回复</span>
+                <van-icon name="arrow-up" />
+            </block>
+        </view>
+    </view>
+
+    <!-- <view wx:if="{{comments.length>0}}" class="check-all-comment" bind:tap="allCommentShow">查看所有回复<van-icon name="arrow" /></view> -->
+    <view wx:if="{{comments.length<1}}" style="text-align: center;color:var(--text-grey-color)">帖子没有留言</view>
+</view>
+<van-action-sheet  z-index="5" show="{{input.commentStart }}"  bind:close="closeCommentView">
+    <ye-input inputValue="{{input.inputValue}}" bind:inputValueEvent="submitComment" marginBottom="{{marginBottom}}" placeholder="{{input.placeholder}}"  isFocus="{{inputFocus}}" bind:keyboardOpen="keyboardOpen" bind:keyboardClose="closeCommentView"></ye-input>  
+</van-action-sheet>

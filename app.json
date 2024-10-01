@@ -1,38 +1,76 @@
 {
+ 
   "pages": [
-    "pages/home/home",
-    "pages/index/index",
-    "pages/person/person"
-    
+    "pages/user/user",
+    "pages/user/user-home/user-home",
+    "pages/user/userEidt/userEidt",
+    "pages/user/user-login/user-login",
+    "pages/user/user-address/user-address",
+    "pages/user/user-address/address-home/address-home",
+    "pages/user/user-pub/user-pub",
+    "pages/user/user-sell/user-sell",
+    "pages/user/user-buy/user-buy",
+    "pages/user/order-detail/order-detail",
+    "pages/user/user-collect/user-collect",
+    "pages/user/user-edit/user-edit",
+    "pages/user/name-edit/name-edit",
+    "pages/user/user-settting/user-settting",
+    "pages/goods/goods",
+    "pages/goods/good-detail/good-detail",
+    "pages/goods/good-buy/good-buy",
+    "pages/goods/good-sort/good-sort",
+    "pages/publish/publish",
+    "pages/message/message",
+    "pages/message/msg-view/msg-view",
+    "pages/message/msg-center/msg-center",
+    "pages/message/msg-comment/msg-comment",
+    "pages/test/test",
+    "pages/publish/pub-home/pub-home"
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText":"小程序"
-   
+    "navigationBarTitleText": "小程序",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#FFF",
+    "enablePullDownRefresh": false,
+    "navigationStyle": "custom",
+    "disableSwipeBack":true
   },
   "tabBar": {
-    "list": [{
-      "pagePath": "pages/home/home",
-      "text": "首页"
-    },{
-      "pagePath": "pages/index/index",
-      "text": "商城"
-    },{
-      "pagePath": "pages/person/person",
-      "text": "个人"
-    }]
+    "custom": true,
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/goods/goods",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/publish/pub-home/pub-home",
+        "text": "发布"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "text": "消息"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的"
+      },
+      {
+        "pagePath": "pages/test/test",
+        "text": "测试"
+      }
+    ]
   },
-  "style": "v2",
-  "renderer": "skyline",
-  "rendererOptions": {
-    "skyline": {
-      "defaultDisplayBlock": true,
-      "disableABTest": true,
-      "sdkVersionBegin": "3.0.0",
-      "sdkVersionEnd": "15.255.255"
-    }
-  },
+  
+  "entryPagePath": "pages/goods/goods",
+  "lazyCodeLoading": "requiredComponents",
   "componentFramework": "glass-easel",
   "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents"
+  "networkTimeout": {
+    "request": 10000
+  }
 }

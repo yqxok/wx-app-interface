@@ -1,0 +1,14 @@
+/* components/ye-card/ye-card.wxss */
+.good-card-container{
+  box-sizing: border-box;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+
+}
+.good-card{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10rpx;
+  background-color: white; 
+  
+}

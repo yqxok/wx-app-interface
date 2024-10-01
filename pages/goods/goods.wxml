@@ -1,0 +1,49 @@
+<view class="page-view">
+    <ye-nav backgroundColor="var(--theme-color)" class="titleBar">
+        <view class="nav-container">
+            <view class="title">忙鱼</view>
+            <view style="flex: 1;"><ye-search enableInput="{{false}}" ></ye-search></view>
+        </view>
+    </ye-nav>
+    <view class="category-bar" style="--category-bar-height:{{categoryBarHeight}}rpx; top:{{46+statusH}}px;" wx:if="{{categoryBar.changeCateogry}}">
+        <view style="font-weight: {{categoryBar.selected==index?'bold':'normal'}};" wx:for="{{goodCategories}}" wx:key="index" bind:tap="tapCateogry" data-index="{{index}}" class="cateogy-bar-item" >
+            <view>{{item.name}}</view>
+            <view class="item-stick" style="background-color: {{categoryBar.selected==index?'var(--theme-color)':'white'}};"></view>
+        </view>
+    </view>
+    <scroll-view scroll-with-animation="{{true}}" scroll-top="{{scrollTop}}" bind:refresherrefresh="pullRefresh" refresher-enabled="{{isRefreshing}}" style="flex:1;height: 1rpx;"  scroll-y  class="scrollPage">
+        <!-- 轮播图 -->
+        <swiper id="first1" indicator-dots="true" autoplay="true" interval="2000" style="--swiper-height:{{swiperHeight}}rpx" class="my-swiper">
+            <swiper-item wx:for="{{[1,2,3]}}" wx:key="index">
+                <image class="swiper-image" src="https://img-baofun.zhhainiao.com/pcwallpaper_ugc/static/b1d73af70fdcafc7d456420b4dfa43e9.jpg?x-oss-process=image%2fresize%2cm_lfit%2cw_1920%2ch_1080"></image>
+            </swiper-item>
+        </swiper>
+        <!-- 分类框 -->
+        <scroll-view scroll-x="true" enable-flex="true" style="--category-height:{{categoryHeight}}rpx;  height:var(--category-height);white-space: nowrap;position: relative;" id="category">
+            <view class="hiddenBar"></view>
+            <view class="category-view" wx:if="{{item.name!='推荐'}}" wx:for="{{goodCategories}}" wx:key="index" bind:tap="navToCategory" data-item="{{item}}">
+                <view class="category">
+                    <view class="{{item.class}}" style="font-size: 80rpx;font-weight: 500;"></view>
+                    <view>{{item.name}}</view>
+                </view>
+            </view>
+        </scroll-view>
+       
+        <scroll-view scroll-top="{{scrollTop1}}" scroll-y="{{startScroll?true:false}}" bind:scrolltolower="scrollToBottom" style="height:calc(var(--page-height) - {{statusH+46}}px - {{categoryHeight/2}}rpx);">
+            <import src="skeleton.wxml"/>
+            <template is="skeleton" wx:if="{{skeletonLoading}}"></template>
+            <!-- <view class="skeleton-container"></view> -->
+            <goods-show bind:tapGoodUserEvent="navToUserHome" wx:else  bind:goodShowHeightEvent="goodShowHeightEvent" bind:goodTapEvent="navToGoodDetail" goodList="{{goodList}}" ></goods-show>
+        </scroll-view>
+        <!-- <swiper  style="height:calc(var(--page-height) - {{statusH+46}}px - {{categoryHeight/2}}rpx);" 	capture-catch:touchmove="pageChangeEvent" >
+            <swiper-item  wx:for="{{goodCategories}}" wx:key="name">
+               
+            </swiper-item>
+            
+        </swiper> -->
+        <!-- 商品展示 -->
+    </scroll-view>
+
+
+</view>
+

@@ -1,0 +1,47 @@
+<van-nav-bar title="确认购买" left-arrow bind:click-left="navBack"/>
+<view style="flex:1;box-sizing: border-box; padding:20rpx">
+    <view class="my-card-container address-container" bind:tap="navToAddress">
+        <view style="flex: 1;" wx:if="{{addressVo!=null}}">
+            <view style="display: flex;align-items: center;font-size: var(--big-font-size);font-weight: bold;">
+                <view class="iconfont icon-dingwei" style="font-size:var(--big-icon-size);"></view>
+                <span style="margin-right: 10rpx;">{{addressVo.receiver}}</span>
+                <span>{{addressVo.phoneNumber}}</span>
+            </view>
+            <view style="color: var(--text-grey-color);font-size: var(--normal-font-size);margin-top:10rpx">
+                <view>{{addressVo.school+' '+addressVo.zone+' '+addressVo.dormiName+' '+addressVo.dormiNum}}</view>
+            </view>
+        </view>
+        <view style="font-weight: bold;margin: 10rpx 0;" wx:else>请选择你的收货地址</view>
+        <view class="iconfont icon-arrow arrow"></view>
+    </view>
+    <template name="buy-model">
+        <view style="display: flex;justify-content: space-between;align-items: center;margin-bottom: 30rpx;">
+            <span style="font-weight: bold;">{{label}}</span>
+            <span style="color: {{label=='小计'?'red':'black'}};">{{label==='小计'?'￥'+item:item}}</span>
+        </view>
+    </template>
+    <view class="my-card-container" style="margin-top:20rpx;">
+        <view class="buy-top-container" >
+            <image class="good-image" src="{{goodDetailVo.picUrls[0].url}}" mode="aspectFill"></image>
+            <view class="stepper-container">
+                <view style=" width: 100%;display: flex; justify-content: space-between;align-items: center;overflow: hidden;" >
+                    <view  class="text-html">{{goodDetailVo.html}}</view>
+                    <view style="margin-left: 20rpx;font-size: 18px;font-weight: 500;">￥{{goodDetailVo.price}}</view>  
+                </view> 
+                <view style="width: 100%; display: flex;justify-content: space-between;align-items: center;">
+                    <view style="font-size: var(--normal-font-size); color: var(--text-grey-color);">剩余：{{goodDetailVo.goodNum}}</view>
+                    <van-stepper max="{{goodDetailVo.goodNum}}" value="{{goodOrderDto.number}}" bind:change="stepperChange" />    
+                </view>
+            </view>
+        </view>
+        <template is="buy-model" data="{{label:'小计',item:goodOrderDto.totalPrice}}"></template>
+    </view>
+</view>
+<view class="buy-bottom-container" >
+    <view>
+        <span>合计：</span>
+        <span style="color: red;">￥{{goodOrderDto.totalPrice}}</span>
+    </view>
+    <view bind:tap="buyGood" class="theme-btn bigger-font-size">确认购买</view>
+</view>
+<van-dialog id="van-dialog" bind:cancel="cancelBuy" bind:confirm="confirmBuy"  message="确认购买吗" showCancelButton showConfirmButton show="{{buyTableShow}}"/>

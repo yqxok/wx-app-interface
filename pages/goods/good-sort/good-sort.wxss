@@ -1,0 +1,8 @@
+/* pages/goods/good-sort/good-sort.wxss */
+@import '../skeleton.wxss';
+.scroll-container{
+    flex: 1;
+    box-sizing: border-box;
+    height: 1rpx;
+    padding-bottom: env(safe-area-inset-bottom);
+}

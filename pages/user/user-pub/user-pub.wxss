@@ -1,0 +1,54 @@
+/* pages/user/user-pub/user-pub.wxss */
+.my-pub-scroll{
+    flex: 1;
+    height: 1rpx;
+    box-sizing: border-box;
+    padding: 20rpx;
+    padding-top: 0;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+.pub-container{
+    background-color: white;
+    box-sizing: border-box;
+    padding: 20rpx;
+    border-radius: 20rpx;
+    margin-top: 20rpx;
+}
+.pub-top-container{
+    display: flex;
+    align-items: center;
+   
+}
+.good-image{
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 20rpx;
+   
+}
+.text-container {
+    flex:1; /* 设置文本容器宽度 */
+    overflow: hidden; /* 超出部分隐藏 */
+    position: relative;
+    box-sizing: border-box;
+    padding: 20rpx;
+    padding-right: 60rpx;
+}
+.text {
+    white-space: nowrap; /* 文本不换行 */
+    overflow: hidden; /* 超出部分隐藏 */
+    position: relative; /* 设置相对定位 */
+    text-overflow: ellipsis;
+    height: 50rpx;
+    font-size: 16px; /* 设置字体大小 */
+    font-weight: 530;
+    max-width: 100%; /* 最大宽度 */
+}
+.pub-bottom-container{
+    margin-top: 20rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+

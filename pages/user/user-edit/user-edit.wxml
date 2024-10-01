@@ -1,0 +1,39 @@
+<van-nav-bar title="{{enableEdit?'编辑资料':'个人名片'}}" left-arrow bind:click-left="navBack"/>
+<view class="my-card-container {{enableEdit?'':'edit-overlay'}}" style="margin:20rpx;padding:0 30rpx;">
+    <template name="cardItem">
+        <view class="card-item" bind:tap="{{func}}">
+            <span style="font-weight: bold;">{{label}}</span>
+            <view style="display: flex;align-items: center;font-size: var(--normal-font-size);color:var(--text-grey-color)">
+                <span>{{value}}</span>
+                <van-icon name="arrow" />
+            </view>
+        </view>
+    </template>
+    <template is="cardItem" data="{{label:'昵称',value:user.userName,func:'navToNameEdit'}}"></template>
+    <view class="card-item" >
+        <span style="font-weight: bold;">头像</span>
+        <van-uploader bind:after-read="readImg" style="display: flex;align-items: center; color:var(--text-grey-color)" >
+            <view style="display: flex;align-items: center;">
+                <image src="{{user.profilePicUrl}}" mode="aspectFill" class="user-img"></image>
+                <van-icon name="arrow" />
+            </view>
+        </van-uploader>
+    </view>
+    <template is="cardItem" data="{{label:'简介',value:user.bio,func:'navToBioEdit'}}"></template>
+    <template is="cardItem" data="{{label:'性别',value:user.gender==='MALE'?'男':'女',func:'genderSelectShow'}}"></template>
+    <template is="cardItem" data="{{label:'生日',value:user.birthday,func:'dateSelect'}}"></template>
+</view>
+<van-dialog use-slot show="{{dateShow}}" show-cancel-button="{{false}}" show-confirm-button="{{false}}" bind:getuserinfo="getUserInfo">
+    <van-datetime-picker confirm-button-text="确认" min-date="80" type="date" value="{{ currentDate}}" cancel-button-text="取消" bind:confirm="confirmBirthday" bind:cancel="cancelBirthday"  show-toolbar="false"/>
+</van-dialog>
+<van-action-sheet show="{{ genderShow }}" bind:close="genderSelect">
+    <view class="btn-container">
+        <view bind:tap="genderSelectShow">取消</view>
+        <view bind:tap="genderSelect" >确定</view>
+    </view>
+    <view class="gender-show-container">
+        <view class="{{isMan?'gender-already-select':''}}" bind:tap="touchGender" data-gender="1">男</view>
+        <view class="{{!isMan?'gender-already-select':''}}" bind:tap="touchGender" data-gender="0" style="margin:20rpx">女</view>
+        
+    </view>
+</van-action-sheet>

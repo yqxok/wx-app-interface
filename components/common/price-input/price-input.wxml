@@ -1,0 +1,32 @@
+<van-action-sheet custom-class="list-container"  bind:close="closeTableEvent" show="{{ show }}" >
+    <view class="price-container">
+        <span>价格：</span>
+        <input value="{{inputValue}}" class="input-show" placeholder="￥0.00" disabled="true"/>
+    </view>
+    <view style="display: flex;" bind:tap="chooseNum">
+        <view class="number-input-container">
+            <button hover-class="btn-hover" class="number-item" data-num="1">1</button>
+            <button hover-class="btn-hover" class="number-item" data-num="2">2</button>
+            <button hover-class="btn-hover" class="number-item" data-num="3">3</button>
+            <button hover-class="btn-hover" class="number-item" data-num="4">4</button>
+            <button hover-class="btn-hover" class="number-item" data-num="5">5</button>
+            <button hover-class="btn-hover" class="number-item" data-num="6">6</button>
+            <button hover-class="btn-hover" class="number-item" data-num="7">7</button>
+            <button hover-class="btn-hover" class="number-item" data-num="8">8</button>
+            <button hover-class="btn-hover" class="number-item" data-num="9">9</button>
+            <button hover-class="btn-hover" class="number-item" data-num=".">.</button>
+            <button hover-class="btn-hover" class="number-item" data-num="0">0</button>
+            <button hover-class="btn-hover" class="number-item" data-num="^">
+                <van-icon name="arrow-down" />
+            </button>
+        </view>
+        <view class="delete-input-container">
+            <button hover-class="btn-hover" class="number-item" style="height: 19vh;" data-num="del">
+                <van-icon name="delete" />
+            </button>
+            <button hover-class="btn-hover" class="number-item finish-item" style="height: 19vh;" data-num="finish">确认</button>
+        </view>
+    </view>
+</van-action-sheet>
+
+

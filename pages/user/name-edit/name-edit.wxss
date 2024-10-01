@@ -1,0 +1,22 @@
+.edit-container{
+    box-sizing: border-box;
+    padding: 20rpx;
+    font-size: var(--big-font-size);
+    font-weight: bold;
+}
+.textarea{
+    width: 100%;
+    font-size: var(--normal-font-size);
+    line-height: 1.4;
+    font-weight: normal;
+    height:calc(var(--normal-font-size)*1.4*5) ;
+}
+.save-btn{
+    margin-top:20rpx;
+    background-color:  var(--theme-color);
+    width: 710rpx;
+    border-radius: 45rpx;
+    font-size: var(--bigger-font-size);
+    font-weight: bold;
+
+}

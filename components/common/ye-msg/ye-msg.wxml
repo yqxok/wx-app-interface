@@ -1,0 +1,5 @@
+<view style="--tip-opacity:{{opacity}};" class="container" >
+    <view class="msg-tip">
+        {{msg}}
+    </view>
+</view>

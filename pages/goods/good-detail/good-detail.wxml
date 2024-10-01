@@ -1,0 +1,69 @@
+<block wx:if="{{goodExit}}">
+    <ye-nav custom-nav="good-detail-nav-container"  >
+        <van-icon bind:click="navBackToGoods" name="arrow-left" custom-class="good-detail-nav-back"></van-icon>
+        <image src="{{goodDetailVo.profilePicUrl}}" data-userid="{{goodDetailVo.userId}}" bind:tap="navToUserHome" class="good-detail-nav-img"/>
+        <view>{{goodDetailVo.userName}}</view>
+    </ye-nav>
+    <scroll-view style="flex: 1;height: 1rpx;" scroll-y="true">
+        
+        <swiper  class="good-detail-swiper"  indicator-dots="true">
+            <swiper-item wx:for="{{goodDetailVo.picUrls}}" wx:key="index">
+                <image bind:tap="clickImg"  src="{{item.url}}" class="good-detail-img" mode="aspectFit"></image>
+            </swiper-item>
+        </swiper>
+        <view style="background-color: white;box-sizing: border-box;padding: 20rpx;">
+            <view style="display: flex;justify-content: space-between;align-items: center;">
+                <view style="font-size:larger;color: red;">￥{{goodDetailVo.price}}</view>
+                <view style="font-size: var(--normal-font-size); color: var(--text-grey-color);">剩余：{{goodDetailVo.goodNum}}</view>
+            </view>
+            <view user-select="{{true}}" style=" line-height: 1.6;overflow-wrap:break-word ;">{{goodDetailVo.html}}</view>
+            <view class="category-tag-container">
+                <span wx:for="{{goodCategories}}" class="category-tag" wx:key="*this">#{{item}}</span>
+            </view>
+        </view>
+        
+        <ye-comment bind:gJConfirmEvent="gJConfirm" bind:gJCancelEvent="gJCancel" goodDetailVo="{{goodDetailVo}}" bind:startCommentEvent="openCommentView"></ye-comment>
+        <!-- 查看所有评论 -->
+        <!-- <van-action-sheet title="所有评论" z-index="5" show="{{ allComment }}"  bind:close="allCommentShow">
+            <scroll-view scroll-y="true" style="height: 60vh;box-sizing: border-box;padding:0 20rpx;">
+                <ye-comment comments="{{comments}}" openAll="true" bind:startCommentEvent="openCommentView"></ye-comment>
+            </scroll-view>
+            <view class="fake-comment-container"  style="padding: 20rpx;margin:0">
+                <image src="https://th.bing.com/th?id=OIP.6JHi5qrxUuWIkg7bIW9IlwAAAA&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.7&pid=3.1&rm=2" class="good-detail-nav-img"/>
+                <view class="fake-comment-input" bind:tap="openCommentView" >看对眼就留言，问问更多的细节</view>
+            </view> 
+        </van-action-sheet> -->
+    </scroll-view>
+    
+    <view class="buy-bottom-container" >
+        <view style="display: flex;font-size: var(--small-font-size);">
+            <view class="icon-text" style="margin-right: 30rpx;" bind:tap="openCommentView">
+                <van-icon name="chat-o" custom-style="font-weight:bold" size="var(--large-font-size)" color="black"/>
+                <view>留言</view>
+            </view>
+            <view class="icon-text" bind:tap="selectCollect">
+                <van-icon  name="{{isCollected?'star':'star-o'}}" custom-style="font-weight:bold" size="var(--large-font-size)" color="{{isCollected?'var(--collected-color)':'black'}}"/>
+                <view>{{goodDetailVo.collectNum}}</view>
+            </view>
+        </view>
+        <view style="display: flex;" wx:if="{{goodDetailVo.userId!=user.userId}}">
+            <view bind:tap="navToMsg" class="border-btn big-font-size" style="margin-right: 20rpx;font-weight: bold;" data-theotherid="{{goodDetailVo.userId}}" data-goodid="{{goodDetailVo.goodId}}">联系卖家</view>
+            <view class="theme-btn big-font-size" style="font-weight: bold;" bind:tap="navToBuy">购买</view>
+        </view>
+        <view style="display: flex;" wx:else>
+            <view class="border-btn big-font-size" style="margin-right: 20rpx;font-weight: bold;" bind:tap="showDeleteTable">删除</view>
+            <view class="theme-btn big-font-size" data-item="{{goodDetailVo}}" style="font-weight: bold;" bind:tap="navToPubEdit">编辑</view>
+        </view>
+    </view>
+    <ye-msg id="msgTip"></ye-msg>
+    <van-dialog id="van-dialog" bind:cancel="cancelDelete" bind:confirm="confirmDelete"  message="确认删除该商品吗" showCancelButton showConfirmButton show="{{deleteTableShow}}"/>
+</block>
+<block wx:else>
+    <van-nav-bar title="错误" bind:click-left="navBackToGoods"  left-arrow />
+    <view style="margin-top: 40%;display: flex;flex-direction: column;align-items: center;">
+        <view style="margin-bottom: 10rpx;">不好意思，出错了~</view>
+        <view style="margin-bottom: 20rpx; color:var(--text-grey-color)">该商品已下架，请查看其他商品</view>
+        <!-- <view class="theme-btn" bind:tap="navToLogin">登录</view> -->
+    </view>
+</block>
+    

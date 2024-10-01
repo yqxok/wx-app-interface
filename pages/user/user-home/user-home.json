@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "ye-nav":"../../../components/common/ye-nav/ye-nav",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-divider": "@vant/weapp/divider/index",
+    "goods-show":"../../../components/common/goods-show/goods-show"
+   
+  },
+  "enablePullDownRefresh": false
+}

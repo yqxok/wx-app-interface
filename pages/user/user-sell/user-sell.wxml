@@ -1,0 +1,39 @@
+<van-nav-bar title="我卖出的" left-arrow bind:click-left="navBack"/>
+<van-tabs active="{{ active }}"  color="var(--theme-color)"  bind:change="swiperChange">
+    <van-tab  title="全部"></van-tab>
+    <van-tab  title="交易中"></van-tab>
+    <van-tab  title="已完成"></van-tab>
+    <van-tab title="已取消"></van-tab>
+</van-tabs>
+<swiper class="swiper-container" current="{{active}}"	bind:change="swiperChange">
+    <swiper-item wx:for="{{4}}" wx:key="this" >
+        <scroll-view scroll-y="true" style=" height: 100%;box-sizing: border-box;padding: 20rpx;">
+            <view style="height: 20rpx;"></view>
+            <view class="sell-container"  wx:for="{{ordersArr[index].records}}" wx:key="orderId">
+                <view class="sell-top-container">
+                    <view style="display: flex;align-items: center;">
+                        <image class="user-image" src="{{item.profilePicUrl}}" mode="aspectFill"></image>
+                        <span>{{item.userName}}</span>
+                    </view>
+                    <view style="color: rgb(223, 201, 3);">{{item.status<=1?(item.status==0?'正在交易中':'交易已完成'):'订单已取消'}}~</view>
+                </view>
+                <view class="sell-top-container" data-orderid="{{item.orderId}}" bind:tap="navToOrderDetail">
+                    <image class="good-image" src="{{item.picUrl}}" mode="aspectFill"></image>
+                    <view  class="text">{{item.html}}</view>
+                    <view style=" margin-right: 20rpx;color:rgb(179, 179, 179);font-size: 14px;">x{{item.number}}</view>
+                    <view style="font-size: 18px;font-weight: 500;">￥{{item.totalPrice}}</view>   
+                </view>
+                <view class="sell-top-container" style="margin-bottom: 0;">
+                    <view bind:tap="deleteOrder" style="color:rgb(179, 179, 179);font-size: var(--normal-font-size);">删除</view>
+                    <view data-theotherid="{{item.userId}}" data-goodid="{{item.goodId}}" bind:tap="navToMsgView" class="theme-btn">联系买家</view>
+                    <!-- <view style="display: flex;">
+                        <button  class="msg-send-btn">联系买家</button>
+                        <button class="msg-send-btn">去评价</button>
+                    </view> -->
+                </view>
+            </view>
+            <view style="box-sizing: border-box;padding:20rpx 0;text-align:center; color: var(--text-grey-color)">哎呀,到底啦~</view>
+        </scroll-view>
+    </swiper-item>
+</swiper>
+<van-dialog id="van-dialog"  message="确认删除该订单吗" showCancelButton showConfirmButton show="{{deleteTableShow}}"/>

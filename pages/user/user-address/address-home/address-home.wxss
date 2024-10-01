@@ -1,0 +1,87 @@
+/* pages/user/user-address/address-home/address-home.wxss */
+page{
+    font-size: var(--normal-font-size);
+}
+
+.address-item{
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); */
+    /* margin-bottom: 20rpx; */
+    
+    background-color: white;
+    margin-bottom: 20rpx;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 30rpx 20rpx;
+    border-radius: 20rpx;
+    /* font-size: var(--normal-font-size); */
+    line-height: calc(var(--big-font-size) + 20rpx);
+}
+
+.address-top{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.address-img{
+    width: 70rpx;
+    height: 70rpx;
+    border-radius:35rpx;
+    background-color: var(--theme-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.address-detail-container{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 0 40rpx;
+}
+.font-style{
+    margin-right:10rpx;
+}
+.address-manage-container{
+    transition: all 0.3s;
+    line-height: 1.2;
+    --address-manage-height:calc(40rpx + var(--normal-font-size)*1.2);
+    overflow: hidden;
+}
+.address-manage{
+    display: flex;
+    justify-content: space-between;
+}
+.divider{
+    margin:20rpx 0;
+    border-top: solid 1rpx var(--grey-btn-color);
+}
+.bottom-container{
+    /* height: 10vh; */
+    display: flex;
+    align-items:flex-start;
+    background-color: white;
+    padding-bottom: env(safe-area-inset-bottom);
+    font-size: var(--big-font-size);
+}
+.address-button1{
+   
+    border-radius: 20rpx;
+    margin: 20rpx;
+    background-color: var(--grey-btn-color);
+    padding: 30rpx 40rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.address-button2{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30rpx 40rpx;
+    background-color: var(--theme-color);
+    border-radius: 20rpx;
+    margin:20rpx 0;
+    margin-right: 20rpx;
+}

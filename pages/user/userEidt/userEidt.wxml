@@ -1,0 +1,51 @@
+<van-nav-bar
+  title="个人资料"
+  left-arrow
+  bind:click-left="onClickLeft"
+
+/>
+<van-cell-group inset custom-class="van-cell-group">
+  <view class="user-img-container">
+    <van-image custom-class="user-img" width="100rpx" height="100rpx" fit="cover"  round="true" src="{{user.profilePicUrl!=null?user.profilePicUrl:img}}"/>
+  </view>
+  <van-field
+    placeholder="请填写"
+    bind:change="onChange"
+    label="用户名"
+    input-align="right"
+    value="{{user.userName!=null?user.userName:null}}"
+  />
+  <van-cell title="手机号" value="{{user.phoneNumber!=null?user.phoneNumber:null}}" />
+  <van-cell title="性别" >
+    <van-radio-group value="{{user.gender}}" bind:change="onChange" direction="horizontal" >
+      <van-radio name="MALE" label-position="left">男</van-radio>
+      <van-radio name="FEMALE" label-position="left">女</van-radio>
+    </van-radio-group>
+  </van-cell>
+  <van-cell title="生日" is-link value="{{user.birthday!=null?user.birthday:'请选择'}}" bind:click="onDisplay" />
+  <van-dialog
+    use-slot
+    show="{{show}}"
+    show-cancel-button
+    bind:close="onClose"
+    bind:getuserinfo="getUserInfo"
+  >
+    <van-datetime-picker
+      type="date"
+      value="{{ currentDate }}"
+      confirm-button-text=""
+      cancel-button-text=""
+      bind:input="onInput"
+      show-toolbar="false"
+    />
+  </van-dialog>
+</van-cell-group>
+<van-cell-group  inset>
+  <van-cell title="账号与安全" is-link custom-class="account-cell"></van-cell>
+</van-cell-group>
+<van-cell-group inset >
+  <van-button type="default" custom-class="button-class" >保存</van-button>
+</van-cell-group>
+<van-cell-group inset>
+  <van-button type="default" custom-class="button-class account-cell">退出登录</van-button>
+</van-cell-group>
