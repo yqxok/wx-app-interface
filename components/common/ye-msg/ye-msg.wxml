@@ -1,5 +1,9 @@
-<view style="--tip-opacity:{{opacity}};" class="container" >
-    <view class="msg-tip">
+<view style="--tip-opacity:{{opacity}};--top-height:{{top}};z-index: {{zIndex}};" class="container" >
+    <view class="msg-tip" wx:if="{{warnType}}">
         {{msg}}
+    </view>
+    <view class="msg-tip" wx:else style="display: flex;align-items: center; background-color: var(--theme-color);">
+        <van-icon name="checked"  color="white"/>
+        <view style="margin-left: 20rpx;">{{msg}}</view>
     </view>
 </view>

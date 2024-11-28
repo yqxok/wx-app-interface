@@ -1,13 +1,23 @@
 // pages/user/user-buy/user-buy.js
 Component({
 data: {
-    ordersArr:[],//渲染数据
+    deleteTableShow:false,
+    ordersArr:[
+        {cursor:0,isEnd:false,list:[]},
+        {cursor:0,isEnd:false,list:[]},
+        {cursor:0,isEnd:false,list:[]},
+        {cursor:0,isEnd:false,list:[]}
+    ],//渲染数据
     dialogMsg:'',//弹窗提示消息
     item:null,//数据传递对象
     option:'',//取消订单or确认收货
     active:0//标签栏
 },
-
+lifetimes:{
+    attached(){
+        this.msgTip=this.selectComponent('#msgTip')
+    }
+},
 /**
  * 组件的方法列表
  */
@@ -15,16 +25,33 @@ methods: {
     navBack(){
         wx.navigateBack()
     },
-    onLoad(){
-       this.updateOrders(null,0)
+    onShow(){
+       this.getOrders(-1,0)
+       this.getOrders(0,1)
+       this.getOrders(1,2)
+       this.getOrders(2,3)
     },
-    //拉取数据
+    //首次请求
+    getOrders(status,index){
+        // const cursorPage=this.data.ordersArr[index]
+        getApp().orderService.getOrderPage(true,status,0,5)
+        .then(res=>{
+      
+            // cursorPage=res.data.data
+            this.setData({[`ordersArr[${index}]`]:res.data})
+        })
+    },
+    //上滑更新数据
     updateOrders(status,index){
-        const userId=getApp().globalData.user.userId
-        const sDto={userId,page:1,pageSize:8,isDeliverer:false}
-        if(status!=null) sDto.status=status
-        getApp().orderService.getSimpleOrderVos(sDto)
-        .then(res=>this.setData({[`ordersArr[${index}]`]:res.data}))
+        const cursorPage=this.data.ordersArr[index]
+        if(cursorPage.isEnd) return
+        getApp().orderService.getOrderPage(true,status,cursorPage.cursor,5)
+        .then(res=>{
+            cursorPage.list.push(...res.data.list)
+            cursorPage.isEnd=res.data.isEnd
+            cursorPage.cursor=res.data.cursor
+            this.setData({[`ordersArr[${index}]`]:cursorPage})
+        })
     },
     navToOrderDetail(e){
         const orderId=e.currentTarget.dataset.orderid
@@ -33,16 +60,20 @@ methods: {
     navToMsgView(e){
         const goodId=e.currentTarget.dataset.goodid
         const theOtherId=e.currentTarget.dataset.theotherid
-        wx.navigateTo({url: `../../message/msg-view/msg-view?theOtherId=${theOtherId}&goodId=${goodId}`})
+        wx.navigateTo({url: `../../message/msg-view/msg-view?userId=${theOtherId}&goodId=${goodId}`})
+    },
+    scrollToBottom(e){
+        const index=e.currentTarget.dataset.index
+        this.updateOrders(index-1,index)
     },
     swiperChange(e){
         let index=0
         if(e.detail.current||e.detail.current==0) index=e.detail.current
         else if(e.detail.index||e.detail.index==0) index=e.detail.index
-        const ordersArr=this.data.ordersArr
-        if(!ordersArr[index]){
-            this.updateOrders(index==0?null:index-1,index)
-        }
+        // const ordersArr=this.data.ordersArr
+        // if(!ordersArr[index]){
+        //     this.updateOrders(index==0?null:index-1,index)
+        // }
         this.setData({active:index})
     },
     openDialog(e){
@@ -54,32 +85,31 @@ methods: {
     dialogConfirm(e){
         const item=e.currentTarget.dataset.item
         const option=e.currentTarget.dataset.option
-        let orderMsgDto
-        if(option=='确认收货'){
-             orderMsgDto=this.createOrderMsgDto(item,1,'您的商品已被确认收货')           
-        }else if(option=='取消订单'){
-             orderMsgDto=this.createOrderMsgDto(item,2,'您的商品订单已被取消')
+        if(option==='确认收货'){
+            this.changeOrderStatus(item,1)           
+        }else if(option==='取消订单'){
+            this.changeOrderStatus(item,2)
+        }else if(option==='删除订单'){
+            this.deleteOrder(item)
         }
-        const genericWsDto={uri:'/order',data:orderMsgDto}
-        getApp().orderService.changeOrderStatus({orderId:item.orderId,status:orderMsgDto.status}).then(res=>{
-            getApp().chatContentSocket.send({data:JSON.stringify(genericWsDto)})
-            this.data.ordersArr=[]
-            this.updateOrders(this.data.active==0?null:this.data.active-1,this.data.active)
-            this.setData({deleteTableShow:false,dialogMsg:'',item:null,option:''})
+        
+    },
+    deleteOrder(item){
+        getApp().orderService.deleteOrder(item.orderId)
+        .then(res=>{
+            this.msgTip.showTip({msg:'订单删除成功',warnType:false})
+            this.onShow()
+        })
+    },
+    changeOrderStatus(item,status){
+        getApp().orderService.changeOrderStatus(item.orderId,status)
+        .then(res=>{
+            this.onShow()
         })
     },
     dialogCancel(){
-        this.setData({deleteTableShow:false,dialogMsg:'',item:null,option:''})
-    },
-    createOrderMsgDto(item,status,content){
-        let orderMsgDto={
-            orderId:item.orderId,
-            senderId:getApp().globalData.user.userId,
-            receiverId:item.userId,
-            status,
-            content
-        }
-        return orderMsgDto
-    },
+        this.setData({deleteTableShow:false})
+    }
+
 }
 })

@@ -1,4 +1,11 @@
 /* components/common/comment/comment.wxss */
+.comment-container{
+    background-color: white;
+    box-sizing: border-box;
+    padding: 20rpx;
+    margin-top: 20rpx;
+    --profile-img:60rpx;
+}
 .comment-item{
     display: flex;
     justify-content: space-between;
@@ -9,14 +16,15 @@
     line-height: 1.5;
 }
 .comment-item-box{
+    /* width: 100%; */
     display: flex;
     justify-content:flex-start;
 }
 
 .comment-img{
-    width: 60rpx;
-    height: 60rpx;
-    border-radius: 30rpx;
+    width: var(--profile-img);
+    height: var(--profile-img);
+    border-radius: 50%;
     margin-right: 20rpx;
 }
 .comment-name-content{
@@ -31,7 +39,8 @@
     align-items: center;
 }
 .check-all-comment{
-    text-align: center; 
+    /* text-align: center;  */
+    margin-left: calc(var(--profile-img) + 20rpx);
     color: rgb(190, 190, 190);
     font-size:smaller;
     box-sizing: border-box;

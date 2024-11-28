@@ -1,7 +1,7 @@
 <van-action-sheet custom-class="list-container"  bind:close="closeTableEvent" show="{{ show }}" >
     <view class="price-container">
         <span>价格：</span>
-        <input value="{{inputValue}}" class="input-show" placeholder="￥0.00" disabled="true"/>
+        <input value="{{inputValue}}" maxlength="8" class="input-show" placeholder="￥0.00" disabled="true"/>
     </view>
     <view style="display: flex;" bind:tap="chooseNum">
         <view class="number-input-container">

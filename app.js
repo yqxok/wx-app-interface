@@ -11,41 +11,35 @@ App({
         this.initEvent()
         //获取屏幕信息
         this.initWindowInfo()
-        
         //获取用户信息
         const token= wx.getStorageSync('token')
         if(token){
             this.userService.updateToken(token)
-            .then(res=> wx.setStorage({key:'token',data:res.data}))
-            this.userService.getUserByToken(token)
-            .then(res=>{
-                this.globalData.user=res.data
-                //webSocket连接
-                this.chatContentSocket=this.chatContentWs.connectChatContent()
+            .then(res=> {
+                wx.setStorage({key:'token',data:res.data})
+                this.userService.getUserByToken(token)
+                .then(res1=>{
+                    this.globalData.user=res1.data
+                    //webSocket连接
+                    this.wsService.connect()
+                })
             })
+           
         }
     },
     onShow(){
-        if(!this.chatContentSocket)//
-            this.chatContentSocket=this.chatContentWs.connectChatContent()
+        this.wsService.connect()
+      
     },
     initEvent(){
-        const startWebSocket=()=>{
-            if(!this.chatContentSocket)
-                this.chatContentSocket=this.chatContentWs.connectChatContent()
+        const connectWebsocket=(res)=>{
+            this.wsService.connect()
         }
-        const closeWebSocket=()=>{
-            this.chatContentSocket.close()
-            this.chatContentSocket=null
+        const closeWebSocket=(res)=>{
+            this.wsService.close()
         }
-        const wsClose=()=>{
-            this.chatContentSocket=null
-        }
-        eventBus.on('loginEvent','startWebSocket', startWebSocket)
+        eventBus.on('loginEvent','connectWebsocket', connectWebsocket)
         eventBus.on('logoutEvent','closeWebSocket',closeWebSocket)
-        eventBus.on('wsCloseEvent','wsClose',wsClose)
-
-        // eventBus.on('userChangeEvent','userChange',userChange)
     },
     initWindowInfo(){
         this.windowInfo= wx.getWindowInfo()

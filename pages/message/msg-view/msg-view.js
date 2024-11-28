@@ -5,9 +5,9 @@ data: {
     preHight:80,
     scrollTop:0,
     keyboardH:0,//键盘高度
-    chattingRecords:[],
+    chats:{cursor:0,isEnd:false,list:[]},
     user:null,
-    theOtherUser:null,
+    theOtherUser:{userName:'未知用户...'},
     goodId:null,
     msgContent:''//设置消息输入框内容
 },
@@ -17,43 +17,40 @@ lifetimes:{
     }
 },
 methods: {
-    onLoad(option){
-        //scroll-view滚动最下面
-        this.query = wx.createSelectorQuery().in(this)
-        this.query.select('.msg-scroll-container').boundingClientRect(res=>{
-            this.setData({scrollTop:res.height*100})
-        })
-        
-        const user=getApp().globalData.user
-        getApp().chatContentService.getChatContentList({theOtherId:option.theOtherId,userId:user.userId,goodId:option.goodId})
+
+    getChats(userId,goodId){
+        const chats=this.data.chats
+        if(chats.isEnd) return
+        getApp().chatContentService.getChatContentList(userId,goodId,chats.cursor,20)
         .then(res=>{
-            this.setData({chattingRecords:res.data,user,goodId:option.goodId})
-            //scroll-view滚动最下面
-            this.query.exec(res=>{})
-            // const index=res.data.length-1
-            // this.setData({bottomLeft:this.bottomLeft,toView:`item${index}`})
-            //未读消息改为已读
-            const ids=res.data.filter(i=>!i.isRead&&i.receiveUserId==user.userId).map(i=>i.chatId)
-            if(ids.length<1) return
-            getApp().chatContentService.changeChatContentIsRead(ids)
-            .then(res1=>console.log(res1))
+            chats.list.push(...res.data.list)
+            chats.isEnd=res.data.isEnd
+            chats.cursor=res.data.cursor
+            this.setData({chats})
         })
-        getApp().userService.getUser(option.theOtherId).
-        then(res=>this.setData({theOtherUser:res.data}))
+    },
+    onLoad(option){
+        const user=getApp().globalData.user
+        getApp().userService.getUser(option.userId).
+        then(res=>this.setData({theOtherUser:res.data,user,goodId:option.goodId}))
+        this.getChats(option.userId,option.goodId)
+      
+        
         //监听消息事件,包括
         this.chatWidget=(res)=>{
             if(res.goodId!=this.data.goodId) return
-            const chattingRecords=this.data.chattingRecords
-            chattingRecords.push(res)
+            const chats=this.data.chats
+            chats.list.unshift(res)
             //将收到的新消息改为已读状态
-            if(res.receiveUserId===this.data.user.userId)
-                getApp().chatContentService.changeChatContentIsRead([res.chatId])
-                .then(res1=>console.log(res1))
-            this.setData({msgContent:'',chattingRecords})
-            this.query.exec(res=>{})
+            getApp().chatContentService.msgRead(option.goodId,option.userId)
+            .then(res=>{})
+            this.setData({msgContent:'',chats})
         }
         eventBus.on('chatContentEvent','chatWidget',this.chatWidget)
         
+    },
+    scrollToTop(){
+        this.getChats(this.data.theOtherUser.userId,this.data.goodId,null)
     },
     onUnload(){
         // console.log('')
@@ -62,12 +59,12 @@ methods: {
     keyboardOpen(e){
         // console.log(e)
         // const index=this.data.chattingRecords.length-1//scroll-view滚动最下面
-        this.query.exec(res=>{})
+        // this.query.exec(res=>{})
         this.setData({keyboardH:e.detail.keyboardH})
     },
     keyboardClose(){
         // const index=this.data.chattingRecords.messages.length-1
-        this.query.exec(res=>{})
+        // this.query.exec(res=>{})
         this.setData({keyboardH:0})
     },
     navBack(){
@@ -88,14 +85,16 @@ methods: {
     msgSend(e){
         const msg=e.detail.value
         if(msg==null||msg.trim()=='') return
-        let genericDto={
-            uri:'/chatting',
-            data:{sendUserId:this.data.user.userId,
-                receiveUserId:this.data.theOtherUser.userId,content:msg,
-                goodId:this.data.goodId
-            }
+        const chatReq={sendUserId:this.data.user.userId,
+            receiveUserId:this.data.theOtherUser.userId,content:msg,
+            goodId:this.data.goodId
         }
-        getApp().chatContentSocket.send({data:JSON.stringify(genericDto)})
+        getApp().chatContentService.sendMsg(chatReq)
+        .then(res=>{
+            this.data.chats.list.unshift(res.data)
+            this.setData({chats:this.data.chats,msgContent:''})
+            // this.query.exec(res=>{})
+        })
     }
 }
 })

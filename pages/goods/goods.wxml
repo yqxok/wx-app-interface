@@ -33,7 +33,7 @@
             <import src="skeleton.wxml"/>
             <template is="skeleton" wx:if="{{skeletonLoading}}"></template>
             <!-- <view class="skeleton-container"></view> -->
-            <goods-show bind:tapGoodUserEvent="navToUserHome" wx:else  bind:goodShowHeightEvent="goodShowHeightEvent" bind:goodTapEvent="navToGoodDetail" goodList="{{goodList}}" ></goods-show>
+            <goods-show bind:tapGoodUserEvent="navToUserHome" wx:else  bind:goodShowHeightEvent="goodShowHeightEvent" bind:goodTapEvent="navToGoodDetail" goodList="{{goodPage.list}}" ></goods-show>
         </scroll-view>
         <!-- <swiper  style="height:calc(var(--page-height) - {{statusH+46}}px - {{categoryHeight/2}}rpx);" 	capture-catch:touchmove="pageChangeEvent" >
             <swiper-item  wx:for="{{goodCategories}}" wx:key="name">

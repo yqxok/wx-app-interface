@@ -4,6 +4,7 @@
     "van-nav-bar": "@vant/weapp/nav-bar/index",
     "van-dialog": "@vant/weapp/dialog/index",
     "van-tab": "@vant/weapp/tab/index",
-    "van-tabs": "@vant/weapp/tabs/index"
+    "van-tabs": "@vant/weapp/tabs/index",
+    "ye-msg":"../../../components/common/ye-msg/ye-msg"
   }
 }

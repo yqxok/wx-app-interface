@@ -6,8 +6,10 @@ page{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-sizing: border-box;
+    padding: 20rpx 0;
     font-size: var(--big-font-size);
-    height: var(--item-height);
+    /* height: var(--item-height); */
     border-bottom: 1rpx solid rgb(243, 243, 243);
 }
 .user-img{

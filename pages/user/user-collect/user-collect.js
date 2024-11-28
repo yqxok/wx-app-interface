@@ -12,15 +12,16 @@ data: {
     selectNum:0,//选中数量
     isManaged:false,//是否开启管理
     leftOpen:false,//是否已经左滑
-    goodCollects:{},//page
+    goodCollects:{cursor:0,isEnd:false,list:[]},
     bottomHeight:150
 },
 lifetimes:{
     attached(){
+        this.msgTip=this.selectComponent('#msgTip')
     }
 },
 observers:{
-    'goodCollects.records':function (newVal) {
+    'goodCollects.list':function (newVal) {
         let selectNum=0,isChoosedAll=false
         newVal.forEach(item=>selectNum+=item.choosed?1:0)
         if(selectNum==newVal.length) isChoosedAll=true
@@ -35,10 +36,8 @@ methods: {
         this.requestCollect()
     },
     requestCollect(){
-        const user=getApp().globalData.user
-        getApp().collectService.getCollectVoList(user.userId,1,8)
+        getApp().collectService.getCollectVoList(0,20)
         .then(res=>{
-            res.data.records.forEach(item=>item.choosed=false)
             this.setData({goodCollects:res.data})
         })
     },
@@ -57,38 +56,36 @@ methods: {
     clickChoose(e){
         // console.log(e)
         const goodId= e.currentTarget.dataset.goodid
-        const records=this.data.goodCollects.records
-        records.forEach(item=>item.choosed=item.goodId==goodId?!item.choosed:item.choosed)
-        this.setData({'goodCollects.records':records})
+        const list=this.data.goodCollects.list
+        list.forEach(item=>item.choosed=item.goodInfo.goodId==goodId?!item.choosed:item.choosed)
+        this.setData({'goodCollects.list':list})
         
     },
     chooseAll(){
         this._chooseAll(false)
     },
     deleteCollectByList(){
-        const records= this.data.goodCollects.records
-        if(!records||records.length<1) return
-        const goodIds= records.filter(item=>item.choosed==true).map(item=>item.goodId)
-        const userId=getApp().globalData.user.userId
-        getApp().collectService.deleteCollect(userId,goodIds)
+        const list= this.data.goodCollects.list
+        if(!list||list.length<1) return
+        const goodIds= list.filter(item=>item.choosed==true).map(item=>item.goodInfo.goodId)
+        getApp().collectService.deleteCollect(goodIds)
         .then(res=>{
+            this.msgTip.showTip({msg:'取消收藏成功',warnType:false})
             this.startManage()
             this.requestCollect()
         })
     },
     deleteCollectById(e){
         const goodId= e.currentTarget.dataset.goodid
-        const userId=getApp().globalData.user.userId
-        getApp().collectService.deleteCollect(userId,[goodId])
+        getApp().collectService.deleteCollect([goodId])
         .then(res=>{
+            this.msgTip.showTip({msg:'取消收藏成功',warnType:false})
             this.requestCollect()
         })
     },
     navGoodDetail(e){
         const goodId=e.currentTarget.dataset.goodid
         wx.navigateTo({url: `./../../goods/good-detail/good-detail?goodId=${goodId}`})
-       
-        
     }
 }
 })

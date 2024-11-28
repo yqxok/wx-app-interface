@@ -1,4 +1,10 @@
 /* pages/message/msg-comment/msg-comment.wxss */
+.scroll-container{
+    flex:1;
+    box-sizing: border-box;
+    height: 1rpx;
+
+}
 .msg-cm-container{
     display: flex;
     box-sizing: border-box;

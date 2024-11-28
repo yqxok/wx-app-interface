@@ -37,12 +37,6 @@ data: {
         selectedIconPath: "/image/icon_API_HL.png",
         text: "我的"
     }],
-    // ,{
-    //     pagePath: "/pages/test/test",
-    //     icon: "",
-    //     selectedIconPath: "/image/icon_API_HL.png",
-    //     text: "测试"
-    // }
     listners:[],//监听器
     unReadNum:0
 },
@@ -76,7 +70,7 @@ methods: {
     updateUnReadCount(){
         const user=getApp().globalData.user
         if(user==null) return
-        getApp().userService.getNoReadNum(user.userId)
+        getApp().userService.getNoReadNum()
         .then(res=>this.setData({unReadNum:res.data}))
     },
     //监听tabbar点击事件

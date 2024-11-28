@@ -3,8 +3,8 @@
     <template name="cardItem">
         <view class="card-item" bind:tap="{{func}}">
             <span style="font-weight: bold;">{{label}}</span>
-            <view style="display: flex;align-items: center;font-size: var(--normal-font-size);color:var(--text-grey-color)">
-                <span>{{value}}</span>
+            <view style="margin-left: 40rpx; flex:1;display: flex;justify-content: flex-end; align-items: center;font-size: var(--normal-font-size);color:var(--text-grey-color)">
+                <span >{{value}}</span>
                 <van-icon name="arrow" />
             </view>
         </view>

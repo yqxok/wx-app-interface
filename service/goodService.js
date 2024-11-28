@@ -1,33 +1,52 @@
 const http=require('../utils/promiseRequest.js')
 module.exports={
-  //提交表单
-    postGood(obj){
-        return http.request({
-            url:'/good',
-            method:'POST',
-            data:obj,
-        })
+    /**
+     * 发布商品
+     * @param {*} goodDto 
+     */
+    postGood(goodDto){
+        return http.request({ url:'/good', method:'POST',data:goodDto,})
     },
-    updateGood(goodId,obj){
-        return http.request({url:`/good/${goodId}`,method:'PUT',data:obj})
+    /**
+     * 更新商品信息
+     * @param {*} goodDto 
+     */
+    updateGood(goodDto){
+        return http.request({url:`/good`,method:'PUT',data:goodDto})
     },
-    getGoodPage(page,pageSize,categoryName=null){
-        let url=`/good/no/${page}/${pageSize}`
-        url+=categoryName!=null?`?categoryName=${categoryName}`:''
-        return http.request({
-           url
-        })
+    /**
+     * 无需登录，获取商品游标页
+     * @param {*} cursor 
+     * @param {*} pageSize 
+     * @param {*} categoryName 
+     */
+    getGoodPage(cursor=0,pageSize,categoryName=null){
+        const data={cursor,pageSize}
+        if(categoryName) data.categoryName=categoryName
+        return http.request({url:'/good/no/page',data,method:'POST'})
     },
+    /**
+     * 无需登录，获取商品详情
+     * @param {*} goodId 
+     */
     getGoodDetailVo(goodId){
         return http.request({url:`/good/no/${goodId}`,method:'GET'})
     },
-    getGoodListById(userId,status){
+    /**
+     * 获取用户发布的商品
+     * @param {*} userId 
+     * @param {*} status 
+     */
+    getGoodListById(userId,status=null){
         const data={}
-        if(status!=null)
-            data.status=status
+        if(status!=null) data.status=status
         return http.request({url:`/good/no/list/${userId}`,data, method:'GET'})
     },
+    /**
+     * 删除商品
+     * @param {*} goodId 
+     */
     deleteGoodById(goodId){
-        return http.request({url:`/good/${goodId}/good`,method:'DELETE'})
+        return http.request({url:`/good/${goodId}`,method:'DELETE'})
     }
 }

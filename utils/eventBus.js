@@ -8,15 +8,13 @@ const eventBus = {
     },
     off(event,funcName) {
         if (!this.events[event]) return;
-    //   this.events[event] = this.events[event].filter(l => l !== listener);
         this.events[event].delete(funcName)
     },
     emit(event, data) {
         if (!this.events[event]) return;
-        this.events[event].forEach(( listner,key) =>{
-            // console.log(key)
-            listner(data)
-        } );
+        this.events[event].forEach(( value,key) =>{
+            value(data)
+        });
     }
 };
   

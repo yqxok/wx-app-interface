@@ -2,14 +2,14 @@
 <view class="goods-show-container" id="nihao">
     <template name="goods-show">
         <view class="goods-item-1" >
-            <view bind:tap="{{overlay?'':'goodTap'}}"  wx:for="{{list}}" wx:key="index" data-item= "{{item}}" class="goods-card ">
-                <image class="{{overlay?'good-overlay':''}}" style="position: relative; width: 100%;max-height: 500rpx; height: {{item.picUrls[0].h?item.picUrls[0].h:200}}rpx;" src="{{item.picUrls[0].url}}" mode="aspectFill"></image>
+            <view bind:tap="{{overlay?'':'tapGood'}}"  wx:for="{{list}}" wx:key="index" data-goodid="{{item.goodId}}" class="goods-card ">
+                <image class="{{overlay?'good-overlay':''}}" style="position: relative; width: 100%;max-height: 500rpx; height: {{item.picUrl.h?item.picUrl.h:200}}rpx;" src="{{item.picUrl.url}}" mode="aspectFill"></image>
                 <view style="box-sizing: border-box; padding:10rpx;">
                     <view class="good-title">{{item.html}} </view>
                     <view style="color: red;font-weight: bold;line-height: 1.6;">￥{{item.price}}</view>
-                    <view wx:if="{{needGoodUser}}" class="good-user-container" catch:tap="tapGoodUser" data-item="{{item}}">
-                        <image src="{{item.profilePicUrl}}" class="good-user-img"/>
-                        <view >{{item.userName}}</view>
+                    <view wx:if="{{needGoodUser}}" class="good-user-container" catch:tap="tapUser" data-userid="{{item.userInfo.userId}}">
+                        <image src="{{item.userInfo.profilePicUrl}}" class="good-user-img"/>
+                        <view >{{item.userInfo.userName}}</view>
                     </view>
                 </view>
             </view>

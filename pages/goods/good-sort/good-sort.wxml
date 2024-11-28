@@ -2,6 +2,6 @@
 <import src="../skeleton.wxml" />
 <scroll-view  scroll-y class="scroll-container" bind:scrolltolower="scrollToBottom" >
     <template is="skeleton" wx:if="{{skeletonLoading}}"></template>
-    <goods-show goodList="{{goodList}}" bind:tapGoodUserEvent="navToUserHome"
+    <goods-show goodList="{{goodPage.list}}" bind:tapGoodUserEvent="navToUserHome"
     bind:goodTapEvent="navToGoodDetail" wx:else></goods-show>
 </scroll-view>

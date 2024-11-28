@@ -8,7 +8,7 @@
                 <span>{{addressVo.phoneNumber}}</span>
             </view>
             <view style="color: var(--text-grey-color);font-size: var(--normal-font-size);margin-top:10rpx">
-                <view>{{addressVo.school+' '+addressVo.zone+' '+addressVo.dormiName+' '+addressVo.dormiNum}}</view>
+                <view>{{addressVo.dormiInfo.school+' '+addressVo.dormiInfo.zone+' '+addressVo.dormiInfo.dormiName+' '+addressVo.dormiNum}}</view>
             </view>
         </view>
         <view style="font-weight: bold;margin: 10rpx 0;" wx:else>请选择你的收货地址</view>
@@ -30,17 +30,17 @@
                 </view> 
                 <view style="width: 100%; display: flex;justify-content: space-between;align-items: center;">
                     <view style="font-size: var(--normal-font-size); color: var(--text-grey-color);">剩余：{{goodDetailVo.goodNum}}</view>
-                    <van-stepper max="{{goodDetailVo.goodNum}}" value="{{goodOrderDto.number}}" bind:change="stepperChange" />    
+                    <van-stepper max="{{goodDetailVo.goodNum}}" value="{{buyNum}}" bind:change="stepperChange" />    
                 </view>
             </view>
         </view>
-        <template is="buy-model" data="{{label:'小计',item:goodOrderDto.totalPrice}}"></template>
+        <template is="buy-model" data="{{label:'小计',item:totalPrice}}"></template>
     </view>
 </view>
 <view class="buy-bottom-container" >
     <view>
         <span>合计：</span>
-        <span style="color: red;">￥{{goodOrderDto.totalPrice}}</span>
+        <span style="color: red;">￥{{totalPrice}}</span>
     </view>
     <view bind:tap="buyGood" class="theme-btn bigger-font-size">确认购买</view>
 </view>

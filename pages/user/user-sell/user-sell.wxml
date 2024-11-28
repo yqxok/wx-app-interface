@@ -7,25 +7,25 @@
 </van-tabs>
 <swiper class="swiper-container" current="{{active}}"	bind:change="swiperChange">
     <swiper-item wx:for="{{4}}" wx:key="this" >
-        <scroll-view scroll-y="true" style=" height: 100%;box-sizing: border-box;padding: 20rpx;">
+        <scroll-view bind:scrolltolower="scrollToBottom" scroll-y="true" style=" height: 100%;box-sizing: border-box;padding: 20rpx;" data-index="{{index}}">
             <view style="height: 20rpx;"></view>
-            <view class="sell-container"  wx:for="{{ordersArr[index].records}}" wx:key="orderId">
+            <view class="sell-container"  wx:for="{{ordersArr[index].list}}" wx:key="orderId">
                 <view class="sell-top-container">
                     <view style="display: flex;align-items: center;">
-                        <image class="user-image" src="{{item.profilePicUrl}}" mode="aspectFill"></image>
-                        <span>{{item.userName}}</span>
+                        <image class="user-image" src="{{item.dealUser.profilePicUrl}}" mode="aspectFill"></image>
+                        <span>{{item.dealUser.userName}}</span>
                     </view>
                     <view style="color: rgb(223, 201, 3);">{{item.status<=1?(item.status==0?'正在交易中':'交易已完成'):'订单已取消'}}~</view>
                 </view>
                 <view class="sell-top-container" data-orderid="{{item.orderId}}" bind:tap="navToOrderDetail">
-                    <image class="good-image" src="{{item.picUrl}}" mode="aspectFill"></image>
-                    <view  class="text">{{item.html}}</view>
-                    <view style=" margin-right: 20rpx;color:rgb(179, 179, 179);font-size: 14px;">x{{item.number}}</view>
+                    <image class="good-image" src="{{item.goodInfo.picUrl.url}}" mode="aspectFill"></image>
+                    <view  class="text">{{item.goodInfo.html}}</view>
+                    <view style=" margin-right: 20rpx;color:rgb(179, 179, 179);font-size: 14px;">x{{item.buyNum}}</view>
                     <view style="font-size: 18px;font-weight: 500;">￥{{item.totalPrice}}</view>   
                 </view>
                 <view class="sell-top-container" style="margin-bottom: 0;">
-                    <view bind:tap="deleteOrder" style="color:rgb(179, 179, 179);font-size: var(--normal-font-size);">删除</view>
-                    <view data-theotherid="{{item.userId}}" data-goodid="{{item.goodId}}" bind:tap="navToMsgView" class="theme-btn">联系买家</view>
+                    <view bind:tap="openDialog" style="color:rgb(179, 179, 179);font-size: var(--normal-font-size);" data-orderid="{{item.orderId}}">删除</view>
+                    <view data-theotherid="{{item.dealUser.userId}}" data-goodid="{{item.goodInfo.goodId}}" style="background-color: var(--grey-btn-color);" bind:tap="navToMsgView" class="theme-btn">联系买家</view>
                     <!-- <view style="display: flex;">
                         <button  class="msg-send-btn">联系买家</button>
                         <button class="msg-send-btn">去评价</button>
@@ -36,4 +36,5 @@
         </scroll-view>
     </swiper-item>
 </swiper>
-<van-dialog id="van-dialog"  message="确认删除该订单吗" showCancelButton showConfirmButton show="{{deleteTableShow}}"/>
+<ye-msg id="msgTip" top="20%"></ye-msg>
+<van-dialog id="van-dialog" data-orderid="{{item.orderId}}"   message="确认删除该订单吗"   showCancelButton showConfirmButton bind:confirm="dialogConfirm" bind:cancel="dialogCancel" show="{{deleteTableShow}}"/>

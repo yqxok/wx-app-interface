@@ -45,17 +45,17 @@ methods:{
     
     onLoad(){
         const getGoods=()=>{
-            getApp().goodService.getGoodPage(1,8).
+            getApp().goodService.getGoodPage(0,8).
             then(res=>{
                 res.data.isEnd=false//添加额外字段，表示商品是否已全部查询完毕
-                this.setData({skeletonLoading:false,goodList:res.data})
+                this.setData({skeletonLoading:false,goodPage:res.data})
             })
         }
         const tabbar=this.getTabBar()
+        tabbar.init()
         tabbar.addListner(()=>{
            this.setData({skeletonLoading:true,scrollTop:0,scrollTop1:0,'categoryBar.selected':0})
            setTimeout(getGoods,500)
-        //    getGoods()
         },0)
        
         getGoods()
@@ -71,13 +71,10 @@ methods:{
     
     //进入商品详情页
     navToGoodDetail(e){
-        wx.navigateTo({url: `./good-detail/good-detail?goodId=${e.detail.goodDetail.goodId}`,
-        success:(res)=>{
-            // res.eventChannel.emit('goodDetailEvent', { goodVo:e.detail.goodDetail })
-        }})
+        wx.navigateTo({url: `./good-detail/good-detail?goodId=${e.detail.goodId}`})
     },
     navToUserHome(e){
-        const userId=e.detail.goodVo.userId
+        const userId=e.detail.userId
         getApp().userService.getUser(userId)
         .then(res=>{
             wx.navigateTo({url: '../user/user-home/user-home',
@@ -103,16 +100,15 @@ methods:{
 
     scrollToBottom(){
 
-        const goodList=this.data.goodList
-        if(goodList.isEnd) return
+        const goodPage=this.data.goodPage
+        if(goodPage.isEnd) return
         let categoryName=this.data.goodCategories[this.data.categoryBar.selected].name
         if(categoryName=='推荐') categoryName=null
-        getApp().goodService.getGoodPage(goodList.current+1,8,categoryName).then(res=>{
-            goodList.records.push(...res.data.records)
-            goodList.total=goodList.records.length
-            goodList.current++;
-            if(res.data.total<8) goodList.isEnd=true
-            this.setData({goodList})
+        getApp().goodService.getGoodPage(goodPage.cursor,8,categoryName).then(res=>{
+            goodPage.list.push(...res.data.list)
+            goodPage.isEnd=res.data.isEnd
+            goodPage.cursor=res.data.cursor
+            this.setData({goodPage})
         }) 
     },
     tapCateogry(e){
@@ -123,10 +119,9 @@ methods:{
         if(categoryName=='推荐')
             categoryName=null
         const getGoodList=()=>{
-            getApp().goodService.getGoodPage(1,8,categoryName).
+            getApp().goodService.getGoodPage(0,8,categoryName).
             then(res=>{
-                res.data.isEnd=false//添加额外字段，表示商品是否已全部查询完毕
-                this.setData({goodList:res.data,skeletonLoading:false,scrollTop1:0})
+                this.setData({goodPage:res.data,skeletonLoading:false,scrollTop1:0})
             })
         }
         setTimeout(getGoodList,500)

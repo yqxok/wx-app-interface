@@ -57,6 +57,11 @@ button::after{content: "";border: none;border-radius: 0;width: 0;height: 0;}
     font-size: var(--big-font-size);
     font-weight: bold;
 }
+.one-row-text{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis ;
+}
 .theme-border{
     border:1rpx solid var(--theme-color) !important;
 }

@@ -8,15 +8,24 @@ page{
     background: rgb(245, 245, 245);
     box-sizing: border-box;
     padding:0 20rpx;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: flex-end; */
+    transform: rotateX(180deg);
    --line-height:calc(var(--big-font-size)*1.2);
    --user-img-width:calc(var(--line-height) + 40rpx);
 }
 .msg-his-container{
     display: flex;
+    /* min-height: 100rpx; */
+    /* align-content: flex-end; */
     align-items: flex-start;
     margin-bottom: 30rpx;
+    transform: rotateX(180deg);
 }
 .msg-my-container{
+    transform: rotateX(180deg);
+    /* min-height: 100rpx; */
     display: flex;
     align-items: flex-start;
     justify-content: flex-end;

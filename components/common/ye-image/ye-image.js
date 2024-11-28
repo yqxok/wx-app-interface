@@ -17,7 +17,7 @@ data: {
 },
 methods: {
     tapImg(e){
-        this.triggerEvent('click')
+        this.triggerEvent('clickImage')
     },
     imageError(e){
         this.setData({imgUrl:'https://gd-hbimg.huaban.com/08bc577200c1146b3aa6dddb87822b6c892b9d3a1a9a-P9Zen7_fw658'})

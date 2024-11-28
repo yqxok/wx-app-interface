@@ -1,16 +1,20 @@
 <van-nav-bar title="互动消息"  left-arrow  bind:click-left="navBack"/>
-<block wx:for="{{cmMsgVoPage.records}}" wx:key="cmMsgId">
-    <view class="msg-cm-container" bind:tap="navToGoodDetail" data-goodid="{{item.goodId}}">
-        <image class="user-img" src="{{item.profilePicUrl}}" mode="aspectFill"></image>
-        <view style="flex:1;display: flex;flex-direction: column;align-items: flex-start;justify-content: space-between;">
-            <view>
-                <span>{{item.userName}} </span>
-                <span style="color:var(--text-grey-color);">{{item.type==0?'回复了我的评论':'在您宝贝下留言了'}} </span>
+<scroll-view bind:scrolltolower="scrollToBottom" scroll-y class="scroll-container" >
+    <block wx:for="{{cmMsgVoPage.list}}" wx:key="cmMsgId">
+        <view class="msg-cm-container" bind:tap="navToGoodDetail" data-goodid="{{item.goodInfo.goodId}}">
+            <image class="user-img" src="{{item.userInfo.profilePicUrl}}" mode="aspectFill"></image>
+            <view style="flex:1;display: flex;flex-direction: column;align-items: flex-start;justify-content: space-between;margin-right: 40rpx;overflow: hidden;">
+                <view>
+                    <span>{{item.userInfo.userName}} </span>
+                    <span style="color:var(--text-grey-color);">{{item.type}} </span>
+                </view>
+                <view style="width:100%" class="one-row-text">{{item.content}}</view>
+                <view style="color:var(--text-grey-color);font-size:var(--small-font-size)">{{item.createTime}}</view>
             </view>
-            <view >{{item.content}}</view>
-            <view style="color:var(--text-grey-color);font-size:var(--small-font-size)">{{item.createTime}}</view>
+            <image class="good-img" src="{{item.goodInfo.picUrl.url}}" mode="aspectFill"></image>
         </view>
-        <image class="good-img" src="{{item.picUrl}}" mode="aspectFill"></image>
-    </view>
-    <view class="split-border" ></view>
-</block>
+        <view class="split-border" ></view>
+    </block>
+    <view style="height: env(safe-area-inset-bottom);"></view>
+</scroll-view>
+

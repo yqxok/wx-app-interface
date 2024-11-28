@@ -2,13 +2,13 @@
 module.exports=Behavior({
 methods:{
     _chooseAll:function(cancelAll){
-        const records= this.data.goodCollects.records
+        const list= this.data.goodCollects.list
         if(this.data.isChoosedAll||cancelAll){
-            records.forEach(item=>item.choosed=false)
-            this.setData({'goodCollects.records':records})
+            list.forEach(item=>item.choosed=false)
+            this.setData({'goodCollects.list':list})
         }else{
-            records.forEach(item=>item.choosed=true)
-            this.setData({'goodCollects.records':records})
+            list.forEach(item=>item.choosed=true)
+            this.setData({'goodCollects.list':list})
         }
     }
 }

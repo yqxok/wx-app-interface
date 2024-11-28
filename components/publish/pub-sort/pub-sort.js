@@ -2,38 +2,24 @@ const { async } = require("validate.js")
 
 Component({
 properties:{
-    //父组件传递的分类数组
-    getCategory:Function,
     closed:{
         type:Boolean,
         value:false
     },
-    allCategories:{//传入分类
-        type:Array,
-        value:[]
-    }
-},
-observers:{
-    allCategories:function (newVal) {
-        
-    }
+   
 },
 data:{
-    // all:[['手机','数码','玩具','户外','书籍'],['垃圾','狗屎','傻逼']],
-    categories:{
-        all:[],//网络请求的数据
-        allBeChoose:false,
-        chosenSort:[],//被选中的分类标签序号
-    },
+    tags:[],//标签
     sortBarHeight:'10rpx'
-    //chosenSort[i]=j表示第i行的第j个被选中
+
 },
 lifetimes:{
     attached(){
-        this.properties.getCategory({})
+        getApp().categoryService.getCategory()
         .then(res=>{
-            this.data.categories.all=[res.data]
-            this.setData({categories:this.data.categories})
+ 
+            this.data.tags.push(res.data)
+            this.setData({tags:this.data.tags})
         })
     }
 },
@@ -48,64 +34,43 @@ methods:{
         const categories=this.data.categories
         return categories.chosenSort.length==categories.all.length
     },
-    //提供给父组件的api
-    async setCategores(categories){
-        const categoriesTmp=this.data.categories
-        for(let index=0;index<categories.length;index++){
-            let item=categories[index]
-            const res =await this.properties.getCategory({pkId:item})
-            if(res.data.length>0)
-                categoriesTmp.all.push(res.data)
-  
-            const num= categoriesTmp.all[index].indexOf(item)
-            categoriesTmp.chosenSort.push(num)
-            
-        }
-        this.setData({'categories.all':categoriesTmp.all,'categories.chosenSort':categoriesTmp.chosenSort})
-   
-
-           
-           
-        // })
- 
+    //提供给父组件的api,查询该商品的标签
+    async setCategores(goodId){
+        getApp().categoryService.getCategoryByGoodId(goodId)
+        .then(res=>this.setData({tags:res.data}))
     },
-    //提供给父组件的api
+    //提供给父组件的api，获取所选的标签
     getAllCategories(){
-        
-        const categories=this.data.categories
-        categories.choosed=categories.chosenSort.map((value,index)=>categories.all[index][value])
-        if(categories.choosed.length!==categories.all.length)
-            throw new Error('请选择标签')
-        return categories.choosed
+        const tags=this.data.tags
+        let list=[]
+        for(let i=0;i<tags.length;i++){
+            if(tags[i].choose==-1)
+                throw new Error('请选择标签')
+            list.push(tags[i].categories[tags[i].choose])
+        }
+        return list
     },
     //选中分类按钮
     async sortTap(e){
         if(!e.target.dataset.item)
             return
-        const categories=this.data.categories
+        let tags=this.data.tags
         const i=e.target.dataset.item[0]
         const j=e.target.dataset.item[1]
 
-        if(categories.chosenSort[i]==j){//取消标签
-            categories.all=categories.all.slice(0,i+1)
-            categories.chosenSort=categories.chosenSort.slice(0,i)
-            this.setData({categories})
+        if(tags[i].choose==j){//取消标签
+            tags=tags.slice(0,i+1)
+            tags[i].choose=-1
+            this.setData({tags})
         }else{//选中标签
-            categories.chosenSort=categories.chosenSort.slice(0,i)
-            categories.chosenSort.push(j)
-            this.setData({'categories.chosenSort':categories.chosenSort})
-            // categories.chosenSort.push(categories.all[i][j])
-            const res= await this.properties.getCategory({pkId:categories.all[i][j]})
-            categories.all=categories.all.slice(0,i+1)
-            if(res.data.length>0){
-                categories.all.push(res.data)
+            tags[i].choose=j
+            const res= await getApp().categoryService.getCategory(tags[i].categories[j])
+            tags=tags.slice(0,i+1)
+            if(res.data.categories.length>0){
+                tags.push(res.data)
             }
-            this.setData({'categories.all':categories.all})
+            this.setData({tags})
         }
-        
-        this.triggerEvent('sortChangeEvent',{sort:categories.chosenSort.map((value,index)=>categories.all[index][value])})
-        
     }
-   
 }
 })

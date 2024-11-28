@@ -5,8 +5,8 @@ data:{
     mySelf:null,
     background:'https://ts4.cn.mm.bing.net/th?id=OIP-C.xffq1npGsVo7qNo2HdMttgHaEo&w=316&h=197&c=8&rs=1&qlt=90&o=6&dpr=1.7&pid=3.1&rm=2',
     current:0,
-    noSellGoods:{orders:[]},
-    selledGoods:{orders:[]},
+    noSellGoods:[],
+    selledGoods:[],
     opacityDegree:0,
     backgroundH:600,//背景图高度
     goodShowHeight:0//swiper高度
@@ -16,7 +16,6 @@ lifetimes:{
         //计算背景图的px高度
         const app=getApp()
         // const windowInfo=getApp().windowInfo
-        console.log(app)
         const w=app.windowInfo.windowWidth
         this.backgroundHPx= this.data.backgroundH/750*w-app.globalData.navH-app.globalData.statusH
         // console.log(windowInfo)
@@ -24,7 +23,6 @@ lifetimes:{
 },
 methods:{
     onLoad(){
-
         const user=getApp().globalData.user
         this.setData({mySelf:user})
         const eventChannel = this.getOpenerEventChannel()
@@ -32,11 +30,11 @@ methods:{
         eventChannel.on('userHomeEvent',  (data)=>{
             this.setData({user:data.user})
              getApp().goodService.getGoodListById(data.user.userId,0)
-            .then(res=>this.setData({'noSellGoods.records':res.data}))
+            .then(res=>this.setData({noSellGoods:res.data}))
             getApp().goodService.getGoodListById(data.user.userId,1)
-            .then(res=>this.setData({'selledGoods.records':res.data}))
+            .then(res=>this.setData({selledGoods:res.data}))
         })
-      
+        
   
     },
     // onShow(){

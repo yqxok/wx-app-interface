@@ -1,8 +1,8 @@
 <van-nav-bar title="{{isNameEdit?'设置昵称':'简介'}}"  left-arrow bind:click-left="navBack"/>
 <form bindsubmit="saveText">
     <view class="edit-container " >
-        <input name="editValue" type="text" class="input" value="{{content}}" wx:if="{{isNameEdit}}"  />
-        <textarea name="editValue" class="textarea" value="{{content}}" wx:else></textarea>
+        <input name="editValue" maxlength="8" type="text" class="input" value="{{content}}" wx:if="{{isNameEdit}}"  />
+        <textarea name="editValue" class="textarea" value="{{content}}" maxlength="30" wx:else></textarea>
         <view style="border-bottom: 5rpx solid black;margin:20rpx 0;"></view>
         <button class="save-btn" form-type="submit" bind:tap="">保存</button>
     </view>    

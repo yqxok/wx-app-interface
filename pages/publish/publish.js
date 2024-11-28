@@ -1,13 +1,11 @@
 // pages/publish/publish.js
 var myStyle=`--pub-edit-container-height:1000rpx;`
 const myBehavior=require('./behavior')
-const BeanUtil=require('../../utils/BeanUtil')
-const GoodDto=require('../../dto/GoodDto')
 Component({
 behaviors:[myBehavior],
 data: {
-    getCategory:getApp().categoryService.getCategory,//传入api
-    goodDto:new GoodDto(),
+    // getCategory:getApp().categoryService.getCategory,//传入api
+    goodDto:{goodNum:1},
     goodVo:{},
     isUpdatePub:false,//发布按钮的文字
     fileList:[],
@@ -39,15 +37,15 @@ methods:{
         // 监听acceptDataFromOpenerPage事件，获取上一页面通过eventChannel传送到当前页面的数据
         eventChannel.on('editToPublishEvent',  (data)=> {
             const fileList=data.goodVo.picUrls.map(item=>{return {url:item.url}})
-            let goodDto=new GoodDto()
-            BeanUtil.copyProperties(data.goodVo,goodDto)
-            getApp().categoryService.getCategoryByGoodId(data.goodVo.goodId)
-            .then(res=>{
-                goodDto.categories=res.data
-                this.pubSort.setCategores(res.data) 
-                this.setData({goodVo:data.goodVo,fileList,goodDto,categoryOpen:true})
-            })
+            const goodDto=this.getGoodDto(data.goodVo)
+            this.pubSort.setCategores(data.goodVo.goodId) 
+            this.setData({goodVo:data.goodVo,fileList,goodDto,categoryOpen:true})
+           
         })
+    },
+    getGoodDto(gVo){
+        return {goodId:gVo.goodId,goodNum:gVo.goodNum,html:gVo.html,picUrls:gVo.picUrls,
+        price:gVo.price,categories:gVo.categories}
     },
     goodNumChange(e){
         this.setData({'goodDto.goodNum':e.detail})

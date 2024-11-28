@@ -3,10 +3,11 @@ Component({
 data:{
     isLogin:false,//是否已经登录
     chatContentList:null,
+    contacts:{cursor:0,isEnd:false,list:[]},
     deleteTableShow:false,
     deletedGoodId:null,//被选中要删除的消息框
-    noReadOrderVo:{noReadNum:0,content:'暂无订单消息',createTime:null},
-    commentMsgVo:{noReadCount:0,userName:'暂无互动消息',createTime:null}
+    orderMsgRoom:{noReadNum:0,content:'暂无订单消息',createTime:''},
+    commentMsgRoom:{noReadNum:0,msg:'暂无互动消息',createTime:''}
 },
 pageLifetimes:{
     show(){
@@ -17,26 +18,31 @@ pageLifetimes:{
 },
 methods:{
     navToMsgView(e){
-        const goodId=e.currentTarget.dataset.goodid
-        const theOtherId=e.currentTarget.dataset.theotherid
-        wx.navigateTo({url: `./msg-view/msg-view?theOtherId=${theOtherId}&goodId=${goodId}`})
+        const item=e.currentTarget.dataset.item
+        wx.navigateTo({url: `./msg-view/msg-view?goodId=${item.goodInfo.goodId}&userId=${item.userInfo.userId}`,
+        success:(res)=>{
+            if(item.noReadNum>0)
+                getApp().chatContentService.msgRead(item.goodInfo.goodId,item.userInfo.userId)
+                .then(res1=>{})
+        }})
     },
     updateChatMsgs(){
-        const user=getApp().globalData.user
-        getApp().chatContentService.getNoReadCount(user.userId)
-        .then(res=>this.setData({chatContentList:res.data}))
+        getApp().chatContentService.getContacts(0,20)
+        .then(res=>{
+            this.data.contacts=res.data
+            this.setData({contacts:this.data.contacts})
+        })
+      
     },
     updateOrderMsg(){
-        const user=getApp().globalData.user
-        getApp().orderService.getOrderMsgCount(user.userId)
-        .then(res=>{
-            this.setData({noReadOrderVo:res.data})})
+        getApp().orderService.getOrderMsgRoom()
+        .then(res=>{ this.setData({orderMsgRoom:res.data})})
     },
     updateCmMsg(){
-        const user=getApp().globalData.user
-        getApp().goodCommentService.getCmMsgCountVo(user.userId)
+        
+        getApp().goodCommentService.getCommentMsgRoom()
         .then(res=>{
-            this.setData({commentMsgVo:res.data})})
+            this.setData({commentMsgRoom:res.data})})
     },
     onLoad(){
         //监听消息事件
@@ -55,6 +61,7 @@ methods:{
         }
         if(!this.data.isLogin)
             this.setData({isLogin:true})
+        
         this.updateChatMsgs()
         this.updateOrderMsg()
         this.updateCmMsg()
@@ -68,21 +75,28 @@ methods:{
        
     },
     navToMsgCenter(){
-        wx.navigateTo({url: './msg-center/msg-center'})
+        wx.navigateTo({url: './msg-center/msg-center',
+        success:(res)=>{
+            if(this.data.orderMsgRoom.noReadNum>0)
+                getApp().userService.msgRead(1).then(res=>{})
+        }})
     },
     navToCommentMsg(){
-        wx.navigateTo({url:'../message/msg-comment/msg-comment'})
+        wx.navigateTo({url:'../message/msg-comment/msg-comment',
+        success:(res)=>{
+            if(this.data.commentMsgRoom.noReadNum>0)
+                getApp().userService.msgRead(0).then(res=>{})
+        }})
     },
     showDeleteTable(e){
-        const goodId=e.currentTarget.dataset.goodid
-        this.setData({deleteTableShow:true,deletedGoodId:goodId})
+        const contactId=e.currentTarget.dataset.item.contactId
+        this.setData({deleteTableShow:true,deleteContactId:contactId})
     },
     confirmDelete(){
-        const userId=getApp().globalData.user.userId
-        getApp().chatContentService.deleteMsg(userId,this.data.deletedGoodId).
+        getApp().chatContentService.contactDelete(this.data.deleteContactId).
         then(res=>this.updateChatMsgs())
-        this.setData({deletedGoodId:null})
-
+        this.setData({deleteContactId:null})
+        
         // console.log(e)
     },
     cancelDelete(){
@@ -90,6 +104,17 @@ methods:{
     },
     navToLogin(){
         wx.navigateTo({url:'../user/user-login/user-login'})
+    },
+    scrollToBottom(){
+        const contacts=this.data.contacts
+        if(contacts.isEnd) return
+        getApp().chatContentService.getContacts(contacts.cursor,20)
+        .then(res=>{
+            contacts.isEnd=res.data.isEnd
+            contacts.list.push(...res.data.list)
+            contacts.cursor=res.data.cursor
+            this.setData({contacts})
+        })
     }
 }
 })

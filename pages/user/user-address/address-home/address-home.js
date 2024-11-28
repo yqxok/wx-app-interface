@@ -1,10 +1,7 @@
 const Dialog=require('@vant/weapp/dialog/dialog.js')
 Component({
 data:{
-    address:[
-        // {receiver:'叶启欣',phoneNumber:13257676770,address:'东莞理工学院 松山湖 莞华12栋',dormiNum:304,default:true},
-        // {receiver:'张三',phoneNumber:15766066826,address:'东莞理工学院 松山湖 莞博22栋',dormiNum:504, default:false}
-    ],
+    address:{cursor:0,isEnd:true,list:[]},
     cfdAddressId:null,//确定要删除的addressId
     current:0,//当前默认的地址
     manageOpen:false,
@@ -17,16 +14,19 @@ observers:{
         console.log(v1)
     }
 },
+lifetimes:{
+    attached(){
+        this.msgTip=this.selectComponent('#msgTip')
+    }
+},
 methods:{
     onLoad(option){
-
         if('key' in option&&option.key=='1'){
             this.setData({getAddress:true})
         }
     },
     reloadAddress(){
-        const user=getApp().globalData.user
-        getApp().addressService.getAddressList(user.userId)
+        getApp().addressService.getAddressList(0,8)
         .then(res=>this.setData({address:res.data}))
     },
     onShow(){
@@ -52,7 +52,7 @@ methods:{
     setDefault(e){
         const user=getApp().globalData.user
         const addressId=e.currentTarget.dataset.addressid
-        getApp().addressService.setDefaultAddress(user.userId,addressId)
+        getApp().addressService.setDefaultAddress({userId:user.userId,addressId})
         .then(res=>this.reloadAddress())
         // const num=e.currentTarget.dataset.num
         // if(num==this.data.current) return
@@ -73,7 +73,8 @@ methods:{
         if(cfdAddressId==null) return
         getApp().addressService.deleteAddress(cfdAddressId)
         .then(res=>{
-           this.reloadAddress()
+            this.msgTip.showTip({msg:'地址删除成功',warnType:false})
+            this.reloadAddress()
         })
     },
     cancelDelete(){
@@ -84,7 +85,7 @@ methods:{
         // const _this=this
         wx.navigateTo({url:'../user-address?key=1',//
             success:(res)=>{
-                res.eventChannel.emit('addressDataEvent', { addressDto: this.data.address[index] })
+                res.eventChannel.emit('addressDataEvent', { addressDto: this.data.address.list[index] })
             }
         })
     },

@@ -20,7 +20,7 @@
             <!-- <view class="pub-edit-position">莞博22栋</view> -->
             <van-divider></van-divider>
             <!-- 下拉框 -->
-            <pub-sort bind:sortChangeEvent="sortChange" id="pub-sort" closed="{{categoryOpen}}" categoriesAll bind:openCategoryEvent="openCategoryEvent" getCategory="{{getCategory}}" ></pub-sort>
+            <pub-sort bind:sortChangeEvent="sortChange" id="pub-sort" closed="{{categoryOpen}}" categoriesAll bind:openCategoryEvent="openCategoryEvent" ></pub-sort>
         </view>
         <!-- 填写价格 -->
         <price-input show="{{priceShow}}" bind:closePriceEvent="closePrice" bind:getPriceEvent="getPrice"></price-input>

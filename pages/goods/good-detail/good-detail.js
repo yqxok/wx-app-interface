@@ -5,13 +5,14 @@ data:{
     goodDetailVo:null,//商品信息
     goodCategories:[],//商品类别
     pageH:0,
-    comments:[],//商品评论
+    comments:[],//商品留言
     keyboardShow:false,
     allComment:false,
     deleteTableShow:false,//显示删除框
     marginBottom:0,//输入框底部距离
     inputFocus:false,//输入框聚焦
-    isCollected:false//是否被收藏
+    isCollected:false,//是否被收藏
+    _goodId:null
 },
 lifetimes:{
     attached(){
@@ -25,31 +26,28 @@ methods:{
         this.msgTip.showTip('点赞')
     },
     onLoad(e){
-        const goodId=e.goodId
+        this.data._goodId=e.goodId
+      
+    },
+    onShow(){
+        const goodId=this.data._goodId
         const user=getApp().globalData.user
         getApp().goodService.getGoodDetailVo(goodId)
         .then(res=>{
-            this.setData({goodDetailVo:res.data})
-            //获取评论
-            // getApp().goodCommentService.getGoodComments(goodId,user&&user.userId?user.userId:null)
-            // .then(res=>this.setData({comments:res.data}))
-            //请求分类
-            getApp().categoryService.getCategoryByGoodId(goodId)
-            .then(res=>this.setData({goodCategories:res.data}))
+            this.setData({goodDetailVo:res.data,user})
             if(user){
-                getApp().collectService.getCollectNum(user.userId,goodId)
-                .then(res=>this.setData({isCollected:res.data,user}))
+                getApp().collectService.isCollected(goodId)
+                .then(res=>this.setData({isCollected:res.data}))
             }
         }).catch(err=>{
             this.setData({goodExit:false})
-        })
-        
-            
+        })   
     },
-    clickImg(){
+    clickImg(e){
+        const url=e.currentTarget.dataset.url
         const picUrls=this.data.goodDetailVo.picUrls
         const imgs=picUrls.map(item=>item.url)
-        wx.previewImage({urls: [...imgs],current:''})
+        wx.previewImage({urls: [...imgs],current:url})
     },
     navToUserHome(e){
         const userId=e.currentTarget.dataset.userid
@@ -65,9 +63,7 @@ methods:{
         getApp().goodCommentService.getGoodComments(goodId,userId)
         .then(res=>this.setData({comments:res.data}))
     },
-    
     //goodCommentDto,commentId
-   
     navBackToGoods(){
         if(this.data._comefromPub){
             this.data_comefromPub=false
@@ -79,8 +75,8 @@ methods:{
         const user=getApp().globalData.user
         if(!user) return 
         const goodId=e.currentTarget.dataset.goodid
-        const theOtherId=e.currentTarget.dataset.theotherid
-        wx.navigateTo({url: `../../message/msg-view/msg-view?theOtherId=${theOtherId}&goodId=${goodId}`})
+        const userId=e.currentTarget.dataset.userid
+        wx.navigateTo({url: `../../message/msg-view/msg-view?userId=${userId}&goodId=${goodId}`})
     },
     navToBuy(){
         const user=getApp().globalData.user
@@ -90,11 +86,10 @@ methods:{
             res.eventChannel.emit('goodBuyEvent',{goodDetailVo:this.data.goodDetailVo})
         }})
     },
-    navToPubEdit(e){
-        const item=e.currentTarget.dataset.item
+    navToPubEdit(){
         wx.navigateTo({url:'../../publish/publish?key=1',
             success:(res)=>{
-                res.eventChannel.emit('editToPublishEvent', { goodVo:item })
+                res.eventChannel.emit('editToPublishEvent', { goodVo:this.data.goodDetailVo })
             }
         })
     },
@@ -103,19 +98,15 @@ methods:{
         if(!user) return 
         const isCollected=this.data.isCollected
         if(!isCollected){
+            this.setData({isCollected:true,'goodDetailVo.collectNum':++this.data.goodDetailVo.collectNum})
             const collectDto={goodId:this.data.goodDetailVo.goodId,
                 userId:getApp().globalData.user.userId}
             getApp().collectService.saveCollect(collectDto)
-            .then(res=>{
-                const collectNum=this.data.goodDetailVo.collectNum+1
-                this.setData({isCollected:res.data,'goodDetailVo.collectNum':collectNum})
-            })
+            .then(res=>{})
         }else{
+            this.setData({isCollected:false,'goodDetailVo.collectNum':--this.data.goodDetailVo.collectNum})
             getApp().collectService.deleteCollect(user.userId,[this.data.goodDetailVo.goodId])
-            .then(res=>{
-                const collectNum=this.data.goodDetailVo.collectNum-1
-                this.setData({isCollected:res.data,'goodDetailVo.collectNum':collectNum})
-            })
+            .then(res=>{})
         }
         
     },
@@ -129,7 +120,9 @@ methods:{
     },
     confirmDelete(){
         getApp().goodService.deleteGoodById(this.data.goodDetailVo.goodId).
-        then(res=>console.log(res))
+        then(res=>{
+            wx.navigateBack()
+        })
         this.setData({curSelectedItem:null})
         // console.log(e)
     },
@@ -144,25 +137,24 @@ methods:{
     allCommentShow(){
         this.setData({allComment:!this.data.allComment})
     },
-    
-    gJConfirm(e){
-        const user=getApp().globalData.user
-        if(!user) return
-        const commentId=e.detail.commentId
-        getApp().goodCommentService.saveGoodJob({commentId,userId:user.userId})
-        .then(res=>{
-            this.getCommentList(this.data.goodDetailVo.goodId,user.userId)
-        })
-        // this.setData({})
-    },
-    gJCancel(e){
-        const user=getApp().globalData.user
-        if(!user) return
-        const commentId=e.detail.commentId
-        getApp().goodCommentService.deleteGoodJob({commentId,userId:user.userId})
-        .then(res=>{
-            this.getCommentList(this.data.goodDetailVo.goodId,user.userId)
-        })
-    }
+    // gJConfirm(e){
+    //     const user=getApp().globalData.user
+    //     if(!user) return
+    //     const commentId=e.detail.commentId
+    //     getApp().goodCommentService.saveGoodJob({commentId,userId:user.userId})
+    //     .then(res=>{
+    //         this.getCommentList(this.data.goodDetailVo.goodId,user.userId)
+    //     })
+    //     // this.setData({})
+    // },
+    // gJCancel(e){
+    //     const user=getApp().globalData.user
+    //     if(!user) return
+    //     const commentId=e.detail.commentId
+    //     getApp().goodCommentService.deleteGoodJob({commentId,userId:user.userId})
+    //     .then(res=>{
+    //         this.getCommentList(this.data.goodDetailVo.goodId,user.userId)
+    //     })
+    // }
 }
 })

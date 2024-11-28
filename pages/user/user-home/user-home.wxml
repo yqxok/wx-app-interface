@@ -14,7 +14,7 @@
         </view>
     </view>
     <view class="container">
-        <span>{{user.bio?user.bio:'这个人很懒，没有写个人简介...'}}</span>
+        <span style=" font-size: var(--normal-font-size); flex:1;overflow: hidden;white-space:nowrap;text-overflow: ellipsis;margin-right: 40rpx;">{{user.bio?user.bio:'这个人很懒，没有写个人简介...'}}</span>
         <span style="font-weight: bold;" bind:tap="navToUserNotEdit" >更多</span>
     </view>
     <view class="container">

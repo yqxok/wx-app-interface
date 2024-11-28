@@ -4,6 +4,7 @@
     "van-nav-bar": "@vant/weapp/nav-bar/index",
     "ye-search":"../../../components/common/ye-search/ye-search",
     "van-icon": "@vant/weapp/icon/index",
-    "ye-swipe-cell":"../../../components/common/ye-swipe-cell/ye-swipe-cell"
+    "ye-swipe-cell":"../../../components/common/ye-swipe-cell/ye-swipe-cell",
+    "ye-msg":"../../../components/common/ye-msg/ye-msg"
   }
 }

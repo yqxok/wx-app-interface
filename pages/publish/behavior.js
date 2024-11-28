@@ -31,22 +31,27 @@ methods:{
                 wx.redirectTo({url:`../goods/good-detail/good-detail?goodId=${resData.data}`})
                
             }else{//重新发布
-                const otherUrl=this.data.goodDto.picUrls.filter(item=>item.search(config.host)==-1?true:false)
-                const myHostUrl=this.data.goodVo.picUrls.filter(item=>this.data.goodDto.picUrls.indexOf(item.url)!=-1)
-                const resUrl= getApp().uploadService.upload({urls:otherUrl,sort:'good'})
+                const otherUrl=this.data.fileList.filter(item=>item.url.search(config.qiniuUrl)==-1?true:false).map(i=>i.url)
+                const myHostUrl=this.data.goodVo.picUrls.filter(item=>{
+                    const fileList=this.data.fileList
+                    for(var i=0;i<fileList.length;i++){
+                        if(fileList[i].url.indexOf(item.url)!=-1) return true
+                    }
+                    return false
+                })
+                const resUrl=await getApp().uploadService.upload({urls:otherUrl,sort:'good'})
                 this.data.goodDto.picUrls=[...myHostUrl,...resUrl]
-                resData=getApp().goodService.updateGood(this.data.goodVo.goodId, this.data.goodDto)                
+                resData=await getApp().goodService.updateGood({...this.data.goodDto})   
             }
             this.setData({loadingShow:false})
             wx.redirectTo({url:`../goods/good-detail/good-detail?goodId=${resData.data}`})
         } catch (error) {
             this.setData({loadingShow:false})
-            this.msgTip.showTip(error.message)
+            this.msgTip.showTip({msg:error.message})
             
         }
     },
     validatePicUrl(){
-        // console.log('dfdff')
         const fileList=this.data.fileList
         if(fileList==null||fileList.length<1)
             throw new Error('请上传图片')
@@ -59,8 +64,7 @@ methods:{
         return this
     },
     validateCategory(){
-        if(!this.pubSort.isAllSelected())
-            throw new Error('请选择分类') 
+        this.data.goodDto.categories=this.pubSort.getAllCategories()
         return this
     }
 

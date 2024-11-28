@@ -15,7 +15,7 @@ properties: {
 data: {
     deleteTableShow:false,
     goodVos:[],
-    host:getApp().config.host,
+    // host:getApp().config.host,
     
 
     curSelectedItem:null
@@ -32,7 +32,7 @@ methods: {
     },
     getGoodVoList(){
         const user=getApp().globalData.user
-        getApp().goodService.getGoodListById(user.userId)
+        getApp().goodService.getGoodListById(user.userId,0)
         .then(res=>this.setData({goodVos:res.data}))
     },
     confirmDelete(e){
@@ -57,12 +57,17 @@ methods: {
     },
     navToPubEdit(e){
         // console.log(e)
-        const item=e.currentTarget.dataset.item
-        wx.navigateTo({url:'../../publish/publish?key=1',
-            success:(res)=>{
-                res.eventChannel.emit('editToPublishEvent', { goodVo:item })
+        const goodId=e.currentTarget.dataset.goodid
+        getApp().goodService.getGoodDetailVo(goodId)
+        .then(res=>{
+            wx.navigateTo({url:'../../publish/publish?key=1',
+            success:(res1)=>{
+                // res.eventChannel.emit('editToPublishEvent', { goodVo:this.data.goodDetailVo })
+                res1.eventChannel.emit('editToPublishEvent', { goodVo:res.data })
             }
         })
+        })
+       
     }
 }
 })

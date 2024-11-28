@@ -6,7 +6,7 @@ const goodCommentService=require('./goodCommentSevice.js')
 const addressService=require('./addressService.js')
 const dormitoryService=require('./dormitoryService.js')
 const chatContentService=require('./chatContentService.js')
-const chatContentWs=require('./chatContentWs')
+const wsService=require('./wsService.js')
 const collectService=require('./collectService')
 const orderService=require('./orderService')
 module.exports={
@@ -18,7 +18,7 @@ module.exports={
     addressService,
     dormitoryService,
     chatContentService,
-    chatContentWs,
+    wsService,
     collectService,
     orderService
 }

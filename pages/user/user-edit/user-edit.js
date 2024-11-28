@@ -46,7 +46,7 @@ methods:{
         const eventChannel = this.getOpenerEventChannel()
         eventChannel.on('userEditEvent',  (data)=>{
             this.setData({user:data.user,
-                currentDate:new Date(data.user.birthday+'T12:00:00').getTime()})
+                currentDate:new Date(data.user.birthday+'T12:00:00').getTime(),isMan:data.user.gender==='MALE'?true:false})
         })
     },
     confirmBirthday(e){

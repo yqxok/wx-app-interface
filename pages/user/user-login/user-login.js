@@ -33,30 +33,30 @@ methods:{
         try {
             this.validateData(v.phoneNumber,v.password)
         } catch (error) {
-            this.msgTip.showTip(error.message)
+            this.msgTip.showTip({msg:error.message})
             return
         }
         if(this.data.isLogin){
             getApp().userService.login({phoneNumber:v.phoneNumber,password:v.password})
             .then(res=>{
-                wx.setStorage({key:'token',data:res.data})
                 getApp().userService.getUserByToken(res.data)
                 .then(res1=>{
+                    wx.setStorage({key:'token',data:res.data})
                     getApp().globalData.user=res1.data
                     eventBus.emit('loginEvent',null)
                     wx.navigateBack()
                 })
-            }).catch(err=>this.msgTip.showTip(err.message))
+            }).catch(err=>this.msgTip.showTip({msg:err.message}))
         }else{
             if(v.password!=v.tryAgain){
-                this.msgTip.showTip('两次密码输入不同')
+                this.msgTip.showTip({msg:'两次密码输入不同'})
                 return
             }
             getApp().userService.signIn({phoneNumber:v.phoneNumber,password:v.password})
             .then(res=>{
-                wx.showToast({ title: res.message, icon:'success'})
+                this.msgTip.showTip({msg:'注册成功',warnType:false})
                 this.setData({isLogin:true})
-            }).catch(err=>this.msgTip.showTip(err.message))
+            }).catch(err=>this.msgTip.showTip({msg:err.message}))
         }
         // Notify({ type: 'primary', message: '通知内容' })
         

@@ -1,25 +1,59 @@
 const http=require('../utils/promiseRequest.js')
 module.exports={
-    saveOrder(goodOrderDto){
-        return http.request({url:'/goodOrder',data:goodOrderDto,method:'POST'})
+    /**
+     * 购买商品
+     * @param {*} goodId 
+     * @param {*} addressId 
+     * @param {*} buyNum 
+     */
+    saveOrder(goodId,addressId,buyNum){
+        return http.request({url:'/order',data:{goodId,addressId,buyNum},method:'POST'})
     },
+    /**
+     * 查询订单详情
+     * @param {*} orderId 
+     */
     getGoodOrderVo(orderId){
-        return http.request({url:`/goodOrder/${orderId}`,method:'GET'})
+        return http.request({url:`/order/${orderId}`,method:'GET'})
     },
-    getSimpleOrderVos(sDto){
-        return http.request({url:'/goodOrder/simpleOrders',method:'POST',data:sDto})
+    /**
+     * 获取订单页面
+     * @param {*} isBuyer 
+     * @param {*} status 
+     * @param {*} cursor 
+     * @param {*} pageSize 
+     */
+    getOrderPage(isBuyer,status=-1,cursor,pageSize){
+        return http.request({url:'/order/page',method:'POST',data:{isBuyer,status,cursor,pageSize}})
     },
-    changeOrderStatus(goodOrderDto){
-        return http.request({url:'/goodOrder/status',method:'PUT',data:goodOrderDto})
+     /**
+     * 更改订单状态
+     * @param {*} orderId 
+     * @param {*} status 
+     */
+    changeOrderStatus(orderId,status){
+        return http.request({url:'/order/status',method:'PUT',data:{orderId,status}})
     },
-    getOrderMsgs(userId){
-        return http.request({url:`/orderMsg/${userId}`,method:'GET'})
+    deleteOrder(orderId){
+        return http.request({url:`/goodOrder/${orderId}`,method:'DELETE'})
     },
-    getOrderMsgCount(userId){
-        return http.request({url:`/orderMsg/noRead/${userId}`,method:'GET'})
+    /**
+     * 查询订单消息页
+     * @param {*} cursor 
+     * @param {*} pageSize 
+     */
+    getOrderMsgs(cursor,pageSize){
+        return http.request({url:`/orderMsg/page`,method:'POST',data:{cursor,pageSize}})
     },
-    updateOrderReadStatus(orderMsgIds){
-        return http.request({url:'/orderMsg/noRead',method:'PUT',data:orderMsgIds})
-    }
-
+    /**
+     * 查询订单消息房间
+     */
+    getOrderMsgRoom(){
+        return http.request({url:`/orderMsg/room`,method:'GET'})
+    },
+   
+    // updateOrderReadStatus(orderId,status){
+    //     return http.request({url:'/orderMsg/noRead',method:'PUT',data:{orderId,status}})
+    // }
+    
 }

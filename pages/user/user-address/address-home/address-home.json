@@ -3,6 +3,7 @@
   "usingComponents": {
     "van-icon": "@vant/weapp/icon/index",
     "van-nav-bar": "@vant/weapp/nav-bar/index",
-    "van-dialog": "@vant/weapp/dialog/index"
+    "van-dialog": "@vant/weapp/dialog/index",
+    "ye-msg":"../../../../components/common/ye-msg/ye-msg"
   }
 }

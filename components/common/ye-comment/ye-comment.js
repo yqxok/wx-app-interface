@@ -6,47 +6,34 @@ properties: {
     //     type:Array,
     //     value:[]
     // },
-    goodDetailVo:{
+    good:{
         type:Object,
-        value:null
+        value:null    
     }
-  
-    // openAll:{
-    //     type:Boolean,
-    //     value:false
-    // }
 },
 observers:{
-    // comments:function(newValue){
-    //     const newComments=this.data.newComments
-    //     for(var i=0;i<newValue.length;i++){        
-    //         if(newComments[i]){
-    //             newValue[i].putAwayComment=newComments[i].putAwayComment
-    //         }else{
-    //             newValue[i].putAwayComment=true
-    //         }
-    //     }
-    //     this.setData({newComments:newValue})
-    // },
-    goodDetailVo:function(newValue){
+    'good.goodId':function(newValue){
         const user=getApp().globalData.user
-        if(newValue){
-            getApp().goodCommentService.getGoodComments(newValue.goodId,user?user.userId:null)
+        if(!this.data.goodId&&newValue){
+            const getComment=user?getApp().goodCommentService.comments:getApp().goodCommentService.commentsNoLogin
+            getComment(newValue,0,8)
             .then(res=>{
-                res.data.forEach(item=>item.putAwayComment=true)
-                this.setData({newComments:res.data})})
+                this.setData({comments:res.data,goodId:newValue})})
         }
     }
 },
 data: {
-    newComments:[],
+    comments:{cursor:0,isEnd:true,list:[]},
     input:{
-        comment:null,
+        comment:null,//评论缓存
         inputValue:'',
         fatherId:null,
+        replyId:null,
         commentStart:false,
+        isReply:false,//是否为回复评论
         placeholder:'看对眼就留言，问问更多细节~'
     },
+    goodId:null,
     marginBottom:0,
     inputFocus:false
 },
@@ -68,14 +55,16 @@ methods: {
         const user=getApp().globalData.user
         if(!user) return 
         var input=this.data.input
-        var fatherId=null
-        if(e.currentTarget.dataset.fatherid) fatherId=e.currentTarget.dataset.fatherid
         input.comment=e.currentTarget.dataset.comment
         input.arr=e.currentTarget.dataset.arr
-        input.fatherId=fatherId
         input.commentStart=true
+        if(e.currentTarget.dataset.fatherid){
+            input.isReply=true
+            input.fatherId=e.currentTarget.dataset.fatherid
+            input.replyId=input.comment.userInfo.userId
+        } 
         if(input.comment){
-            input.placeholder='回复：'+input.comment.userName
+            input.placeholder='回复：'+input.comment.userInfo.userName
         }else{
             input.placeholder='看对眼就留言，问问更多细节~'
         }
@@ -89,32 +78,51 @@ methods: {
     goodJob(e){
         const user=getApp().globalData.user
         if(!user) return
-        const arr=e.currentTarget.dataset.arr,cmVos=this.data.newComments
+        const arr=e.currentTarget.dataset.arr,cmVos=this.data.comments.list
         var item=null
         // console.log(arr)
         if(arr[1]==-1){
             item=cmVos[arr[0]]
             item.goodJobNum+=item.isGoodJob?-1:1
             item.isGoodJob=!item.isGoodJob
-            this.setData({[`newComments[${arr[0]}].isGoodJob`]:item.isGoodJob,
-            [`newComments[${arr[0]}].goodJobNum`]:item.goodJobNum})
+            this.setData({[`comments.list[${arr[0]}]`]:item})
         }else{
-            item=cmVos[arr[0]].sonComments[arr[1]]     
+            item=cmVos[arr[0]].sonComments.list[arr[1]]     
             item.goodJobNum+=item.isGoodJob?-1:1
             item.isGoodJob=!item.isGoodJob
-            this.setData({[`newComments[${arr[0]}].sonComments[${arr[1]}].isGoodJob`]:item.isGoodJob,[`newComments[${arr[0]}].sonComments[${arr[1]}].goodJobNum`]:item.goodJobNum})
+            this.setData({[`comments.list[${arr[0]}].sonComments.list[${arr[1]}]`]:item})
         }
         if(item.isGoodJob)
-            getApp().goodCommentService.saveGoodJob({commentId:item.commentId,userId:user.userId})
+            getApp().goodCommentService.saveGoodJob(item.commentId?item.commentId:item.sonCommentId)
             .then(res=>{})
         else
-            getApp().goodCommentService.deleteGoodJob({commentId:item.commentId,userId:user.userId})
+            getApp().goodCommentService.deleteGoodJob(item.commentId?item.commentId:item.sonCommentId)
             .then(res=>{})
     },
     resCommentEvent(e){
         const index=e.currentTarget.dataset.index
-        if(index==0||index){//展开剩余评论或收起
-            this.setData({[`newComments[${index}].putAwayComment`]:!this.data.newComments[index].putAwayComment})
+        const comment=this.data.comments.list[index]
+        const sonComments=comment.sonComments
+        //展开剩余评论或收起
+        if(!sonComments.isEnd){
+            getApp().goodCommentService.sonCommentsNoLogin(comment.commentId,sonComments.cursor,6)
+            .then(res=>{
+                console.log(res.data)
+                // const cursorPage=res.data
+                sonComments.isEnd=res.data.isEnd
+                sonComments.cursor=res.data.cursor
+                sonComments.list.push(...res.data.list)
+                sonComments.size+=res.data.size
+                sonComments.showEnd=res.data.showEnd
+                // comment.putAwayComment=!res.data.isEnd
+                this.setData({[`comments.list[${index}]`]:comment})
+            })
+        }else if(comment.putAwayComment){
+            this.setData({[`comments.list[${index}].putAwayComment`]:false,
+            [`comments.list[${index}].sonComments.showEnd`]:false})
+        }else{
+            this.setData({[`comments.list[${index}].putAwayComment`]:true,
+            [`comments.list[${index}].sonComments.showEnd`]:true})
         }
     },
     closeCommentView(){//
@@ -126,31 +134,22 @@ methods: {
     submitComment(e){
         const content=e.detail.value
         const input=this.data.input
-        const user=getApp().globalData.user
-        if(!user) return
-        const goodCommentDto={goodId:this.properties.goodDetailVo.goodId,content,userId:user.userId}
-        if(input.comment){//有回复评论
-            goodCommentDto.fatherId=input.fatherId
-            goodCommentDto.replyUserId=input.comment.userId
+        console.log("提交")
+        if(!getApp().globalData.user) return
+        // const goodCommentDto={goodId:this.data.good.goodId,content,userId:user.userId}
+        if(input.isReply){//回复评论
+            getApp().goodCommentService.sendSonComment(input.fatherId,input.replyId,content)
+            .then(res=>{
+                getApp().goodCommentService.comments(this.data.goodId,0,8)
+                .then(res1=>this.setData({comments:res1.data}))
+            })
+        }else{
+            getApp().goodCommentService.sendComment(this.data.goodId,content)
+            .then(res=>{
+                getApp().goodCommentService.comments(this.data.goodId,0,8)
+                .then(res1=>this.setData({comments:res1.data}))
+            })
         }
-        
-        //保存评论
-        getApp().goodCommentService.postGoodComment(goodCommentDto)
-        .then(res=>{
-            this.insertComment(res.data)
-            const g=goodCommentDto
-            console.log(g)
-            if(g.replyUserId&&g.replyUserId!=g.userId){
-                const commentMsgDto={commentId:res.data.commentId,goodId:g.goodId,content:g.content,senderId:g.userId,receiverId:g.replyUserId,type:0}
-                const genericWsDto={uri:'/comment',data:commentMsgDto}
-                getApp().chatContentSocket.send({data:JSON.stringify(genericWsDto)})
-            }else if(!g.fatherId&&g.userId!=this.properties.goodDetailVo.userId){
-                const commentMsgDto={commentId:res.data.commentId,goodId:g.goodId,content:g.content,senderId:g.userId,receiverId:this.properties.goodDetailVo.userId,type:1}
-                const genericWsDto={uri:'/comment',data:commentMsgDto}
-                getApp().chatContentSocket.send({data:JSON.stringify(genericWsDto)})
-            }
-        })
-        // const input= this.data.input
         this.setData({'input.inputValue':''})
     },
     insertComment(cmVo){
@@ -165,7 +164,6 @@ methods: {
            cms[arr[0]].sonCommentNum+=1
        }
        this.setData({newComments:cms})
-    
     }
 }
 })

@@ -8,7 +8,7 @@
         border="{{ true }}" placeholder="联系电话" maxlength="11"
         bind:change="phoneNumberChange" input-align="right" required
     />
-    <van-field  label="宿舍楼" border="true" readonly value="{{addressDto.school&&addressDto.zone&&addressDto.dormiName?addressDto.school+' '+addressDto.zone+' '+addressDto.dormiName:''}}"
+    <van-field  label="宿舍楼" border="true" readonly value="{{addressDto.dormiInfo.school&&addressDto.dormiInfo.zone&&addressDto.dormiInfo.dormiName?addressDto.dormiInfo.school+' '+addressDto.dormiInfo.zone+' '+addressDto.dormiInfo.dormiName:''}}"
         input-align="right"  required  bind:click-input="showTableEvent">   
         <van-icon slot="button" name="arrow" bind:click="showTableEvent" />
     </van-field>

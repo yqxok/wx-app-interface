@@ -7,25 +7,25 @@
 </van-tabs>
 <swiper class="swiper-container" current="{{active}}"	bind:change="swiperChange">
     <swiper-item wx:for="{{4}}" wx:key="this" >
-        <scroll-view scroll-y="true" style=" flex: 1;height: 100%;box-sizing: border-box;padding:0 20rpx;">
+        <scroll-view bind:scrolltolower="scrollToBottom" scroll-y="true" style=" flex: 1;height: 100%;box-sizing: border-box;padding:0 20rpx;" data-index="{{index}}" >
             <view style="height: 20rpx;"></view>
-            <view class="sell-container" wx:for="{{ordersArr[index].records}}" wx:key="orderId">
+            <view class="sell-container" wx:for="{{ordersArr[index].list}}" wx:key="orderId">
                 <view class="sell-top-container">
                     <view style="display: flex;align-items: center;">
-                        <image class="user-image" src="{{item.profilePicUrl}}" mode="aspectFill"></image>
-                        <span>{{item.userName}}</span>
+                        <image class="user-image" src="{{item.dealUser.profilePicUrl}}" mode="aspectFill"></image>
+                        <span>{{item.dealUser.userName}}</span>
                     </view>
                     <view style="color: rgb(223, 201, 3);">{{item.status<=1?(item.status==0?'正在交易中':'交易已完成'):'订单已取消'}}~</view>
                 </view>
                 <view class="sell-top-container" data-orderid="{{item.orderId}}" bind:tap="navToOrderDetail">
-                    <image class="good-image" src="{{item.picUrl}}" mode="aspectFill"></image>
-                    <view  class="text">{{item.html}}</view>
-                    <view style="margin-right: 20rpx; color:rgb(179, 179, 179);font-size: 14px;">x{{item.number}}</view>
+                    <image class="good-image" src="{{item.goodInfo.picUrl.url}}" mode="aspectFill"></image>
+                    <view  class="text">{{item.goodInfo.html}}</view>
+                    <view style="margin-right: 20rpx; color:rgb(179, 179, 179);font-size: 14px;">x{{item.buyNum}}</view>
                     <view style="font-size: 18px;font-weight: 500;">￥{{item.totalPrice}}</view>   
                 </view>
                 <view class="sell-top-container" style="margin-bottom: 0;">
                     <block wx:if="{{item.status==0}}">
-                        <van-icon data-theotherid="{{item.userId}}" data-goodid="{{item.goodId}}" 
+                        <van-icon data-theotherid="{{item.dealUser.userId}}" data-goodid="{{item.goodInfo.goodId}}" 
                         bind:click="navToMsgView" size="var(--bigger-icon-size)" color="var(--text-grey-color)" name="chat-o" />
                         <!-- <view data-theotherid="{{item.userId}}" data-goodid="{{item.goodId}}" class="theme-btn" style="background-color: var(--grey-btn-color);" bind:tap="navToMsgView">联系卖家</view> -->
                         <view style="display: flex;">
@@ -34,8 +34,8 @@
                         </view>
                     </block>
                     <block wx:else>
-                        <view bind:tap="openDialog" style="color:rgb(179, 179, 179);font-size: var(--normal-font-size);">删除</view>
-                        <view data-theotherid="{{item.userId}}" data-goodid="{{item.goodId}}" class="theme-btn" style="background-color: var(--grey-btn-color);" bind:tap="navToMsgView">联系卖家</view>
+                        <view bind:tap="openDialog" style="color:rgb(179, 179, 179);font-size: var(--normal-font-size);" data-msg="确认删除订单吗" data-option="删除订单" data-item="{{item}}">删除</view>
+                        <view data-theotherid="{{item.dealUser.userId}}" data-goodid="{{item.goodInfo.goodId}}" class="theme-btn" style="background-color: var(--grey-btn-color);" bind:tap="navToMsgView">联系卖家</view>
                     </block>
                 </view> 
             </view>
@@ -43,5 +43,5 @@
         </scroll-view>
     </swiper-item>
 </swiper>
-
+<ye-msg id="msgTip" top="20%"></ye-msg>
 <van-dialog id="van-dialog" data-item="{{item}}" data-option="{{option}}"  message="{{dialogMsg}}" showCancelButton showConfirmButton bind:confirm="dialogConfirm" bind:cancel="dialogCancel" show="{{deleteTableShow}}"/>

@@ -1,19 +1,35 @@
 const http=require('../utils/promiseRequest.js')
 module.exports={
-    getAddressList(userId){
-       return http.request({url:`/address/${userId}`,method:'GET'})
+    /**
+     * 请求用户地址页面
+     * @param {*} cursor 
+     * @param {*} pageSize 
+     */
+    getAddressList(cursor,pageSize){
+       return http.request({url:`/address/${cursor}/${pageSize}`,method:'GET'})
     },
-    saveAddress(userId,addressDto){
-        return http.request({url:`/address/${userId}`,data:addressDto,method:'POST'})
+    /**
+     * 保存地址
+     * @param {addressId,dormitoryId,dormiNum,phoneNumber,receiver} addressDto 
+     */
+    saveAddress(addressDto){
+        return http.request({url:`/address`,data:addressDto,method:'POST'})
     },
-    updateAddress(addressId, addressDto){
-        return http.request({url:`/address/${addressId}`,data:addressDto,method:'PUT'})
+    /**
+     * 更新地址
+     * @param {*} addressDto 
+     */
+    updateAddress(addressDto){
+        return http.request({url:`/address`,data:addressDto,method:'PUT'})
     },
-    getDefaultAddress(userId){
-        return http.request({url:`/address/${userId}/default`,method:'GET'})
+    /**
+     * 查询默认地址
+     */
+    getDefaultAddress(){
+        return http.request({url:`/address/default`,method:'GET'})
     },
-    setDefaultAddress(userId,addressId){
-        return http.request({url:`/address/${userId}/${addressId}`,method:'PUT'})
+    setDefaultAddress(addressDto){
+        return http.request({url:`/address/default`,method:'PUT',data:addressDto})
     },
     deleteAddress(addressId){
         return http.request({url:`/address/${addressId}`,method:'DELETE'})

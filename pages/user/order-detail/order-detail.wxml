@@ -2,11 +2,11 @@
 <scroll-view scroll-y="true" style=" flex: 1;height: 1rpx;box-sizing: border-box;padding: 20rpx;">
     <view class="order-status">{{goodOrderVo.status<=1?(goodOrderVo.status==0?'正在交易中':'交易已完成'):'订单已取消'}}~</view>
     <view class="detail-card">
-        <view class="sell-top-container" bind:tap="navToOrderDe">
-            <image class="good-image" src="{{goodOrderVo.picUrl}}" mode="aspectFill"></image>
+        <view bind:tap="navToGoodDetail" data-goodid="{{goodOrderVo.goodInfo.goodId}}" class="sell-top-container" >
+            <image class="good-image" src="{{goodOrderVo.goodInfo.picUrl.url}}" mode="aspectFill"></image>
             <view class="text-container">
-                <view  class="text">{{goodOrderVo.html}}</view>
-                <view style="font-size: 18px;font-weight: 500;">￥{{goodOrderVo.totalPrice}}</view> 
+                <view  class="text">{{goodOrderVo.goodInfo.html}}</view>
+                <view style="font-size: 18px;font-weight: 500;">￥{{goodOrderVo.goodInfo.price}}</view> 
             </view>
         </view>
         <import src="model.wxml"/>
@@ -14,17 +14,18 @@
         <template is="model" data="{{label:'商品总价',item:goodOrderVo.totalPrice}}" />
         <van-divider />
         <template is="model" data="{{label:'订单编号',item:goodOrderVo.orderId}}" />
-        <template is="model" data="{{label:user.userId==goodOrderVo.delivererId?'买家昵称':'卖家昵称',item:goodOrderVo.receiver}}" />
-        <template is="model" data="{{label:'收货地址',item:goodOrderVo.rAddress}}" />
+        <template is="model" data="{{label:'昵称',item:goodOrderVo.dealUser.userName}}" />
+        <template is="model" data="{{label:'收货地址',item:goodOrderVo.addressInfo.address}}" />
         <template is="model" data="{{label:'下单时间',item:goodOrderVo.createTime}}" />
         <!-- <template is="model" data="{{label:'付款时间',item:goodOrderVo.payTime}}" /> -->
         <template is="model" wx:if="{{goodOrderVo.dealTime!=null}}" data="{{label:'成交时间',item:goodOrderVo.dealTime}}" />
     </view>
 </scroll-view>
 <view class="bottom-menu">
-    <view class="bottom-btn">{{isSellOrder?'联系买家':'联系卖家'}}</view>
+    <view bind:tap="navToMsg" class="border-btn big-font-size" data-theotherid="{{goodOrderVo.dealUser.userId}}" data-goodid="{{goodOrderVo.goodInfo.goodId}}">{{isSellOrder?'联系买家':'联系卖家'}}</view>
     <view style="display: flex;">
-        <view class="bottom-btn" style="margin-right: {{isSellOrder?'0':'20rpx;'}}">删除订单</view>
+        <view wx:if="{{goodOrderVo.status!=0}}" class="bottom-btn" bind:tap="showDeleteTable" style="margin-right: {{isSellOrder?'0':'20rpx;'}}">删除订单</view>
         <view wx:if="{{!isSellOrder}}" class="bottom-btn" style="background-color: var(--theme-color);">去评价</view>
     </view>
 </view>
+<van-dialog id="van-dialog"  message="确认删除该订单吗" showCancelButton showConfirmButton bind:confirm="dialogConfirm" bind:cancel="dialogCancel" show="{{deleteTableShow}}"/>

@@ -1,5 +1,10 @@
 const http=require('../utils/promiseRequest.js')
 module.exports={
+    /**
+     * 查询dormitory
+     * @param {*} school 
+     * @param {*} zone 
+     */
     getDormitoryByName(school,zone){
         let tmp={school,zone}
         const data = Object.keys(tmp).reduce((obj, key) => {
@@ -8,6 +13,13 @@ module.exports={
             }
             return obj;
           }, {});
-        return  http.request({url:'/dormitory',data,method:'GET'})
+        return  http.request({url:'/address/dormi',data,method:'GET'})
+    },
+    /**
+     * 获取dormiId
+     * @param {school,zone,dormiName} dormiInfo 
+     */
+    getDormiId(dormiInfo){
+        return http.request({url:'/address/id',data:dormiInfo,method:'POST'})
     }
 }

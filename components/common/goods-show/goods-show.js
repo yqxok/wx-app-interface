@@ -3,8 +3,8 @@ const config=require('../../../config.js')
 Component({
 properties: {
     goodList:{
-        type:Object,
-        value:{}
+        type:Array,
+        value:[]
     },
     overlay:{
         type:Boolean,
@@ -18,9 +18,9 @@ properties: {
 observers:{
     goodList:function(newValue){
         //  console.log(newValue)
-        if('records' in newValue==false) return
-        const list=newValue.records.map(item=>{
-            const picUrl=item.picUrls[0]
+        // if('records' in newValue==false) return
+        const list=newValue.map(item=>{
+            const picUrl=item.picUrl
             picUrl.h=345*picUrl.height/picUrl.width
             return item
         })
@@ -61,12 +61,12 @@ methods: {
         }
     },
     //商品被点击事件
-    goodTap(e){
+    tapGood(e){
         // console.log(e)
-        this.triggerEvent('goodTapEvent',{goodDetail:e.currentTarget.dataset.item})
+        this.triggerEvent('goodTapEvent',{goodId:e.currentTarget.dataset.goodid})
     },
-    tapGoodUser(e){
-        this.triggerEvent('tapGoodUserEvent',{goodVo:e.currentTarget.dataset.item})
+    tapUser(e){
+        this.triggerEvent('tapGoodUserEvent',{userId:e.currentTarget.dataset.userid})
     }
 
 }

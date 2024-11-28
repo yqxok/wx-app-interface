@@ -1,7 +1,7 @@
 /* components/common/ye-msg/ye-msg.wxss */
 .container{
     position:absolute;
-    top:40%;
+    top:var(--top-height);
     width:100%;
     display: flex;
     justify-content: center;
@@ -10,6 +10,7 @@
 
 }
 .msg-tip{
+    font-size: var(--normal-font-size);
     max-width: 300rpx;
     box-sizing: border-box;
     border-radius: 20rpx;

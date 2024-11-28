@@ -1,10 +1,9 @@
 module.exports=Behavior({
 data:{
 
-    goodList:{
-        isEnd:false,
-        current:1,
-        records:[]
+    
+    goodPage:{
+        cursor:'0',isEnd:true,list:[]
     },
     startX: 0,
     startY: 0,
