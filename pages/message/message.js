@@ -5,6 +5,7 @@ data:{
     chatContentList:null,
     contacts:{cursor:0,isEnd:false,list:[]},
     deleteTableShow:false,
+    refresherTriggered:false,//控制下拉刷新
     deletedGoodId:null,//被选中要删除的消息框
     orderMsgRoom:{noReadNum:0,content:'暂无订单消息',createTime:''},
     commentMsgRoom:{noReadNum:0,msg:'暂无互动消息',createTime:''}
@@ -43,6 +44,13 @@ methods:{
         getApp().goodCommentService.getCommentMsgRoom()
         .then(res=>{
             this.setData({commentMsgRoom:res.data})})
+    },
+    //下拉刷新
+    pullRefresh(){
+        setTimeout(()=>{
+            this.onShow()
+            this.setData({refresherTriggered:false})
+        } ,300)
     },
     onLoad(){
         //监听消息事件

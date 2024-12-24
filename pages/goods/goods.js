@@ -23,7 +23,8 @@ data:{
     scrollTop1:0,//内层scroll
     goodShowHeight:0,//swiper高度
     statusH:0,//状态栏高度
-    isRefreshing:true,//是否刷新
+    // isRefreshing:true,//是否刷新
+    refresherTriggered:false,
     skeletonLoading:true,
     startScroll:false,//内层scroll是否能够滚动
     goodCategories:[{name:'推荐'}, {name:'数码',class:'iconfont icon-shuma'},
@@ -42,22 +43,23 @@ lifetimes:{
     }
 },
 methods:{
-    
     onLoad(){
         const getGoods=()=>{
+
             getApp().goodService.getGoodPage(0,8).
             then(res=>{
                 res.data.isEnd=false//添加额外字段，表示商品是否已全部查询完毕
                 this.setData({skeletonLoading:false,goodPage:res.data})
             })
         }
+        //点击首页进行刷新数据
         const tabbar=this.getTabBar()
         tabbar.init()
         tabbar.addListner(()=>{
-           this.setData({skeletonLoading:true,scrollTop:0,scrollTop1:0,'categoryBar.selected':0})
+            this.setData({skeletonLoading:true,scrollTop:0,scrollTop1:0,'categoryBar.selected':0})
            setTimeout(getGoods,500)
         },0)
-       
+       //获取商品数据
         getGoods()
         const observer=wx.createIntersectionObserver(this)
         observer.relativeTo('.titleBar')
@@ -68,7 +70,18 @@ methods:{
                 this.setData({'categoryBar.changeCateogry':false,startScroll:false})
         })
     },
-    
+    pullRefresh(){
+        this.setData({skeletonLoading:true,scrollTop:0,scrollTop1:0,'categoryBar.selected':0})
+        setTimeout(()=>{
+            this.setData({refresherTriggered:false})
+            getApp().goodService.getGoodPage(0,8).
+            then(res=>{
+                // res.data.isEnd=false//添加额外字段，表示商品是否已全部查询完毕
+                this.setData({skeletonLoading:false,goodPage:res.data})
+            })
+        },300)
+       
+    },
     //进入商品详情页
     navToGoodDetail(e){
         wx.navigateTo({url: `./good-detail/good-detail?goodId=${e.detail.goodId}`})

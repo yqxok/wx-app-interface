@@ -57,14 +57,9 @@ methods: {
         eventBus.off('chatContentEvent','chatWidget')
     },
     keyboardOpen(e){
-        // console.log(e)
-        // const index=this.data.chattingRecords.length-1//scroll-view滚动最下面
-        // this.query.exec(res=>{})
         this.setData({keyboardH:e.detail.keyboardH})
     },
     keyboardClose(){
-        // const index=this.data.chattingRecords.messages.length-1
-        // this.query.exec(res=>{})
         this.setData({keyboardH:0})
     },
     navBack(){

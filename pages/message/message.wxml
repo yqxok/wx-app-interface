@@ -1,23 +1,7 @@
 <!--pages/message/message.wxml-->
 <view class="page-view" style="background-color: white;">
     <van-nav-bar title="消息" title-class="title"/>
-    <scroll-view wx:if="{{isLogin}}" bind:scrolltolower="scrollToBottom" scroll-y="true"  class="msg-scroll-container" >
-        <!-- <ye-search placeholder="搜索联系人"></ye-search> -->
-        <!-- <view class="all-msg-container">
-            <view class="all-msg-item">
-                <van-icon name="bill" color="var(--theme-color)" size="var(--bigger-icon-size)" />
-                <view>订单消息</view>
-            </view>
-            <view class="all-msg-item">
-                <van-icon name="comment" color="var(--theme-color)" size="var(--bigger-icon-size)" />
-                <veiw>回复我的</veiw>
-            </view>
-            <view class="all-msg-item">
-                <van-icon name="good-job" color="var(--theme-color)" size="var(--bigger-icon-size)" />
-                <veiw>点赞我的</veiw>
-            </view>
-        </view> -->
-        
+    <scroll-view wx:if="{{isLogin}}" bind:scrolltolower="scrollToBottom" scroll-y="true"  class="msg-scroll-container" bind:refresherrefresh="pullRefresh" refresher-triggered="{{refresherTriggered}}" refresher-enabled="true">
         <view class="msg-container" bind:tap="navToMsgCenter" style="border-radius: 20rpx; background-color: var(--background-color);">
             <view style="position: relative;">
                 <view class="msg-center-icon" style="background: pink;">

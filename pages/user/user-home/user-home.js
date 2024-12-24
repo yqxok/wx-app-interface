@@ -37,12 +37,7 @@ methods:{
         
   
     },
-    // onShow(){
-    //     const user=getApp().globalData.user
-    //     const curUser=this.data.user
-    //     if(curUser==null||curUser.userId!=user.userId) return
-    //     this.setData({user})
-    // },
+
     scrolling(e){
         // console.log(e)
         const topH=e.detail.scrollTop
@@ -74,14 +69,12 @@ methods:{
             res.eventChannel.emit('userEditEvent',{user:this.data.user})
         }})
     },
-    // //商品展示高度变化
-    // goodShowHeightEvent(e){
-    //     this.setData({goodShowHeight:e.detail.height+50})
-    // },
+
     navToGoodDetail(e){
-        wx.navigateTo({url: `../../goods/good-detail/good-detail?goodId=${e.detail.goodDetail.goodId}`,
+
+        wx.navigateTo({url: `../../goods/good-detail/good-detail?goodId=${e.detail.goodId}`,
         success:(res)=>{
-            // res.eventChannel.emit('goodDetailEvent', { goodVo:e.detail.goodDetail })
+           
         }})
     }
 }

@@ -1,7 +1,7 @@
 <view class="page-view">
     <ye-nav backgroundColor="var(--theme-color)" class="titleBar">
         <view class="nav-container">
-            <view class="title">忙鱼</view>
+            <view class="title">闲鱼</view>
             <view style="flex: 1;"><ye-search enableInput="{{false}}" ></ye-search></view>
         </view>
     </ye-nav>
@@ -11,7 +11,7 @@
             <view class="item-stick" style="background-color: {{categoryBar.selected==index?'var(--theme-color)':'white'}};"></view>
         </view>
     </view>
-    <scroll-view scroll-with-animation="{{true}}" scroll-top="{{scrollTop}}" bind:refresherrefresh="pullRefresh" refresher-enabled="{{isRefreshing}}" style="flex:1;height: 1rpx;"  scroll-y  class="scrollPage">
+    <scroll-view scroll-with-animation="{{true}}" scroll-top="{{scrollTop}}" bind:refresherrefresh="pullRefresh" refresher-triggered="{{refresherTriggered}}" refresher-enabled="true" style="flex:1;height: 1rpx;"  scroll-y  class="scrollPage">
         <!-- 轮播图 -->
         <swiper id="first1" indicator-dots="true" autoplay="true" interval="2000" style="--swiper-height:{{swiperHeight}}rpx" class="my-swiper">
             <swiper-item wx:for="{{[1,2,3]}}" wx:key="index">
