@@ -38,17 +38,18 @@ lifetimes:{
         
         const targetH=(this.data.swiperHeight+this.data.categoryBarHeight+30)/750*this.windowInfo.windowWidth
         this.setData({statusH,targetH})
-        // app.goodService.getGoodPage(1,8)
-        // .then(res=>this.setData({goodList:res.data}))
+       
     }
+},
+observers:{
+   
 },
 methods:{
     onLoad(){
         const getGoods=()=>{
 
-            getApp().goodService.getGoodPage(0,8).
+            getApp().goodService.getGoodPage({cursor:0,pageSize:8}).
             then(res=>{
-                res.data.isEnd=false//添加额外字段，表示商品是否已全部查询完毕
                 this.setData({skeletonLoading:false,goodPage:res.data})
             })
         }
@@ -74,7 +75,7 @@ methods:{
         this.setData({skeletonLoading:true,scrollTop:0,scrollTop1:0,'categoryBar.selected':0})
         setTimeout(()=>{
             this.setData({refresherTriggered:false})
-            getApp().goodService.getGoodPage(0,8).
+            getApp().goodService.getGoodPage({cursor:0,pageSize:8}).
             then(res=>{
                 // res.data.isEnd=false//添加额外字段，表示商品是否已全部查询完毕
                 this.setData({skeletonLoading:false,goodPage:res.data})
@@ -113,14 +114,17 @@ methods:{
 
     scrollToBottom(){
 
-        const goodPage=this.data.goodPage
+        var goodPage=this.data.goodPage
         if(goodPage.isEnd) return
         let categoryName=this.data.goodCategories[this.data.categoryBar.selected].name
         if(categoryName=='推荐') categoryName=null
-        getApp().goodService.getGoodPage(goodPage.cursor,8,categoryName).then(res=>{
-            goodPage.list.push(...res.data.list)
-            goodPage.isEnd=res.data.isEnd
-            goodPage.cursor=res.data.cursor
+        getApp().goodService.getGoodPage({cursor:goodPage.cursor,pageSize:8,categoryName,
+        leftHeight:goodPage.leftHeight,rightHeight:goodPage.rightHeight}).then(res=>{
+            const list=[...goodPage.list,...res.data.list]
+            const anotherList=[...goodPage.anotherList,...res.data.anotherList]
+            goodPage=res.data
+            goodPage.list=list
+            goodPage.anotherList=anotherList
             this.setData({goodPage})
         }) 
     },
@@ -132,7 +136,7 @@ methods:{
         if(categoryName=='推荐')
             categoryName=null
         const getGoodList=()=>{
-            getApp().goodService.getGoodPage(0,8,categoryName).
+            getApp().goodService.getGoodPage({cursor:0,pageSize:8,categoryName}).
             then(res=>{
                 this.setData({goodPage:res.data,skeletonLoading:false,scrollTop1:0})
             })

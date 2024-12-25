@@ -10,8 +10,8 @@
         <scroll-view bind:scrolltolower="scrollToBottom" scroll-y="true" style=" flex: 1;height: 100%;box-sizing: border-box;padding:0 20rpx;" data-index="{{index}}" >
             <view style="height: 20rpx;"></view>
             <view class="sell-container" wx:for="{{ordersArr[index].list}}" wx:key="orderId">
-                <view class="sell-top-container">
-                    <view style="display: flex;align-items: center;">
+                <view class="sell-top-container" >
+                    <view bind:tap="navToUserHome" data-userid="{{item.dealUser.userId}}" style="display: flex;align-items: center;">
                         <image class="user-image" src="{{item.dealUser.profilePicUrl}}" mode="aspectFill"></image>
                         <span>{{item.dealUser.userName}}</span>
                     </view>

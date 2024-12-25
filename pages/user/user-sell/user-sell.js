@@ -44,7 +44,17 @@ methods: {
         getApp().orderService.deleteOrder(orderId)
         .then(res=>{
             this.msgTip.showTip({msg:'删除成功',warnType:false})
-            this.onShow()
+            this.onLoad()
+        })
+    },
+    navToUserHome(e){
+        const userId=e.currentTarget.dataset.userid
+        getApp().userService.getUser(userId)
+        .then(res=>{
+            wx.navigateTo({url: '../../user/user-home/user-home',
+            success:(res1)=>{
+                res1.eventChannel.emit('userHomeEvent', {user:res.data })
+            }})
         })
     },
     dialogCancel(){
@@ -54,11 +64,22 @@ methods: {
         const orderId=e.currentTarget.dataset.orderid
         this.setData({deleteTableShow:true,orderId})
     },
-    onShow(){
-        this.updateOrders(-1,0)
-        this.updateOrders(0,1)
-        this.updateOrders(1,2)
-        this.updateOrders(2,3)
+    onLoad(){
+        this.loadOrders(-1,0)
+        this.loadOrders(0,1)
+        this.loadOrders(1,2)
+        this.loadOrders(2,3)
+    },
+    //初次加载订单数据
+    loadOrders(status,index){
+        const cursorPage=this.data.ordersArr[index]
+        getApp().orderService.getOrderPage(false,status,cursorPage.cursor,5)
+        .then(res=>{
+            cursorPage.list=res.data.list
+            cursorPage.isEnd=res.data.isEnd
+            cursorPage.cursor=res.data.cursor
+            this.setData({[`ordersArr[${index}]`]:cursorPage})
+        })
     },
     //拉取数据
     updateOrders(status,index){
@@ -71,8 +92,7 @@ methods: {
             cursorPage.cursor=res.data.cursor
             this.setData({[`ordersArr[${index}]`]:cursorPage})
         })
-        // getApp().orderService.getOrderPage(false,status,0,8)
-        // .then(res=>this.setData({[`ordersArr[${index}]`]:res.data}))
+      
     },
     scrollToBottom(e){
         const index=e.currentTarget.dataset.index

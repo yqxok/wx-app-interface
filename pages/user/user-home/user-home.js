@@ -28,6 +28,14 @@ methods:{
         const eventChannel = this.getOpenerEventChannel()
         // 监听acceptDataFromOpenerPage事件，获取上一页面通过eventChannel传送到当前页面的数据
         eventChannel.on('userHomeEvent',  (data)=>{
+            // getApp().goodService.getGoodPage({cursor:0,pageSize:50,status:0}).
+            // then(res=>{
+            //     this.setData({noSellGoods:res.data})
+            // })
+            // getApp().goodService.getGoodPage({cursor:0,pageSize:50,status:1}).
+            // then(res=>{
+            //     this.setData({selledGoods:res.data})
+            // })
             this.setData({user:data.user})
              getApp().goodService.getGoodListById(data.user.userId,0)
             .then(res=>this.setData({noSellGoods:res.data}))
@@ -48,7 +56,7 @@ methods:{
         // console.log(e)
     },
     goodsShowChange(e){
-        // console.log(e)
+        console.log(e)
         this.setData({goodShowHeight:e.detail.height})
     },
     pageChangeEvent(e){

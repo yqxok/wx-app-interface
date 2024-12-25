@@ -15,7 +15,7 @@
         <!-- 轮播图 -->
         <swiper id="first1" indicator-dots="true" autoplay="true" interval="2000" style="--swiper-height:{{swiperHeight}}rpx" class="my-swiper">
             <swiper-item wx:for="{{[1,2,3]}}" wx:key="index">
-                <image class="swiper-image" src="https://img-baofun.zhhainiao.com/pcwallpaper_ugc/static/b1d73af70fdcafc7d456420b4dfa43e9.jpg?x-oss-process=image%2fresize%2cm_lfit%2cw_1920%2ch_1080"></image>
+                <image class="swiper-image" src="https://tse3-mm.cn.bing.net/th/id/OIP-C.UxibjgxVCHnZn8zjgWf5rwAAAA?rs=1&pid=ImgDetMain"></image>
             </swiper-item>
         </swiper>
         <!-- 分类框 -->
@@ -29,11 +29,11 @@
             </view>
         </scroll-view>
        
-        <scroll-view scroll-top="{{scrollTop1}}" scroll-y="{{startScroll?true:false}}" bind:scrolltolower="scrollToBottom" style="height:calc(var(--page-height) - {{statusH+46}}px - {{categoryHeight/2}}rpx);">
+        <scroll-view scroll-top="{{scrollTop1}}" scroll-y="{{startScroll?true:false}}" bind:scrolltolower="scrollToBottom" 	lower-threshold="500" style="height:calc(var(--page-height) - {{statusH+46}}px - {{categoryHeight/2}}rpx);">
             <import src="skeleton.wxml"/>
             <template is="skeleton" wx:if="{{skeletonLoading}}"></template>
             <!-- <view class="skeleton-container"></view> -->
-            <goods-show bind:tapGoodUserEvent="navToUserHome" wx:else  bind:goodShowHeightEvent="goodShowHeightEvent" bind:goodTapEvent="navToGoodDetail" goodList="{{goodPage.list}}" ></goods-show>
+            <goods-show bind:tapGoodUserEvent="navToUserHome" wx:else  bind:goodShowHeightEvent="goodShowHeightEvent" bind:goodTapEvent="navToGoodDetail" goodList1="{{goodPage.list}}" goodList2="{{goodPage.anotherList}}"></goods-show>
         </scroll-view>
         <!-- <swiper  style="height:calc(var(--page-height) - {{statusH+46}}px - {{categoryHeight/2}}rpx);" 	capture-catch:touchmove="pageChangeEvent" >
             <swiper-item  wx:for="{{goodCategories}}" wx:key="name">

@@ -8,8 +8,10 @@
 page{
     --tab-height:calc(100rpx + env(safe-area-inset-bottom)) ;
     /* color */
-    --theme-color:rgb(134, 223, 1);
-    --theme-weight-color:rgb(115, 192, 0);
+    /* --theme-color:rgb(134, 223, 1);
+    --theme-weight-color:rgb(115, 192, 0); */
+    --theme-color:rgb(236, 233, 34);
+    --theme-weight-color:rgb(230, 226, 0);
     --text-grey-color:rgb(167, 167, 167);
     --background-color:rgb(250, 250, 250);
     --grey-btn-color:rgb(230, 230, 230);

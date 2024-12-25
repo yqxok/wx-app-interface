@@ -1,7 +1,7 @@
 <van-nav-bar title="{{categoryName}}" left-arrow bind:click-left="navBack"  />
 <import src="../skeleton.wxml" />
-<scroll-view  scroll-y class="scroll-container" bind:scrolltolower="scrollToBottom" >
+<scroll-view  scroll-y class="scroll-container" lower-threshold="500" bind:scrolltolower="scrollToBottom" >
     <template is="skeleton" wx:if="{{skeletonLoading}}"></template>
-    <goods-show goodList="{{goodPage.list}}" bind:tapGoodUserEvent="navToUserHome"
+    <goods-show goodList1="{{goodPage.list}}" goodList2="{{goodPage.anotherList}}" bind:tapGoodUserEvent="navToUserHome"
     bind:goodTapEvent="navToGoodDetail" wx:else></goods-show>
 </scroll-view>

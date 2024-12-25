@@ -9,7 +9,7 @@ methods: {
     onLoad(option){
         this.setData({categoryName:option.categoryName})
         this.getGoodPage=()=>{
-            getApp().goodService.getGoodPage(0,8,option.categoryName).
+            getApp().goodService.getGoodPage({cursor:0,pageSize:8,categoryName:option.categoryName}).
             then(res=>{
                 this.setData({goodPage:res.data,skeletonLoading:false})
             })
@@ -30,15 +30,18 @@ methods: {
         })
     },
     scrollToBottom(){
-        const goodPage=this.data.goodPage
+        var goodPage=this.data.goodPage
         if(goodPage.isEnd) return
         let categoryName=this.data.categoryName
         if(categoryName=='推荐') categoryName=null
-        getApp().goodService.getGoodPage(goodPage.cursor,8,categoryName).then(res=>{
-            goodPage.list.push(...res.data.list)
-            goodPage.isEnd=res.data.isEnd
-            goodPage.cursor=res.data.cursor
-            this.setData({goodPage})
+        getApp().goodService.getGoodPage({cursor:goodPage.cursor,pageSize:8,categoryName,
+            leftHeight:goodPage.leftHeight,rightHeight:goodPage.rightHeight}).then(res=>{
+                const list=[...goodPage.list,...res.data.list]
+                const anotherList=[...goodPage.anotherList,...res.data.anotherList]
+                goodPage=res.data
+                goodPage.list=list
+                goodPage.anotherList=anotherList
+                this.setData({goodPage})
         }) 
     },
     navBack(){

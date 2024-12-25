@@ -8,7 +8,7 @@
     <view wx:for="{{comments.list}}" wx:key="commentId">
         <view class="comment-item" data-arr="{{[index,-1]}}" bind:tap="startComment" data-comment="{{item}}" data-fatherid="{{item.commentId}}">
             <view class="comment-item-box" >
-                <image catch:tap="showDialog" class="comment-img" src="{{item.userInfo.profilePicUrl}}" mode="aspectFill"/>
+                <image catch:tap="clickImg" data-userid="{{item.userInfo.userId}}" class="comment-img" src="{{item.userInfo.profilePicUrl}}" mode="aspectFill"/>
                 <view class="comment-name-content">
                     <view style="color: rgb(190, 190, 190);margin-bottom: 10rpx;">
                         <span>{{item.userInfo.userName}}</span>
@@ -26,7 +26,7 @@
         <!-- 子回复!item.putAwayComment?item.sonComments:item.sonCommentNum>0?[item.sonComments[0]]:[] -->
         <view wx:for="{{item.putAwayComment?item.sonComments.list:item.sonComments.size>0?[item.sonComments.list[0]]:[]}}" wx:key="sonCommentId"  wx:for-item="son" wx:for-index="sonindex" class="comment-item"  style="margin-left: 80rpx;" data-arr="{{[index,sonindex]}}" bind:tap="startComment" data-comment="{{son}}" data-fatherid="{{item.commentId}}">
             <view class="comment-item-box">
-                <image class="comment-img" src="{{son.userInfo.profilePicUrl}}" mode="aspectFill"/>
+                <image catch:tap="clickImg" data-userid="{{son.userInfo.userId}}" class="comment-img" src="{{son.userInfo.profilePicUrl}}" mode="aspectFill"/>
                 <view class="comment-name-content">
                     <view style="color: rgb(190, 190, 190);margin-bottom: 10rpx;">
                         <span>{{son.userInfo.userName}}</span>

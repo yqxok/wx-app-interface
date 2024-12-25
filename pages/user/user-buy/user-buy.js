@@ -57,6 +57,16 @@ methods: {
         const orderId=e.currentTarget.dataset.orderid
         wx.navigateTo({url: `../order-detail/order-detail?orderId=${orderId}`})
     },
+    navToUserHome(e){
+        const userId=e.currentTarget.dataset.userid
+        getApp().userService.getUser(userId)
+        .then(res=>{
+            wx.navigateTo({url: '../../user/user-home/user-home',
+            success:(res1)=>{
+                res1.eventChannel.emit('userHomeEvent', {user:res.data })
+            }})
+        })
+    },
     navToMsgView(e){
         const goodId=e.currentTarget.dataset.goodid
         const theOtherId=e.currentTarget.dataset.theotherid

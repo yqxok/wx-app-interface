@@ -2,7 +2,7 @@ Component({
 data: {
     host:null,
     user:null,
-    img:'https://img.zcool.cn/community/01fc8555fe47136ac7251df821f27e.jpg@1280w_1l_2o_100sh.jpg'
+    img:'https://5b0988e595225.cdn.sohucs.com/images/20181210/d8e89fa545944ed38512a4073fa32175.jpeg'
 },
 pageLifetimes:{
     show(){

@@ -15,7 +15,8 @@ properties: {
 data: {
     selected: 0,
     color: "black",
-    selectedColor: "#3cc51f",
+    // selectedColor: "#3cc51f",
+    selectedColor:"#ece922",
     list: [{
         pagePath: "/pages/goods/goods",
         icon: "iconfont icon-shouye",

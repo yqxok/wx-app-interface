@@ -11,7 +11,7 @@
             <view style="height: 20rpx;"></view>
             <view class="sell-container"  wx:for="{{ordersArr[index].list}}" wx:key="orderId">
                 <view class="sell-top-container">
-                    <view style="display: flex;align-items: center;">
+                    <view bind:tap="navToUserHome" data-userid="{{item.dealUser.userId}}"  style="display: flex;align-items: center;">
                         <image class="user-image" src="{{item.dealUser.profilePicUrl}}" mode="aspectFill"></image>
                         <span>{{item.dealUser.userName}}</span>
                     </view>

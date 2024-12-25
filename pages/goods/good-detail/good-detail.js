@@ -43,6 +43,16 @@ methods:{
             this.setData({goodExit:false})
         })   
     },
+    navToUserHome(e){
+        const userId=e.currentTarget.dataset.userid
+        getApp().userService.getUser(userId)
+        .then(res=>{
+            wx.navigateTo({url: '../../user/user-home/user-home',
+            success:(res1)=>{
+                res1.eventChannel.emit('userHomeEvent', {user:res.data })
+            }})
+        })
+    },
     clickImg(e){
         const url=e.currentTarget.dataset.url
         const picUrls=this.data.goodDetailVo.picUrls
@@ -50,7 +60,7 @@ methods:{
         wx.previewImage({urls: [...imgs],current:url})
     },
     navToUserHome(e){
-        const userId=e.currentTarget.dataset.userid
+        const userId=e.currentTarget.dataset.userid?e.currentTarget.dataset.userid:e.detail.userId
         getApp().userService.getUser(userId)
         .then(res=>{
             wx.navigateTo({url: '../../user/user-home/user-home',

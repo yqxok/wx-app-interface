@@ -1,7 +1,7 @@
 <block wx:if="{{goodExit}}">
     <ye-nav custom-nav="good-detail-nav-container"  >
         <van-icon bind:click="navBackToGoods" name="arrow-left" custom-class="good-detail-nav-back"></van-icon>
-        <image src="{{goodDetailVo.userInfo.profilePicUrl}}" data-userid="{{goodDetailVo.userId}}" bind:tap="navToUserHome" class="good-detail-nav-img"/>
+        <image  src="{{goodDetailVo.userInfo.profilePicUrl}}" data-userid="{{goodDetailVo.userInfo.userId}}" bind:tap="navToUserHome" class="good-detail-nav-img"/>
         <view>{{goodDetailVo.userInfo.userName}}</view>
     </ye-nav>
     <scroll-view style="flex: 1;height: 1rpx;" scroll-y="true">
@@ -20,7 +20,7 @@
                 <span wx:for="{{goodDetailVo.categories}}" class="category-tag" wx:key="*this">#{{item}}</span>
             </view>
         </view>
-        <ye-comment good="{{goodDetailVo}}"></ye-comment>
+        <ye-comment bind:imgClickEvent="navToUserHome" good="{{goodDetailVo}}"></ye-comment>
     </scroll-view>
     <view class="buy-bottom-container">
         <block wx:if="{{goodDetailVo.status==1}}">

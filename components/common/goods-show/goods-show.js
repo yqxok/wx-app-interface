@@ -2,7 +2,12 @@
 const config=require('../../../config.js')
 Component({
 properties: {
-    goodList:{
+   
+    goodList1:{
+        type:Array,
+        value:[]
+    },
+    goodList2:{
         type:Array,
         value:[]
     },
@@ -16,27 +21,15 @@ properties: {
     }
 },
 observers:{
-    goodList:function(newValue){
-        //  console.log(newValue)
-        // if('records' in newValue==false) return
-        const list=newValue.map(item=>{
-            const picUrl=item.picUrl
-            picUrl.h=345*picUrl.height/picUrl.width
-            return item
-        })
-        // console.log('dfdsf')
-        this.setData({
-            goodList1:list.filter((item,index)=>index%2==0),
-            goodList2:list.filter((item,index)=>index%2!=0),
-            
-        },()=>{})
+    goodList1:function(newValue){
+        
         this.observerHeight()
 
     }
 },
 data: {
-    goodList1:[],
-    goodList2:[],
+    // goodList1:[],
+    // goodList2:[],
     host:null
 },
 lifetimes:{
@@ -53,7 +46,6 @@ methods: {
         try {
             this._observer.select('#nihao')
             .boundingClientRect((res)=>{
-                    // console.log(res)
                     this.triggerEvent('goodShowHeightEvent',{height:res.height})
             }).exec()
         } catch (error) {
@@ -62,7 +54,7 @@ methods: {
     },
     //商品被点击事件
     tapGood(e){
-        // console.log(e)
+
         this.triggerEvent('goodTapEvent',{goodId:e.currentTarget.dataset.goodid})
     },
     tapUser(e){

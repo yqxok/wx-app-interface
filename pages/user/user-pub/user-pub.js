@@ -33,7 +33,7 @@ methods: {
     getGoodVoList(){
         const user=getApp().globalData.user
         getApp().goodService.getGoodListById(user.userId,0)
-        .then(res=>this.setData({goodVos:res.data}))
+        .then(res=>this.setData({goodVos:[...res.data.list,...res.data.anotherList]}))
     },
     confirmDelete(e){
         getApp().goodService.deleteGoodById(this.data.curSelectedItem.goodId).

@@ -19,11 +19,18 @@ module.exports={
      * @param {*} cursor 
      * @param {*} pageSize 
      * @param {*} categoryName 
+     * cursor=0,pageSize,categoryName=null,leftHeight=0,rightHeight=0
      */
-    getGoodPage(cursor=0,pageSize,categoryName=null){
-        const data={cursor,pageSize}
-        if(categoryName) data.categoryName=categoryName
-        return http.request({url:'/good/no/page',data,method:'POST'})
+    /**
+     * 
+     * @param {*} req 
+     */
+    getGoodPage(req ){
+        // const data={cursor,pageSize}
+        // if(categoryName) data.categoryName=categoryName
+        req.deviceWidth=345
+        req.maxHeight=500
+        return http.request({url:'/good/no/page',data:req,method:'POST'})
     },
     /**
      * 无需登录，获取商品详情
@@ -35,12 +42,11 @@ module.exports={
     /**
      * 获取用户发布的商品
      * @param {*} userId 
-     * @param {*} status 
+     * @param {*} status
      */
-    getGoodListById(userId,status=null){
-        const data={}
-        if(status!=null) data.status=status
-        return http.request({url:`/good/no/list/${userId}`,data, method:'GET'})
+    getGoodListById(userId,status){
+        var req={status,deviceWidth:345,maxHeight:500}
+        return http.request({url:`/good/no/list/${userId}`,data:req, method:'POST'})
     },
     /**
      * 删除商品

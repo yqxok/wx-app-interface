@@ -34,8 +34,12 @@ module.exports={
     changeOrderStatus(orderId,status){
         return http.request({url:'/order/status',method:'PUT',data:{orderId,status}})
     },
+    /**
+     * 删除订单
+     * @param {*} orderId 
+     */
     deleteOrder(orderId){
-        return http.request({url:`/goodOrder/${orderId}`,method:'DELETE'})
+        return http.request({url:`/order/${orderId}`,method:'DELETE'})
     },
     /**
      * 查询订单消息页

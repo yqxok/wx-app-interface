@@ -99,6 +99,9 @@ methods: {
             getApp().goodCommentService.deleteGoodJob(item.commentId?item.commentId:item.sonCommentId)
             .then(res=>{})
     },
+    clickImg(e){
+        this.triggerEvent('imgClickEvent',{userId:e.currentTarget.dataset.userid}) 
+    },
     resCommentEvent(e){
         const index=e.currentTarget.dataset.index
         const comment=this.data.comments.list[index]

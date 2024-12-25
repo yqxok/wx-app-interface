@@ -31,10 +31,10 @@
     </view>
     <swiper class="swiper" style="height: {{goodShowHeight}}px;"	bind:change="pageChangeEvent">
         <swiper-item >
-            <goods-show needGoodUser="{{false}}" bind:goodTapEvent="navToGoodDetail" bind:goodShowHeightEvent="goodsShowChange" goodList="{{noSellGoods}}" ></goods-show>
+            <goods-show needGoodUser="{{false}}" bind:goodTapEvent="navToGoodDetail" bind:goodShowHeightEvent="goodsShowChange" goodList1="{{noSellGoods.list}}" goodList2="{{noSellGoods.anotherList}}" ></goods-show>
         </swiper-item>
         <swiper-item>
-            <goods-show needGoodUser="{{false}}" overlay="{{true}}" bind:goodShowHeightEvent="goodShowHeightEvent" bind:goodTapEvent="navToGoodDetail" goodList="{{selledGoods}}" ></goods-show>
+            <goods-show needGoodUser="{{false}}" overlay="{{true}}" bind:goodShowHeightEvent="goodShowHeightEvent" bind:goodTapEvent="navToGoodDetail" goodList1="{{selledGoods.list}}" goodList2="{{selledGoods.anotherList}}" ></goods-show>
         </swiper-item>
     </swiper>
 </scroll-view>
