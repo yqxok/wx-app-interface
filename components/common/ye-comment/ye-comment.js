@@ -29,7 +29,7 @@ data: {
         inputValue:'',
         fatherId:null,
         replyId:null,
-        commentStart:false,
+        commentStart:false,//留言窗口是否开启
         isReply:false,//是否为回复评论
         placeholder:'看对眼就留言，问问更多细节~'
     },
@@ -153,7 +153,7 @@ methods: {
                 .then(res1=>this.setData({comments:res1.data}))
             })
         }
-        this.setData({'input.inputValue':''})
+        this.setData({'input.inputValue':'','input.commentStart':false})
     },
     insertComment(cmVo){
        const arr=this.data.input.arr,cms=this.data.newComments

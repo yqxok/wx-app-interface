@@ -24,6 +24,7 @@
     "pages/message/msg-view/msg-view",
     "pages/message/msg-center/msg-center",
     "pages/message/msg-comment/msg-comment",
+    "pages/message/msg-ai/msg-ai",
     "pages/test/test",
     "pages/publish/pub-home/pub-home"
   ],

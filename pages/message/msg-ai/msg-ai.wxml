@@ -1,0 +1,19 @@
+<van-nav-bar title="闲鱼Ai助手"  left-arrow  bind:click-left="navBack"/>
+<scroll-view scroll-y class="msg-scroll-container" >
+    <view style="height: 20rpx;width:100%;background-color: transparent;"></view>
+    <block wx:for="{{chats}}" wx:key="index">
+        <view  class="msg-his-container" wx:if="{{item.type==0}}">
+            <image class="msg-his-img" mode="aspectFill" src="https://tse2-mm.cn.bing.net/th/id/OIP-C.-wzq3W-9eNj042XCLBfQcwHaLZ?w=156&h=180&c=7&r=0&o=5&dpr=1.6&pid=1.7"></image>
+            <view class="msg-his-msg" style="background-color: rgb(226, 226, 226);">{{item.textObj.text}}</view>
+        </view>
+        <view  class="msg-my-container" wx:else>
+            <view  class="msg-his-msg">{{item.text}}</view>
+            <image catch:tap="navToUserHome" data-userid="{{item.sendUserId}}" class="msg-his-img" mode="aspectFill" src="https://tse1-mm.cn.bing.net/th/id/OIP-C.fTGQtKmOTbOO5qHurf6rPwHaEK?w=296&h=180&c=7&r=0&o=5&dpr=1.6&pid=1.7" />
+        </view>
+    </block>
+    
+    <!-- <view>{{textObj.text}}</view> -->
+</scroll-view>
+<view style="margin-bottom: {{keyboardH==0?'env(safe-area-inset-bottom)':keyboardH+'px'}};">
+    <ye-input  inputValue="{{msgContent}}" bind:inputValueEvent="msgSend" bind:keyboardOpen="keyboardOpen" bind:keyboardClose="keyboardClose"></ye-input>
+</view>

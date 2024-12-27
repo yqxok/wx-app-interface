@@ -1,0 +1,4 @@
+<view  class="msg-his-container">
+    <image catch:tap="navToUserHome" data-userid="{{item.sendUserId}}" class="msg-his-img" mode="aspectFill" src="{{theOtherUser.profilePicUrl}}"></image>
+    <view class="msg-his-msg" style="background-color: rgb(226, 226, 226);">{{item.content}}</view>
+</view>

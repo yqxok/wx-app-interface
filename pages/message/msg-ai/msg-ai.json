@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
+    "towxml":"/towxml/towxml",
+    "ye-input":"../../../components/common/ye-input/ye-input"
+  }
+}
