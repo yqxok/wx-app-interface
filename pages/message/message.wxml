@@ -1,6 +1,6 @@
 <!--pages/message/message.wxml-->
 <view class="page-view" style="background-color: white;">
-    <van-nav-bar title="消息" title-class="title" left-text="AI小姐姐" bind:click-left="navToMsgAi"/>
+    <van-nav-bar title="消息" title-class="title" left-text="AI私人助理" bind:click-left="navToMsgAi"/>
     <scroll-view wx:if="{{isLogin}}" bind:scrolltolower="scrollToBottom" scroll-y="true"  class="msg-scroll-container" bind:refresherrefresh="pullRefresh" refresher-triggered="{{refresherTriggered}}" refresher-enabled="true">
         <view class="msg-container" bind:tap="navToMsgCenter" style="border-radius: 20rpx; background-color: var(--background-color);">
             <view style="position: relative;">

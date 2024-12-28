@@ -8,8 +8,8 @@ data: {
     chats:{cursor:0,isEnd:false,list:[]},
     user:null,
     theOtherUser:{userName:'未知用户...'},
-    goodId:null,
-    msgContent:''//设置消息输入框内容
+    goodId:null
+   
 },
 lifetimes:{
     attached(){
@@ -44,7 +44,7 @@ methods: {
             //将收到的新消息改为已读状态
             getApp().chatContentService.msgRead(option.goodId,option.userId)
             .then(res=>{})
-            this.setData({msgContent:'',chats})
+            this.setData({chats})
         }
         eventBus.on('chatContentEvent','chatWidget',this.chatWidget)
         
@@ -87,7 +87,7 @@ methods: {
         getApp().chatContentService.sendMsg(chatReq)
         .then(res=>{
             this.data.chats.list.unshift(res.data)
-            this.setData({chats:this.data.chats,msgContent:''})
+            this.setData({chats:this.data.chats})
             // this.query.exec(res=>{})
         })
     }

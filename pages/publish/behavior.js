@@ -28,6 +28,9 @@ methods:{
                     userId:getApp().globalData.user.userId
                 })
                 this.setData({loadingShow:false})
+                wx.switchTab({
+                    url: '../goods/goods.wxml',
+                  })
                 wx.redirectTo({url:`../goods/good-detail/good-detail?goodId=${resData.data}`})
                
             }else{//重新发布
@@ -44,6 +47,8 @@ methods:{
                 resData=await getApp().goodService.updateGood({...this.data.goodDto})   
             }
             this.setData({loadingShow:false})
+            // wx.
+
             wx.redirectTo({url:`../goods/good-detail/good-detail?goodId=${resData.data}`})
         } catch (error) {
             this.setData({loadingShow:false})

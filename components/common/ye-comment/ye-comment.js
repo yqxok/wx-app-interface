@@ -26,7 +26,6 @@ data: {
     comments:{cursor:0,isEnd:true,list:[]},
     input:{
         comment:null,//评论缓存
-        inputValue:'',
         fatherId:null,
         replyId:null,
         commentStart:false,//留言窗口是否开启
@@ -153,7 +152,7 @@ methods: {
                 .then(res1=>this.setData({comments:res1.data}))
             })
         }
-        this.setData({'input.inputValue':'','input.commentStart':false})
+        this.setData({'input.commentStart':false})
     },
     insertComment(cmVo){
        const arr=this.data.input.arr,cms=this.data.newComments

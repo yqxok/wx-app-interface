@@ -63,5 +63,5 @@
 </view>
 
 <van-action-sheet  z-index="5" show="{{input.commentStart }}"  bind:close="closeCommentView">
-    <ye-input inputValue="{{input.inputValue}}" bind:inputValueEvent="submitComment" marginBottom="{{marginBottom}}" placeholder="{{input.placeholder}}"  isFocus="{{inputFocus}}" bind:keyboardOpen="keyboardOpen" bind:keyboardClose="closeCommentView"></ye-input>  
+    <ye-input bind:inputValueEvent="submitComment" marginBottom="{{marginBottom}}" placeholder="{{input.placeholder}}"  isFocus="{{inputFocus}}" bind:keyboardOpen="keyboardOpen" bind:keyboardClose="closeCommentView"></ye-input>  
 </van-action-sheet>

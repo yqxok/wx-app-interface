@@ -9,13 +9,14 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    /* transform: rotateX(180deg);  */
+    transform: rotateX(180deg); 
    --line-height:calc(var(--big-font-size)*1.2);
    --user-img-width:calc(var(--line-height) + 40rpx);
+   --msg-max-width:calc(670rpx - var(--user-img-width)*2);
 }
 .msg-his-container{
-    /* transform: rotateX(180deg); */
-    /* min-height: 100rpx; */
+    transform: rotateX(180deg);
+    min-height: 100rpx;
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
@@ -23,8 +24,8 @@
 
 }
 .msg-my-container{
-    /* transform: rotateX(180deg); */
-    /* min-height: 100rpx; */
+    transform: rotateX(180deg);
+    min-height: 100rpx;
     display: flex;
     align-items: flex-start;
     justify-content: flex-end;
@@ -37,7 +38,7 @@
 .msg-his-img{
     width: var(--user-img-width);
     height: var(--user-img-width);
-    border-radius:0.5 ;
+    border-radius:50%;
 }
 
 .msg-his-msg{
@@ -49,6 +50,34 @@
     background-color: var(--theme-color);
     font-size: var(--big-font-size);
     line-height:var(--line-height);
-    max-width: calc(670rpx - var(--user-img-width)*2);
+    max-width: var(--msg-max-width);
     overflow-wrap:break-word;
+}
+/* 消息内嵌入商品信息 */
+.msg-good-container{
+    display: flex;
+    margin-top: 20rpx;
+    border-radius: 10rpx;
+    background-color: rgb(245, 245, 245);
+    --good-img:80rpx
+}
+.msg-good-img{
+    width: var(--good-img);
+    height: var(--good-img);
+    border-radius: 10rpx;
+}
+.msg-good-contain-container{
+    width: calc(var(--msg-max-width) - 40rpx - var(--good-img));
+    box-sizing: border-box;
+    padding-left: 10rpx;
+    font-size: var(--normal-font-size);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.good-html{
+    overflow:hidden;
+    /* overflow-wrap:break-word; */
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

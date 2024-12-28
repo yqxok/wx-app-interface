@@ -9,6 +9,7 @@ const chatContentService=require('./chatContentService.js')
 const wsService=require('./wsService.js')
 const collectService=require('./collectService')
 const orderService=require('./orderService')
+const aiService=require('./aiService')
 module.exports={
     goodService,
     userService,
@@ -20,5 +21,6 @@ module.exports={
     chatContentService,
     wsService,
     collectService,
-    orderService
+    orderService,
+    aiService
 }

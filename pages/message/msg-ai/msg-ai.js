@@ -10,18 +10,14 @@ properties: {
  */
 data: {
     
-    chats:[{type:1,text:'讲一个笑话'},{type:0,textObj:{
-        text:'',//渲染的文本
-        originText:'',//素材文本
-        typeSpeed:20//打字速度
-    }}],
-    keyboardH:0
+    user:null,
+    keyboardH:0,
+    chats:[{type:0,textObj:{
+            text:'',//渲染的文本
+            originText:'请问有什么能帮助你的吗？',//素材文本
+            items:[]
+        }}]
 },
-// observers:{
-//     'textObj.originText':function(val){
-        
-//     }
-// },
 /**
  * 组件的方法列表
  */
@@ -29,65 +25,71 @@ methods: {
     navBack(){
         wx.navigateBack()
     },
-    // showText(index){
-    //     var text=this.data.text
-    //     if (index < text.length) {
-    //         // 更新当前文本内容
-    //         this.data.currentText += text[index];
-    //         // 使用setData更新视图
-    //         this.setData({
-    //            currentText:this.data.currentText
-    //         });
-    //         // 递归调用，显示下一个字符
-    //         setTimeout(() => {
-    //           this.showText(index + 1);
-    //         }, 50); // 每50毫秒显示一个字符
-    //     }
-    // },
-    // onLoad(){
-    //     typeWriter.showText(this,'text',this.data.text)
-    //     // this.showText(0);
-    // }
     onLoad(){
-        const requestTask= wx.request({
-            url: 'http://10.61.117.240:7001/api/ai/generateStream', // 流式接口的URL
-            method: 'GET',
-            data: {
-              message: '讲一个笑话'
-            },
-            header:{token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MzU4MzExMzEsInVzZXJJZCI6IjE4MTA2Njg4OTIzMTU2OTcxNTMifQ.0q-OJlAdEkDzdeSv_Gk5ZLVZben06Zci17q2HZlS7n0'},
-            
-            // header: {
-            //     'content-type': 'application/json',
-            // },
-            enableChunked: true, // 开启流式传输模式
-            success(res) {
-              // 处理响应
+        setTimeout(()=>{
+            typeWriter.showText(this,`chats[0].textObj`, this.data.chats[0].textObj)
+        },500)
+        
+        if(getApp().globalData.user)
+            this.setData({user:getApp().globalData.user})
+    },
+    navToGoodDetail(e){
+        wx.navigateTo({url: `../../goods/good-detail/good-detail?goodId=${e.currentTarget.dataset.goodid}`})
+    },
+    //流式响应
+    msgSend(e){
+        const chats=this.data.chats
+        chats.unshift({type:1,text:e.detail.value})
+        chats.unshift({type:0,textObj:{text:'', originText:'',items:[]}})
+        this.setData({chats})
+        //监听消息是否传输完毕
+        let timeId=null
+        const task=getApp().aiService.send(e.detail.value)
+        task.onChunkReceived((response) => {
+            clearTimeout(timeId)
+            let data = response.data
+            const type = Object.prototype.toString.call(data); // Uni8Array的原型对象被更改了所以使用字符串的信息进行判断。
+            let str
+            if(type ==="[object Uint8Array]"){
+                str=decodeURIComponent(escape(String.fromCharCode.apply(null,data)))
+            }else if(data instanceof ArrayBuffer){
+                // 将ArrayBuffer转换为Uint8Array
+                console.log("ArrayBuffer");
+                const uint8Array = new Uint8Array(data);
+                str=decodeURIComponent(escape(String.fromCharCode.apply(null,uint8Array)))
             }
-        });
-        requestTask.onChunkReceived((response) => {
-            // console.log(response)
-            const arrayBuffer = response.data
-            const uint8Array = new Uint8Array(arrayBuffer)
-            const str = new TextDecoder('utf-8').decode(uint8Array)
-            // typeWriter.showText(this,this.data.textObj+str)
-            this.data.chats[1].textObj.originText+=str
-            // this.setData({'textObj.originText[1]':str+})
-            typeWriter.showText(this,'chats[1].textObj', this.data.chats[1].textObj)
-            // this.setData({html:this.data.html+str})
-            // console.log(str)
-        //     let result =getApp().towxml(this.data.text+str,'markdown',{
-        //      theme:'light',                   // 主题，默认`light`
-        //      events:{                    // 为元素绑定的事件方法
-        //           tap:(e)=>{
-        //               console.log('h4',e);
-        //           }
-        //       }
-        //    })
-
-        //     // 更新解析数据  
-        //     this.setData({html: result,text:this.data.text+str})
+            this.data.chats[0].textObj.originText+=str
+            //渲染
+            // typeWriter.showText(this,`chats[0].textObj`, this.data.chats[0].textObj)
+            timeId=setTimeout(()=>{
+                //反序列化消息
+                const obj=JSON.parse(this.data.chats[0].textObj.originText)
+                this.data.chats[0].textObj.originText=obj.message
+                //渲染ai消息
+                typeWriter.showText(this,`chats[0].textObj`, this.data.chats[0].textObj,()=>{
+                      //渲染商品数据
+                    this.setData({'chats[0].textObj.items':obj.items})
+                })
+            },500)
         })
+        task.offChunkReceived((res)=>{
+            console.log(res)
+        })
+    },
+    Uint8ArrayToString(fileData){
+        var dataString = "";
+        for (var i = 0; i < fileData.length; i++) {
+          dataString += String.fromCharCode(fileData[i]);
+        }
+       
+        return dataString
+      
+    },
+    keyboardOpen(e){
+        this.setData({keyboardH:e.detail.keyboardH})
+    },
+    keyboardClose(){
+        this.setData({keyboardH:0})
     }
 }
 })

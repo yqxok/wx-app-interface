@@ -26,13 +26,12 @@ methods:{
     },
     //跳转登录界面
     userLogin(e){
-        if(this.data.user)
+        if(this.data.user){
             wx.navigateTo({url:'./user-home/user-home',
             success:(res)=>{
                 res.eventChannel.emit('userHomeEvent', {user:this.data.user })
             }
-        })
-        else    
+        })}else    
             wx.navigateTo({ url: './user-login/user-login' })
     },
     //跳转地址界面

@@ -15,10 +15,10 @@ properties: {
         type:Number,
         value:0
     },
-    inputValue:{
-        type:String,
-        value:''
-    }
+    // inputValue:{
+    //     type:String,
+    //     value:''
+    // }
     
 },
 observers:{
@@ -30,7 +30,7 @@ observers:{
  * 组件的初始数据
  */
 data: {
-    
+    inputValue:''
 },
 lifetimes:{
     attached(){
@@ -60,7 +60,7 @@ methods: {
     },
     submit(e){
         this.triggerEvent('inputValueEvent',{value:e.detail.value.textarea})
-        
+        this.setData({inputValue:''})
     }
 }
 })
