@@ -4,7 +4,6 @@
         <view class="{{item.icon}}" style="color: {{selected === index ? selectedColor : color}};font-size: var(--tab-icon-size);font-weight: bold;position: relative;">
             <view class="msg-tip" wx:if="{{index==2&&unReadNum!=0}}">{{unReadNum}}</view>  
             <!-- <view class="msg-tip" wx:if="{{index==2}}" >9</view>     -->
-
         </view>
         <view style="font-size: 16rpx;">{{item.text}}</view>
     </view>

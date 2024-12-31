@@ -1,0 +1,9 @@
+<van-nav-bar title="闲鱼Ai助手" />
+<scroll-view scroll-y class="scroll-container" refresher-triggered="{{refresherTriggered}}" >
+    <view style="height: 20rpx;"></view>
+
+    <view wx:for="{{history}}" data-roomid="{{item.roomId}}" wx:key="index" bind:tap="navToMsgAi" class="htstory-contact" >{{item.roomName}}</view>
+    <view style="height: 40rpx;"></view>
+</scroll-view>
+<view class="new-contact"  bind:tap="navToMsgAi">开启新会话</view>
+<view style="height: var(--tab-height);"></view>

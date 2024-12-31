@@ -13,7 +13,7 @@ data:{
 pageLifetimes:{
     show(){
         const tabbar= this.getTabBar()
-        tabbar.setData({selected:2})
+        tabbar.setData({selected:3})
         tabbar.init()
     },
 },
@@ -27,11 +27,7 @@ methods:{
                 .then(res1=>{})
         }})
     },
-    navToMsgAi(){
-        wx.navigateTo({
-          url: './msg-ai/msg-ai'
-        })
-    },
+   
     updateChatMsgs(){
         getApp().chatContentService.getContacts(0,20)
         .then(res=>{

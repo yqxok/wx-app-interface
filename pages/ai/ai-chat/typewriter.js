@@ -16,7 +16,7 @@ const showText=(obj,name, textObj,call=()=>{})=>{
    
     var _this=obj
     const handle=()=>{
-        if (textObj.text.length <textObj.originText.length) {
+        if (textObj.text.length <textObj.originText.length&&textObj.originText[textObj.text.length]!='[') {
             // 更新当前文本内容
             textObj.text +=textObj.originText[textObj.text.length]
             // 使用setData更新视图
@@ -30,7 +30,7 @@ const showText=(obj,name, textObj,call=()=>{})=>{
         }else if(textObj.text.length ==textObj.originText.length)
             call()
     }
-    if(textObj.text.length <textObj.originText.length)
+    if(textObj.text.length <textObj.originText.length&&textObj.originText[textObj.text.length]!='[')
         handle()
     
 }

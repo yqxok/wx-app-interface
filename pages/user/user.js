@@ -7,7 +7,7 @@ data: {
 pageLifetimes:{
     show(){
         const tabbar= this.getTabBar()
-        tabbar.setData({selected:3})
+        tabbar.setData({selected:4})
         tabbar.init()
     },
 },

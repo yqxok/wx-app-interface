@@ -1,6 +1,7 @@
 {
- 
   "pages": [
+    "pages/ai/ai",
+    "pages/ai/ai-chat/ai-chat",
     "pages/user/user",
     "pages/user/user-home/user-home",
     "pages/user/userEidt/userEidt",
@@ -24,7 +25,6 @@
     "pages/message/msg-view/msg-view",
     "pages/message/msg-center/msg-center",
     "pages/message/msg-comment/msg-comment",
-    "pages/message/msg-ai/msg-ai",
     "pages/test/test",
     "pages/publish/pub-home/pub-home"
   ],
@@ -51,6 +51,10 @@
       {
         "pagePath": "pages/publish/pub-home/pub-home",
         "text": "发布"
+      },
+      {
+        "pagePath": "pages/ai/ai",
+        "text": "AI"
       },
       {
         "pagePath": "pages/message/message",

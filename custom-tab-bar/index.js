@@ -20,22 +20,27 @@ data: {
     list: [{
         pagePath: "/pages/goods/goods",
         icon: "iconfont icon-shouye",
-        selectedIconPath: "/image/icon_component_HL.png",
+        // selectedIconPath: "/image/icon_component_HL.png",
         text: "首页"
     }, {
         pagePath: "/pages/publish/pub-home/pub-home",
         icon: "iconfont icon-fabu",
-        selectedIconPath: "/image/icon_API_HL.png",
+        // selectedIconPath: "/image/icon_API_HL.png",
         text: "发布"
+    },{
+        pagePath: "/pages/ai/ai",
+        icon: "iconfont icon-xiaoxi",
+        // selectedIconPath: "/image/icon_API_HL.png",
+        text: "AI"
     },{
         pagePath: "/pages/message/message",
         icon: "iconfont icon-xiaoxi",
-        selectedIconPath: "/image/icon_API_HL.png",
+        // selectedIconPath: "/image/icon_API_HL.png",
         text: "消息"
     },{
         pagePath: "/pages/user/user",
         icon: "iconfont icon-geren",
-        selectedIconPath: "/image/icon_API_HL.png",
+        // selectedIconPath: "/image/icon_API_HL.png",
         text: "我的"
     }],
     listners:[],//监听器

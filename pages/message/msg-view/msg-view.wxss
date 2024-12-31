@@ -53,5 +53,11 @@ page{
     max-width: calc(670rpx - var(--user-img-width)*2);
     overflow-wrap:break-word;
 }
-
+.msg-time{
+    transform: rotateX(180deg);
+    text-align: center;
+    font-size: var(--small-font-size);
+    color:var(--text-grey-color);
+    margin-bottom: 20rpx;
+}
 /*  */

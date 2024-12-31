@@ -8,7 +8,7 @@
                 <view class="msg-his-msg" style="background-color: rgb(226, 226, 226);">
                 {{item.textObj.text}}
                     <block wx:for="{{item.textObj.items}}" wx:for-item="good" wx:key="goodId">
-                        <view class="msg-good-container" bind:tap="navToGoodDetail" data-goodid="{{good.goodId}}" >
+                        <view class="msg-good-container" bind:tap="navToGoodDetail" data-goodid="{{good.goodId}}">
                             <image src="{{good.url}}" mode="aspectFill" class="msg-good-img"></image>
                             <view class="msg-good-contain-container" >
                                 <view style="font-size: var(--normal-font-size); color:red">￥{{good.price}}</view>
@@ -16,13 +16,13 @@
                             </view>
                         </view>
                     </block>
-                    
                 </view>
             </view>
             <view  class="msg-my-container" wx:else>
                 <view  class="msg-his-msg">{{item.text}}</view>
                 <image catch:tap="navToUserHome" data-userid="{{item.sendUserId}}" class="msg-his-img" mode="aspectFill" src="{{user.profilePicUrl}}" />
             </view>
+            <view class="msg-time" wx:if="{{item.sendTime.length>0}}">{{item.sendTime}}</view>
         </block>
         <view style="height: 20rpx;width:100%;background-color: transparent;"></view>
     </view>

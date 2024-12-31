@@ -5,6 +5,7 @@
     <view style=" min-height: 100%; display: flex;flex-direction: column;justify-content: flex-end;">
         <view style="height: 20rpx;width:100%;background-color: transparent;"></view>
         <block wx:for="{{chats.list}}" wx:key="index">
+            
             <view  class="msg-his-container" wx:if="{{item.sendUserId==theOtherUser.userId}}">
                 <image catch:tap="navToUserHome" data-userid="{{item.sendUserId}}" class="msg-his-img" mode="aspectFill" src="{{theOtherUser.profilePicUrl}}"></image>
                 <view class="msg-his-msg" style="background-color: rgb(226, 226, 226);">{{item.content}}</view>
@@ -13,6 +14,7 @@
                 <view  class="msg-his-msg">{{item.content}}</view>
                 <image catch:tap="navToUserHome" data-userid="{{item.sendUserId}}" class="msg-his-img" mode="aspectFill" src="{{user.profilePicUrl}}" />
             </view>
+            <view class="msg-time" wx:if="{{item.sendTime.length>0}}">{{item.sendTime}}</view>
         </block>
         <view style="height: 1px;"></view>
     </view>

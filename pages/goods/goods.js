@@ -44,24 +44,43 @@ lifetimes:{
 observers:{
    
 },
-methods:{
-    onLoad(){
-        const getGoods=()=>{
-
-            getApp().goodService.getGoodPage({cursor:0,pageSize:8}).
-            then(res=>{
-                this.setData({skeletonLoading:false,goodPage:res.data})
-            })
-        }
+pageLifetimes:{
+    show(){
         //点击首页进行刷新数据
         const tabbar=this.getTabBar()
         tabbar.init()
         tabbar.addListner(()=>{
             this.setData({skeletonLoading:true,scrollTop:0,scrollTop1:0,'categoryBar.selected':0})
-           setTimeout(getGoods,500)
+            setTimeout(()=>{
+                getApp().goodService.getGoodPage({cursor:0,pageSize:8}).
+                then(res=>{
+                    this.setData({skeletonLoading:false,goodPage:res.data})
+                })
+            },500)
         },0)
+    }
+},
+methods:{
+    // getGoods(){
+    //     getApp().goodService.getGoodPage({cursor:0,pageSize:8}).
+    //     then(res=>{
+    //         this.setData({skeletonLoading:false,goodPage:res.data})
+    //     })
+    // },
+    onLoad(){
+        // const getGoods=()=>{
+
+        //     getApp().goodService.getGoodPage({cursor:0,pageSize:8}).
+        //     then(res=>{
+        //         this.setData({skeletonLoading:false,goodPage:res.data})
+        //     })
+        // }
+      
        //获取商品数据
-        getGoods()
+       getApp().goodService.getGoodPage({cursor:0,pageSize:8}).
+       then(res=>{
+           this.setData({skeletonLoading:false,goodPage:res.data})
+       })
         const observer=wx.createIntersectionObserver(this)
         observer.relativeTo('.titleBar')
         .observe('.hiddenBar',(res)=>{

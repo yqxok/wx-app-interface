@@ -1,0 +1,36 @@
+/* pages/ai/ai-chat.wxss */
+page{
+    --contact-width:500rpx;
+}
+.scroll-container{
+    height: 1rpx;
+    flex:1;
+    position: relative;
+    transform: rotate(180deg);
+}
+.htstory-contact{
+    transform: rotate(180deg);
+    width: var(--contact-width);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 0  auto;
+    margin-bottom: 40rpx;
+    border-radius: 20rpx;
+    background-color: rgb(243, 243, 243);
+    padding: 20rpx 0;
+    text-align: center;
+}
+.new-contact{
+    /* position: absolute;
+    bottom: 100rpx; */
+    margin: 0 auto;
+    margin-bottom: 100rpx;
+    text-align: center;
+    background-color: var(--theme-color);
+    padding: 40rpx 0;
+    font-weight: bold;
+    font-size: var(--bigger-font-size);
+    border-radius: 20rpx;
+    width: var(--contact-width);
+    left:calc((750rpx - var(--contact-width))/2) ;
+}
