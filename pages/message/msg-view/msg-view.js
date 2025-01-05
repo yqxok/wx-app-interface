@@ -1,5 +1,6 @@
 // pages/message/msg-view/msg-view.js
 const eventBus=require('./../../../utils/eventBus')
+const timeUtil=require('./../../../utils/TimeUtil')
 Component({
 data: {
     preHight:80,
@@ -26,6 +27,7 @@ methods: {
             chats.list.push(...res.data.list)
             chats.isEnd=res.data.isEnd
             chats.cursor=res.data.cursor
+            // timeUtil.convertTime(chats.list)
             this.setData({chats})
         })
     },
@@ -40,6 +42,8 @@ methods: {
         this.chatWidget=(res)=>{
             if(res.goodId!=this.data.goodId) return
             const chats=this.data.chats
+            //设置sendTime属性
+            timeUtil.setSendTime(chats.list[0],res)
             chats.list.unshift(res)
             //将收到的新消息改为已读状态
             getApp().chatContentService.msgRead(option.goodId,option.userId)
@@ -86,6 +90,8 @@ methods: {
         }
         getApp().chatContentService.sendMsg(chatReq)
         .then(res=>{
+            //设置sendTime属性
+            timeUtil.setSendTime(this.data.chats.list[0],res.data)
             this.data.chats.list.unshift(res.data)
             this.setData({chats:this.data.chats})
             // this.query.exec(res=>{})

@@ -13,7 +13,9 @@ properties: {
  */
 data: {
     history:[{content:"我想要价格不高于50的英语书",createTime:''}],
-    refresherTriggered:false
+    refresherTriggered:false,
+    deleteTableShow:false,//显示删除框
+    _deleteRoomId:null//要删除的room
 },
 pageLifetimes:{
     show(){
@@ -34,10 +36,11 @@ pageLifetimes:{
 methods: {
     navToMsgAi(e){
         const roomId=e.currentTarget.dataset.roomid
+        const roomName=e.currentTarget.dataset.roomname
         console.log(e)
         // e.currentTarget.data
         if(roomId)
-            wx.navigateTo({url: `./ai-chat/ai-chat?roomId=${roomId}`})
+            wx.navigateTo({url: `./ai-chat/ai-chat?roomId=${roomId}&roomName=${roomName}`})
         else
             wx.navigateTo({url: './ai-chat/ai-chat'})
     },
@@ -46,10 +49,25 @@ methods: {
             getApp().aiService.getRooms()
             .then(res=>this.setData({history:res.data}))
     },
-    refresherTriggered(){
-        setTimeout(() => {
-            this.setData({refresherTriggered:false})
-        }, 500);
+    deleteRoom(e){
+        const roomId= e.currentTarget.dataset.roomid
+        this.data._deleteRoomId=roomId
+        this.setData({deleteTableShow:true})
+    },
+    confirmDelete(){
+        if(!this.data._deleteRoomId){
+            this.setData({deleteTableShow:true}) 
+            return
+        }
+        getApp().aiService.deleteRoom(this.data._deleteRoomId)
+        .then(res=>{
+            this.onShow()
+        })  
+    },
+    cancelDelete(){
+        this.data._deleteRoomId=null
+        this.setData({deleteTableShow:false})
     }
+   
 }
 })

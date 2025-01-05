@@ -1,4 +1,5 @@
 const http=require('../utils/promiseRequest.js')
+const timeUtil=require('../utils/TimeUtil')
 module.exports={
     /**
      * 查询会话列表
@@ -20,7 +21,13 @@ module.exports={
     * @param {*} pageSize 
     */
     getChatContentList(userId,goodId,cursor,pageSize){
-        return http.request({url:`/chatContent/records`,method:'POST',data:{userId,goodId,cursor,pageSize}})
+        return http.request({url:`/chatContent/records`,method:'POST',data:{userId,goodId,cursor,pageSize}}).then(res=>{
+            if(res.data.list.length!=0)
+                timeUtil.convertTime(res.data.list)
+            return new Promise((resolve,reject)=>{
+                resolve(res)
+            })
+        })
     },
     /**
      * 发送聊天消息

@@ -1,6 +1,7 @@
 /* pages/ai/ai-chat.wxss */
 page{
-    --contact-width:500rpx;
+    --contact-width:600rpx;
+    --delete-icon-width:50rpx;
 }
 .scroll-container{
     height: 1rpx;
@@ -9,16 +10,27 @@ page{
     transform: rotate(180deg);
 }
 .htstory-contact{
+    display: flex;
+    align-items: center;
     transform: rotate(180deg);
     width: var(--contact-width);
-    white-space: nowrap;
-    text-overflow: ellipsis;
+   
     margin: 0  auto;
     margin-bottom: 40rpx;
     border-radius: 20rpx;
     background-color: rgb(243, 243, 243);
-    padding: 20rpx 0;
+    box-sizing: border-box;
+    padding: 20rpx;
     text-align: center;
+}
+.delete{
+    width: var(--delete-icon-width);
+}
+.history-contact-name{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: calc(var(--contact-width) - var(--delete-icon-width));
 }
 .new-contact{
     /* position: absolute;
@@ -33,4 +45,11 @@ page{
     border-radius: 20rpx;
     width: var(--contact-width);
     left:calc((750rpx - var(--contact-width))/2) ;
+}
+.msg-time{
+    transform: rotateX(180deg) rotateY(180deg);
+    text-align: center;
+    font-size: var(--small-font-size);
+    color:var(--text-grey-color);
+    margin-bottom: 20rpx;
 }

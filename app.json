@@ -76,6 +76,9 @@
   "componentFramework": "glass-easel",
   "sitemapLocation": "sitemap.json",
   "networkTimeout": {
-    "request": 10000
+    "request": 20000,
+    "connectSocket": 10000,
+    "uploadFile": 10000,
+    "downloadFile": 10000
   }
 }

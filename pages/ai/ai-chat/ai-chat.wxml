@@ -1,4 +1,4 @@
-<van-nav-bar title="闲鱼Ai助手"  left-arrow  bind:click-left="navBack"/>
+<van-nav-bar title="{{room.text}}"  left-arrow  bind:click-left="navBack"/>
 <scroll-view scroll-y class="msg-scroll-container" >
     <view style=" min-height: 100%; display: flex;flex-direction: column;justify-content: flex-end;">
         <view style="height: 20rpx;width:100%;background-color: transparent;"></view>

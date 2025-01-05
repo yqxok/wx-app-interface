@@ -3,7 +3,6 @@ const config=require('./config.js')
 const http=require('./service/http')
 const eventBus=require('./utils/eventBus')
 App({
-    towxml:require('/towxml/index'),
     onError(error){
         console.log('全局捕获的异常：'+error)
     },

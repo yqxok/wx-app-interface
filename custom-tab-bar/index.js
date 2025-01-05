@@ -29,7 +29,7 @@ data: {
         text: "发布"
     },{
         pagePath: "/pages/ai/ai",
-        icon: "iconfont icon-xiaoxi",
+        icon: "iconfont icon-SVG",
         // selectedIconPath: "/image/icon_API_HL.png",
         text: "AI"
     },{
